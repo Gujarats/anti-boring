@@ -3,17 +3,17 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.internal.widget.ListViewCompat
+    <ListView
         android:id="@+id/ListTebakan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </android.support.v7.internal.widget.ListViewCompat>
+    </ListView>
 
     <ProgressBar
         android:id="@+id/LoadingListTebakan"
-        android:layout_width="30dp"
-        android:layout_height="3odp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
         android:layout_centerVertical="true" />

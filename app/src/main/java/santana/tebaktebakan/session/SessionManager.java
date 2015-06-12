@@ -11,6 +11,8 @@ public class SessionManager {
     private static final String PREF_NAME = "TebakanPref";
     //api token
     private static final String KEY_TOKEN = "KEY_TOKEN";
+    // uid user
+    private static final String KEY_UID = "KEY_UID";
     // Shared Preferences
     SharedPreferences pref;
     // Editor for Shared preferences
@@ -20,7 +22,6 @@ public class SessionManager {
     // Shared pref mode
     int PRIVATE_MODE = 0;
 
-
     // Constructor
     public SessionManager(Context context) {
         this._context = context;
@@ -28,6 +29,17 @@ public class SessionManager {
         editor = pref.edit();
     }
 
+    public String getUidUser(){
+        return pref.getString(KEY_UID,"");
+    }
+
+    //uid user from server
+    public void setUidUser(String uid){
+        editor.putString(KEY_UID,uid);
+        editor.commit();
+    }
+
+    //token
     public String getToken(){
         return pref.getString(KEY_TOKEN,"");
     }

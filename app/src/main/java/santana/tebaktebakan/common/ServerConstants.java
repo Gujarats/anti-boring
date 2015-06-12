@@ -8,6 +8,7 @@ public class ServerConstants {
     //rest api
     public static final String getTebakanList = UrlBeckend+"getTebakanList";
     public static final String insertTebakan = UrlBeckend+"insertTebakan";
+    public static final String UploadGambarTebakan = UrlBeckend+"uploadGambarTebakan";
     public static final String loginTebakan = UrlBeckend+"loginTebakan";
 //    public static final String insertTebakan = UrlBeckend+"insertTebakan";
 
@@ -20,6 +21,8 @@ public class ServerConstants {
     public static final String mParamsEmail = "email";
     public static final String mParamsToken = "access_token";
     public static final String mParamsUidUser = "uidUser";
+    public static final String mParamsTextTebakan = "textTebakan";
+    public static final String mParamsGambarTebakan = "gambarTebakan";
     public static final String mParamsQuestion = "question";
     public static final String mParamGender = "gender";
     public static final String mParamUidUserFriend = "uidUserFriend";
@@ -32,12 +35,17 @@ public class ServerConstants {
     public static final String resultRegisterBeckend = "data_user_inserted";
     public static final String resultLoginBeckend = "login_success";
     public static final String uidUser = "uidUser";
+    public static final String dataListTebakan = "dataListTebakan";
+    public static final String _idTebakan = "_idTebakan";
+    public static final String textTebakan = "textTebakan";
+    public static final String gambarTebakan = "gambarTebakan";
+
 
     //result type
     public static final String resultType = "resultType";
-    public static final int resultTypeRegister = 0;
-    public static final int resultTypelogin = 1;
-    public static final int resultRegisterGcm = 2;
+    public static final int addTebakanView = 0;
+    public static final int addITebakanDown = 1;
+    public static final int addTebakanAtas = 2;
     public static final int resultPushNotif = 3;
     public static final int UserAddToGroup = 4;
 

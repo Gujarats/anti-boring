@@ -7,7 +7,8 @@
     <ImageView
         android:id="@+id/GambarTebakanUpload"
         android:layout_width="400dp"
-        android:layout_height="400dp"/>
+        android:layout_height="400dp"
+        android:onClick="UploadCliced"/>
 
 
     <EditText
@@ -22,7 +23,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/TextTebakanUpload"
+        android:onClick="UploadCliced"
         android:text="Upload Tebakan"/>
+
+    <TextView
+        android:id="@+id/PercentageUpload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"/>
+
+    <ProgressBar
+        android:id="@+id/ProgressBarUpload"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/PercentageUpload"
+        android:indeterminate="true"
+        android:visibility="gone" />
 
 
 </RelativeLayout>
