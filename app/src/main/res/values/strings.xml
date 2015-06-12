@@ -3,4 +3,11 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    //answer tebakan activity
+    <string name="hints_answer">Your Answer Here</string>
+
+    //upload tebakan activity
+    <string name="hints_upload">Your Answer Here</string>
+    //
 </resources>

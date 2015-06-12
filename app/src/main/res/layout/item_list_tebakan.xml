@@ -4,7 +4,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/GambarTebakan"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:adjustViewBounds="true"
+        android:maxHeight="150dp"
+        android:scaleType="centerCrop"
+        android:visibility="visible" />
 
 
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/TextTebakan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_below="@+id/GambarTebakan"
+        android:text="@string/app_name"
+        android:textColor="@color/material_blue_grey_800"
+        android:textSize="10sp"
+        />
 
 </RelativeLayout>
