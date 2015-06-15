@@ -36,7 +36,9 @@ public class TebakanListActivity extends AppCompatActivity {
         if(sessionManager.getUidUser().isEmpty() || sessionManager.getToken().isEmpty()){
             sessionManager.clearAllSession();
             Intent intent = new Intent(this,RegisterActivity.class);
+            finish();
             startActivity(intent);
+
         }
 
         tebakanListAdapter = new TebakanListAdapter(getApplicationContext(),this,R.layout.item_list_tebakan);

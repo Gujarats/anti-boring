@@ -3,6 +3,7 @@ package santana.tebaktebakan.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.Log;
 import android.view.Menu;
@@ -36,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity implements Response.List
 
 
     protected AppCompatEditText Email,password,rePassword,username;
+    protected AppCompatButton Login;
     SessionManager sessionManager;
 
     @Override
@@ -51,6 +53,12 @@ public class RegisterActivity extends AppCompatActivity implements Response.List
         password = (AppCompatEditText) findViewById(R.id.PasswordRegister);
         rePassword = (AppCompatEditText) findViewById(R.id.rePaswordRegister);
         username = (AppCompatEditText) findViewById(R.id.UserNameRegister);
+        Login  = (AppCompatButton) findViewById(R.id.LoginButtonRegister);
+    }
+
+    public void Login(View v){
+        Intent intent = new Intent(this,LoginActivity.class);
+        startActivity(intent);
     }
 
     public void Register(View v){

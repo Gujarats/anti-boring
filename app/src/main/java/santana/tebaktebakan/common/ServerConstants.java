@@ -12,7 +12,7 @@ public class ServerConstants {
     public static final String registerGcm = UrlBeckend+"api/v_gs/registerGcm";
 
     public static final String registerUser = UrlBeckend+"register";
-    public static final String loginTebakan = UrlBeckend+"loginTebakan";
+    public static final String loginTebakan = UrlBeckend+"login";
 
 
 // sending request
@@ -42,6 +42,8 @@ public class ServerConstants {
     public static final String textTebakan = "textTebakan";
     public static final String gambarTebakan = "gambarTebakan";
     public static final String _idUser = "_idUser";
+    public static final String gcmID = "gcmID";
+    public static final String username = "username";
 
 
     //result type

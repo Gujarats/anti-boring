@@ -29,7 +29,7 @@
         android:layout_below="@+id/EmailRegister"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:hint="Passoword"/>
+        android:hint="Password"/>
 
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/rePaswordRegister"
@@ -51,13 +51,14 @@
         android:text="Register"/>
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/LoginActivityButton"
+        android:id="@+id/LoginButtonRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/RegisterButton"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:onClick="Register"
+        android:onClick="Login"
+
         android:text="Login Here"/>
 
 

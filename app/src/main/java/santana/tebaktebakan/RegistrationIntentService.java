@@ -44,7 +44,7 @@ import santana.tebaktebakan.common.ServerConstants;
 import santana.tebaktebakan.requestNetwork.CostumRequestString;
 import santana.tebaktebakan.session.SessionManager;
 
-public class RegistrationIntentService extends IntentService {
+public class RegistrationIntentService extends IntentService implements Response.Listener<String>,Response.ErrorListener{
 
     private static final String TAG = "RegIntentService";
     private static final String[] TOPICS = {"global"};
@@ -120,39 +120,10 @@ public class RegistrationIntentService extends IntentService {
         mParams.put(ServerConstants.mParamsGcmID,token);
         mParams.put(ServerConstants.mParamsEmail,sessionManager.getEmail());
         mParams.put(ServerConstants.mParamsPassword,sessionManager.getPassword());
-        mParams.put(ServerConstants.mParamsPassword,sessionManager.getUsername());
+        mParams.put(ServerConstants.mParamsUsername,sessionManager.getUsername());
 
         //token server
-        CostumRequestString myreq = new CostumRequestString(com.android.volley.Request.Method.POST, ServerConstants.registerUser , mParams, new Response.Listener<String> (){
-
-            @Override
-            public void onResponse(String response) {
-                Log.d("response", response);
-                try {
-                    JSONObject jsonObject =  new JSONObject(response);
-                    if(jsonObject.getString(ServerConstants.statusBeckend).equalsIgnoreCase(ServerConstants.statusBeckendOk)){
-                        switch (jsonObject.getInt(ServerConstants.resultType)){
-
-                            case ServerConstants.registerResult :
-
-                                break;
-                            case ServerConstants.registerGcmResult :
-
-                                break;
-                        }
-                    }else{
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        },new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Error ", error.getMessage());
-            }
-        });
+        CostumRequestString myreq = new CostumRequestString(com.android.volley.Request.Method.POST, ServerConstants.registerUser , mParams, RegistrationIntentService.this,RegistrationIntentService.this);
 
         myreq.setRetryPolicy(new DefaultRetryPolicy(5000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         AppController.getInstance().addToRequestQueue(myreq);
@@ -174,35 +145,7 @@ public class RegistrationIntentService extends IntentService {
         mParams.put(ServerConstants.mParams_idUser,sessionManager.getUidUser());
 
         //token server
-        CostumRequestString myreq = new CostumRequestString(com.android.volley.Request.Method.POST, ServerConstants.registerGcm , mParams, new Response.Listener<String> (){
-
-            @Override
-            public void onResponse(String response) {
-                Log.d("response", response);
-                try {
-                    JSONObject jsonObject =  new JSONObject(response);
-                    if(jsonObject.getString(ServerConstants.statusBeckend).equalsIgnoreCase(ServerConstants.statusBeckendOk)){
-                        switch (jsonObject.getInt(ServerConstants.resultType)){
-                            case ServerConstants.registerResult :
-
-                                break;
-                            case ServerConstants.registerGcmResult :
-
-                                break;
-                        }
-                    }else{
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        },new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Error ", error.getMessage());
-            }
-        });
+        CostumRequestString myreq = new CostumRequestString(com.android.volley.Request.Method.POST, ServerConstants.registerGcm , mParams, RegistrationIntentService.this,RegistrationIntentService.this);
 
         myreq.setRetryPolicy(new DefaultRetryPolicy(5000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         AppController.getInstance().addToRequestQueue(myreq);
@@ -219,6 +162,35 @@ public class RegistrationIntentService extends IntentService {
         for (String topic : TOPICS) {
             GcmPubSub pubSub = GcmPubSub.getInstance(this);
             pubSub.subscribe(token, "/topics/" + topic, null);
+        }
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Log.d("Error",error.getMessage());
+    }
+
+    @Override
+    public void onResponse(String response) {
+        Log.d("response", response);
+        try {
+            JSONObject jsonObject =  new JSONObject(response);
+            if(jsonObject.getString(ServerConstants.statusBeckend).equalsIgnoreCase(ServerConstants.statusBeckendOk)){
+                switch (jsonObject.getInt(ServerConstants.resultType)){
+                    case ServerConstants.registerResult :
+                        Intent intent = new Intent(this,TebakanListActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        break;
+                    case ServerConstants.registerGcmResult :
+
+                        break;
+                }
+            }else{
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
