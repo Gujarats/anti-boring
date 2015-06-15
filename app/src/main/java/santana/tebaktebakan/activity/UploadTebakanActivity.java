@@ -57,7 +57,7 @@ public class UploadTebakanActivity extends AppCompatActivity implements UploadCo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.upload_tebakan_layout_activity);
+        setContentView(R.layout.layout_upload_tebakan_activity);
         sessionManager = new SessionManager(getApplicationContext());
         initUI();
     }
@@ -149,7 +149,7 @@ public class UploadTebakanActivity extends AppCompatActivity implements UploadCo
         if(selectedimg!=null){
             Map<String,String> mParams = new HashMap<String,String>();
             mParams.put(ServerConstants.mParamsToken,sessionManager.getToken());
-            mParams.put(ServerConstants.mParamsUidUser,sessionManager.getUidUser());
+            mParams.put(ServerConstants.mParams_idUser,sessionManager.getUidUser());
             mParams.put(ServerConstants.mParamsTextTebakan,TextTebakan);
             mParams.put(ServerConstants.mParamsGambarTebakan,UrlGambarTebakan);
             CostumRequestString myreq = new CostumRequestString(com.android.volley.Request.Method.POST,ServerConstants.insertTebakan,mParams,UploadTebakanActivity.this,UploadTebakanActivity.this);

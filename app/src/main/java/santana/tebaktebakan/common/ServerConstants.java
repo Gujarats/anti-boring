@@ -4,13 +4,15 @@ package santana.tebaktebakan.common;
  * Created by Gujarat Santana on 12/06/15.
  */
 public class ServerConstants {
-    public static final String UrlBeckend = "adsf";
+    public static final String UrlBeckend = "http://chatmeet.cloudapp.net:3745/";
     //rest api
-    public static final String getTebakanList = UrlBeckend+"getTebakanList";
-    public static final String insertTebakan = UrlBeckend+"insertTebakan";
-    public static final String UploadGambarTebakan = UrlBeckend+"uploadGambarTebakan";
+    public static final String getTebakanList = UrlBeckend+"api/v_gs/getTebakanList";
+    public static final String insertTebakan = UrlBeckend+"api/v_gs/insertTebakan";
+    public static final String UploadGambarTebakan = UrlBeckend+"api/v_gs/uploadGambarTebakan";
+    public static final String registerGcm = UrlBeckend+"api/v_gs/registerGcm";
+
+    public static final String registerUser = UrlBeckend+"register";
     public static final String loginTebakan = UrlBeckend+"loginTebakan";
-//    public static final String insertTebakan = UrlBeckend+"insertTebakan";
 
 
 // sending request
@@ -20,12 +22,12 @@ public class ServerConstants {
     public static final String mParamsIdChat = "idChatGroup";
     public static final String mParamsEmail = "email";
     public static final String mParamsToken = "access_token";
-    public static final String mParamsUidUser = "uidUser";
+    public static final String mParams_idUser = "_idUser";
     public static final String mParamsTextTebakan = "textTebakan";
     public static final String mParamsGambarTebakan = "gambarTebakan";
+    public static final String mParamsKunciTebakan= "kunciTebakan";
     public static final String mParamsQuestion = "question";
     public static final String mParamGender = "gender";
-    public static final String mParamUidUserFriend = "uidUserFriend";
 
     //result from request
     public static final String resultBeckend = "result";
@@ -39,6 +41,7 @@ public class ServerConstants {
     public static final String _idTebakan = "_idTebakan";
     public static final String textTebakan = "textTebakan";
     public static final String gambarTebakan = "gambarTebakan";
+    public static final String _idUser = "_idUser";
 
 
     //result type
@@ -46,8 +49,11 @@ public class ServerConstants {
     public static final int addTebakanView = 0;
     public static final int addITebakanDown = 1;
     public static final int addTebakanAtas = 2;
-    public static final int resultPushNotif = 3;
-    public static final int UserAddToGroup = 4;
+    public static final int loginResult = 3;
+    public static final int registerResult = 4;
+    public static final int uploadResult = 5;
+    public static final int showTebakanResult = 6;
+    public static final int registerGcmResult = 7;
 
     //result from request not_ok
     public static final int ErrorUserNotFound = 11;
