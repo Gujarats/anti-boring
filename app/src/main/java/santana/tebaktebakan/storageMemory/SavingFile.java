@@ -101,6 +101,23 @@ public class SavingFile {
         return fileImage;
     }
 
+    public File saveBitmapToInternalTesting(byte[] buffer){
+        try {
+            FileOutputStream fos = context.openFileOutput(fileName,Context.MODE_PRIVATE);
+            fos.write(buffer);
+            fos.close();
+            //returning file path
+            File file = new File(context.getFilesDir()+"/"+fileName);
+            return file;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 
     public File saveBitmapToInternalFile(){
         ContextWrapper cw = new ContextWrapper(context);

@@ -38,6 +38,8 @@ public class CostumRequest2 extends Request {
     private File mImageFile;
     private String fileName;
 
+    //encode image with byte
+
 
 
 

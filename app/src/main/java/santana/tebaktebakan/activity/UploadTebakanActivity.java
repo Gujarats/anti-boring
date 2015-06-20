@@ -26,12 +26,14 @@ import com.android.volley.VolleyError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 import santana.tebaktebakan.AppController;
 import santana.tebaktebakan.R;
+import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.common.ServerConstants;
 import santana.tebaktebakan.imageManager.BitmapLoader;
 import santana.tebaktebakan.imageManager.UploadCompleted;
@@ -49,12 +51,13 @@ public class UploadTebakanActivity extends AppCompatActivity implements UploadCo
     private ImageView GambarTebakan;
     private Button Upload;
     private EditText TextTebakanUpload,TextKunciTebakan;
-    private String UrlGambarTebakan="no_data";
+    private String UrlGambarTebakan= ApplicationConstants.ImageVisibiliy;
     private Uri selectedimg=null;
     private String TextTebakan,KunciTebakan;
     //loading
     private ProgressBar progresbarUpload;
     private TextView percentageUpload;
+    private Bitmap Gambartampil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,14 +83,15 @@ public class UploadTebakanActivity extends AppCompatActivity implements UploadCo
             if (resultCode == RESULT_OK) {
                 selectedimg = data.getData();
                 System.out.println("Paht image"+data.getData().getPath());
-                GambarTebakan.setImageBitmap(BitmapLoader.decodePathtoBitmap(getRealPathFromURI(getApplicationContext(), selectedimg), 400, 400));
+                Gambartampil = BitmapLoader.decodePathtoBitmap(getRealPathFromURI(getApplicationContext(), selectedimg), 400, 400);
+                GambarTebakan.setImageBitmap(Gambartampil);
             }
         }
 
     }
 
     public String getRealPathFromURI(Context context, Uri contentUri) {
-        Cursor cursor = null;
+        Cursor cursor =  null;
         try {
             String[] proj = { MediaStore.Images.Media.DATA };
             cursor = context.getContentResolver().query(contentUri,  proj, null, null, null);
@@ -126,16 +130,23 @@ public class UploadTebakanActivity extends AppCompatActivity implements UploadCo
 
                         if(selectedimg!=null && !selectedimg.equals("")){
                             Log.d("UPload","imageUpload");
-                            Bitmap bitmap = BitmapLoader.decodePathtoBitmap(getRealPathFromURI(getApplicationContext(), selectedimg), 400, 400);
+//                            Bitmap bitmap = BitmapLoader.decodePathtoBitmap(getRealPathFromURI(getApplicationContext(), selectedimg), 400, 400);
+                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                            Gambartampil.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                            byte[] byteArray = stream.toByteArray();
+
 
                             String filname = "IMG_" + sessionManager.getUidUser() + "_" + String.valueOf(System.currentTimeMillis())+".jpg";
-                            SavingFile savingFile = new SavingFile(getApplicationContext(),filname,bitmap);
+                            SavingFile savingFile = new SavingFile(getApplicationContext(),filname,Gambartampil);
                             File pathImage =null;
                             if(savingFile.isExternalStorageWritable()){
+                                Log.d("saved","External");
                                 pathImage = savingFile.SaveBitmapToExternalFile();
                             }
                             else{
-                                pathImage = savingFile.saveBitmapToInternalFile();
+                                Log.d("saved","internal");
+//                                pathImage = savingFile.saveBitmapToInternalFile();
+                                pathImage = savingFile.saveBitmapToInternalTesting(byteArray);
                             }
 
                             Map<String,String> mParams = new HashMap<String,String>();
@@ -172,15 +183,25 @@ public class UploadTebakanActivity extends AppCompatActivity implements UploadCo
                     }else{
                         if(selectedimg!=null && !selectedimg.equals("")){
                             Log.d("UPload","TextUPload");
-                            Bitmap bitmap = BitmapLoader.decodePathtoBitmap(getRealPathFromURI(getApplicationContext(), selectedimg), 500, 500);
+//                            Bitmap bitmap = BitmapLoader.decodePathtoBitmap(getRealPathFromURI(getApplicationContext(), selectedimg), 500, 500);
+                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                            Gambartampil.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                            byte[] byteArray = stream.toByteArray();
+
+                            /**
+                             * tested and working
+                             */
                             String filname = "IMG_" + sessionManager.getUidUser() + "_" + String.valueOf(System.currentTimeMillis())+".jpg";
-                            SavingFile savingFile = new SavingFile(getApplicationContext(),filname,bitmap);
+                            SavingFile savingFile = new SavingFile(getApplicationContext(),filname,Gambartampil);
                             File pathImage =null;
                             if(savingFile.isExternalStorageWritable()){
+                                Log.d("saved","External");
                                 pathImage = savingFile.SaveBitmapToExternalFile();
                             }
                             else{
-                                pathImage = savingFile.saveBitmapToInternalFile();
+                                Log.d("saved","internal");
+//                                pathImage = savingFile.saveBitmapToInternalFile();
+                                pathImage = savingFile.saveBitmapToInternalTesting(byteArray);
                             }
 
                             Map<String,String> mParams = new HashMap<String,String>();
@@ -216,14 +237,14 @@ public class UploadTebakanActivity extends AppCompatActivity implements UploadCo
     }
 
     private void UploadTebakanText(){
-        if(UrlGambarTebakan.isEmpty()){
-            UrlGambarTebakan = "no data image";
-        }
+//        if(UrlGambarTebakan.isEmpty()){
+//            UrlGambarTebakan = "no data image";
+//        }
             Map<String,String> mParams = new HashMap<String,String>();
             mParams.put(ServerConstants.mParamsToken,sessionManager.getToken());
             mParams.put(ServerConstants.mParams_idUser,sessionManager.getUidUser());
             mParams.put(ServerConstants.mParamsTextTebakan,TextTebakan);
-            mParams.put(ServerConstants.mParamsGambarTebakan,UrlGambarTebakan);
+            mParams.put(ServerConstants.mParamsGambarTebakanUrl,UrlGambarTebakan);
             mParams.put(ServerConstants.mParamsKunciTebakan,KunciTebakan);
             mParams.put(ServerConstants.mParamsGcmID,sessionManager.getGcmID());
             CostumRequestString myreq = new CostumRequestString(com.android.volley.Request.Method.POST,ServerConstants.insertTebakanTextGambar,mParams,UploadTebakanActivity.this,UploadTebakanActivity.this);

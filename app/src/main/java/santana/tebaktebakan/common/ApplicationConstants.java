@@ -11,6 +11,8 @@ public class ApplicationConstants {
 
     //intent service from activity
     public static final String FromActivity = "FromActivity";
+    public static final String ImageVisibiliy = "no_data";
+
 
 
     public static final String SENDER_ID_GCM = "390993870271";

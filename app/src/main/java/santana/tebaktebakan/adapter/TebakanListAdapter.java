@@ -28,6 +28,7 @@ import java.util.Map;
 
 import santana.tebaktebakan.AppController;
 import santana.tebaktebakan.R;
+import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.common.ServerConstants;
 import santana.tebaktebakan.object.TebakanObject;
 import santana.tebaktebakan.requestNetwork.CostumRequestString;
@@ -106,11 +107,12 @@ public class TebakanListAdapter extends BaseAdapter implements Response.Listener
         Holder._idTebakan.setText(tebakanObject.get_idTebakan());
         Holder.TextTebakan.setText(tebakanObject.getTextTebakan());
         Holder.kunciTebakan.setText(tebakanObject.getKunciTebakan());
-        if(!tebakanObject.getUrlGambarTebakan().isEmpty() && tebakanObject.getUrlGambarTebakan()!=null){
-            Holder.GambarTebakan.setImageUrl(tebakanObject.getUrlGambarTebakan(),imageLoader);
-            Holder.GambarTebakan.setVisibility(View.VISIBLE);
-        }else{
+        if(tebakanObject.getUrlGambarTebakan().equalsIgnoreCase(ApplicationConstants.ImageVisibiliy)){
             Holder.GambarTebakan.setVisibility(View.GONE);
+        }else{
+            Holder.GambarTebakan.setImageUrl(tebakanObject.getUrlGambarTebakan(), imageLoader);
+            Holder.GambarTebakan.setVisibility(View.VISIBLE);
+
         }
 
     }
