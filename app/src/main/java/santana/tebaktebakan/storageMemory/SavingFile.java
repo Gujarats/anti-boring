@@ -79,6 +79,50 @@ public class SavingFile {
     }
 
 
+    public File SaveBitmapToExternalFile() {
+
+        String root = Environment.getExternalStorageDirectory().toString();
+        File directory = new File(root + "/persona");
+        directory.mkdirs();
+
+
+        File fileImage = new File(directory, fileName);
+        if (fileImage.exists ()) fileImage.delete ();
+        try {
+            FileOutputStream out = new FileOutputStream(fileImage);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
+            out.flush();
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return fileImage;
+    }
+
+
+    public File saveBitmapToInternalFile(){
+        ContextWrapper cw = new ContextWrapper(context);
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("persona", Context.MODE_PRIVATE);
+        // Create imageDir
+        File imageFile=new File(directory,fileName);
+        if (imageFile.exists ()) imageFile.delete ();
+
+        FileOutputStream fos = null;
+        try {
+
+            fos = new FileOutputStream(imageFile);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fos);
+            fos.flush();
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return imageFile;
+    }
     /*
     use this method to get Wirte Acces status to external storage
      */

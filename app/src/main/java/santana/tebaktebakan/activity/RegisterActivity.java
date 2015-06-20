@@ -37,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity implements Response.List
 
 
     protected AppCompatEditText Email,password,rePassword,username;
+
     protected AppCompatButton Login;
     SessionManager sessionManager;
 
@@ -46,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity implements Response.List
         setContentView(R.layout.layout_register_activity);
         sessionManager = new SessionManager(getApplicationContext());
         initUI();
+//        username.getEditText().getText().
     }
 
     private void initUI(){

@@ -5,19 +5,21 @@
     android:orientation="vertical">
 
 
-    <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/UserNameRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:hint="Enter Unique Username"/>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/UserNameRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:hint="Enter Unique Username"
+            />
 
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/EmailRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/UserNameRegister"
+        android:layout_below="@+id/UserNameRegister2"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:hint="Your Email Address"/>

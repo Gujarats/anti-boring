@@ -2,19 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     android:orientation="vertical">
 
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/GambarTebakan"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="400px"
+        android:layout_height="400px"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:adjustViewBounds="true"
         android:maxHeight="150dp"
-        android:scaleType="centerCrop"
         android:visibility="visible" />
 
 
@@ -31,6 +31,13 @@
     <TextView
         android:id="@+id/_idTebakan"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/kunciTebakan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
 
 </RelativeLayout>

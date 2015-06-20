@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -20,12 +22,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import santana.tebaktebakan.AppController;
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.common.ServerConstants;
 import santana.tebaktebakan.object.TebakanObject;
+import santana.tebaktebakan.requestNetwork.CostumRequestString;
+import santana.tebaktebakan.session.SessionManager;
 
 /**
  * Created by Gujarat Santana on 12/06/15.
@@ -38,13 +44,22 @@ public class TebakanListAdapter extends BaseAdapter implements Response.Listener
     private Context context;
     private Activity activity;
     private ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+    private SessionManager sessionManager;
 
     public TebakanListAdapter(Context context, Activity activity, int layout){
+        sessionManager = new SessionManager(context);
         this.context  = context;
         this.activity = activity;
         inflater = activity.getLayoutInflater();
         this.layout=layout;
         tebakanObjects = new ArrayList<TebakanObject>();
+        Map<String,String> mParams = new HashMap<String,String>();
+        mParams.put(ServerConstants.mParams_idUser,sessionManager.getUidUser());
+        mParams.put(ServerConstants.mParamsToken,sessionManager.getToken());
+
+        CostumRequestString myReq = new CostumRequestString(Request.Method.POST,ServerConstants.ShowAllTebakan,mParams,TebakanListAdapter.this,TebakanListAdapter.this);
+        myReq.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        AppController.getInstance().addToRequestQueue(myReq);
     }
 
     @Override
@@ -74,6 +89,7 @@ public class TebakanListAdapter extends BaseAdapter implements Response.Listener
             holder._idTebakan = (TextView) view.findViewById(R.id._idTebakan);
             holder.TextTebakan = (AppCompatTextView) view.findViewById(R.id.TextTebakan);
             holder.GambarTebakan = (NetworkImageView) view.findViewById(R.id.GambarTebakan);
+            holder.kunciTebakan = (TextView) view.findViewById(R.id.kunciTebakan);
             view.setTag(holder);
         } else {
             holder = (viewHoler) view.getTag();
@@ -89,7 +105,14 @@ public class TebakanListAdapter extends BaseAdapter implements Response.Listener
     private void populateView(viewHoler Holder, TebakanObject tebakanObject){
         Holder._idTebakan.setText(tebakanObject.get_idTebakan());
         Holder.TextTebakan.setText(tebakanObject.getTextTebakan());
-        Holder.GambarTebakan.setImageUrl(tebakanObject.getUrlGambarTebakan(),imageLoader);
+        Holder.kunciTebakan.setText(tebakanObject.getKunciTebakan());
+        if(!tebakanObject.getUrlGambarTebakan().isEmpty() && tebakanObject.getUrlGambarTebakan()!=null){
+            Holder.GambarTebakan.setImageUrl(tebakanObject.getUrlGambarTebakan(),imageLoader);
+            Holder.GambarTebakan.setVisibility(View.VISIBLE);
+        }else{
+            Holder.GambarTebakan.setVisibility(View.GONE);
+        }
+
     }
 
 
@@ -105,13 +128,25 @@ public class TebakanListAdapter extends BaseAdapter implements Response.Listener
             JSONObject jsonObject = new JSONObject(response);
             Log.d("response",response);
             if(jsonObject.getString(ServerConstants.statusBeckend).equalsIgnoreCase(ServerConstants.statusBeckendOk)){
-
                 switch (jsonObject.getInt(ServerConstants.resultType)){
+                    case ServerConstants.showTebakanResult:
+                        JSONArray jsonResult = jsonObject.getJSONArray(ServerConstants.dataListTebakan);
+                        for(int i=0;i<jsonResult.length();i++){
+                            TebakanObject tebakanObject = new TebakanObject();
+                            tebakanObject.set_idTebakan(jsonResult.getJSONObject(i).getString(ServerConstants._idTebakan));
+                            tebakanObject.setKunciTebakan(jsonResult.getJSONObject(i).getString(ServerConstants.mParamsKunciTebakan));
+                            tebakanObject.setTextTebakan(jsonResult.getJSONObject(i).getString(ServerConstants.textTebakan));
+                            tebakanObject.setUrlGambarTebakan(jsonResult.getJSONObject(i).getString(ServerConstants.gambarTebakan));
+                            tebakanObjects.add(tebakanObject);
+                            notifyDataSetChanged();
+                        }
+                        break;
                     case ServerConstants.addTebakanView :
                         JSONArray jsonArray = jsonObject.getJSONArray(ServerConstants.dataListTebakan);
                         for(int i=0;i<jsonArray.length();i++){
                             TebakanObject tebakanObject = new TebakanObject();
                             tebakanObject.set_idTebakan(jsonArray.getJSONObject(i).getString(ServerConstants._idTebakan));
+                            tebakanObject.setKunciTebakan(jsonArray.getJSONObject(i).getString(ServerConstants.mParamsKunciTebakan));
                             tebakanObject.setTextTebakan(jsonArray.getJSONObject(i).getString(ServerConstants.textTebakan));
                             tebakanObject.setUrlGambarTebakan(jsonArray.getJSONObject(i).getString(ServerConstants.gambarTebakan));
                             tebakanObjects.add(tebakanObject);
@@ -154,9 +189,6 @@ public class TebakanListAdapter extends BaseAdapter implements Response.Listener
 
             }else{
                 Log.d("Error", "Load Data Error");
-//                TebakanObject tebakanObject = new TebakanObject();
-//                tebakanObjects.lastIndexOf(tebakanObject);
-//                tebakanObjects.size();
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -167,5 +199,6 @@ public class TebakanListAdapter extends BaseAdapter implements Response.Listener
         NetworkImageView GambarTebakan;
         AppCompatTextView TextTebakan;
         TextView _idTebakan;
+        TextView kunciTebakan;
     }
 }

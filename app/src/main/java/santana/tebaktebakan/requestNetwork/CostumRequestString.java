@@ -20,7 +20,6 @@ public class CostumRequestString extends Request<String> {
     private Response.ErrorListener errorListener;
     private Map<String, String> params;
 
-
     public CostumRequestString(int method, String url, Map<String, String> mParams, Response.Listener<String> reponseListener, Response.ErrorListener errorListener) {
         super(method, url, errorListener);
         this.listener = reponseListener;
@@ -28,16 +27,13 @@ public class CostumRequestString extends Request<String> {
         this.params = mParams;
     }
 
-    public CostumRequestString(int method, String url, Response.Listener<String> reponseListener, Response.ErrorListener errorListener) {
-        super(method, url, errorListener);
-        this.listener = reponseListener;
-        this.errorListener = errorListener;
-    }
 
+
+    @Override
     protected Map<String, String> getParams()
             throws com.android.volley.AuthFailureError {
         return params;
-    };
+    }
 
     @Override
     protected Response<String> parseNetworkResponse(NetworkResponse response) {

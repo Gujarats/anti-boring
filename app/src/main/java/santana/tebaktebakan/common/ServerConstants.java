@@ -7,12 +7,23 @@ public class ServerConstants {
     public static final String UrlBeckend = "http://chatmeet.cloudapp.net:3745/";
     //rest api
     public static final String getTebakanList = UrlBeckend+"api/v_gs/getTebakanList";
-    public static final String insertTebakan = UrlBeckend+"api/v_gs/insertTebakan";
+
+    //url gambar tidak perlu pakai garis miring lagi
+    public static final String getGambarTebakan = UrlBeckend+"getImage";
+
     public static final String UploadGambarTebakan = UrlBeckend+"api/v_gs/uploadGambarTebakan";
     public static final String registerGcm = UrlBeckend+"api/v_gs/registerGcm";
 
+    //upload tebakan type
+    public static final String insertTebakanTextGambar = UrlBeckend+"api/v_gs/insertTebakanTextGambar";
+    public static final String insertTebakanText = UrlBeckend+"api/v_gs/insertTebakanText";
+
+    //show all tebakan
+    public static final String ShowAllTebakan = UrlBeckend+"api/v_gs/showAllTebakan";
+
     public static final String registerUser = UrlBeckend+"register";
     public static final String loginTebakan = UrlBeckend+"login";
+//    /api/v_gs/getImage:file
 
 
 // sending request
@@ -24,7 +35,9 @@ public class ServerConstants {
     public static final String mParamsToken = "access_token";
     public static final String mParams_idUser = "_idUser";
     public static final String mParamsTextTebakan = "textTebakan";
-    public static final String mParamsGambarTebakan = "gambarTebakan";
+    public static final String mParamsGambarTebakan = "gambarTebakanFile";
+    public static final String mParamsGambarTebakanUrl = "gambarTebakan";
+    public static final String mParamsBinaryGambarTebakan = "gambarTebakanBinary";
     public static final String mParamsKunciTebakan= "kunciTebakan";
     public static final String mParamsQuestion = "question";
     public static final String mParamGender = "gender";
@@ -38,7 +51,7 @@ public class ServerConstants {
     public static final String resultLoginBeckend = "login_success";
     public static final String uidUser = "uidUser";
     public static final String dataListTebakan = "dataListTebakan";
-    public static final String _idTebakan = "_idTebakan";
+    public static final String _idTebakan = "_id";
     public static final String textTebakan = "textTebakan";
     public static final String gambarTebakan = "gambarTebakan";
     public static final String _idUser = "_idUser";

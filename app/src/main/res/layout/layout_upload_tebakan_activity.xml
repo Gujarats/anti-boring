@@ -6,8 +6,9 @@
 
     <ImageView
         android:id="@+id/GambarTebakanUpload"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
+        android:layout_width="500px"
+        android:layout_height="500px"
+        android:layout_centerHorizontal="true"
         android:onClick="UploadCliced"/>
 
 
@@ -18,11 +19,19 @@
         android:layout_below="@+id/GambarTebakanUpload"
         android:hint="Enter Your Hinst/Geust/Tebakan"/>
 
+    <EditText
+        android:id="@+id/TextKunciTebakan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TextTebakanUpload"
+        android:hint="Enter Your Answer For Tebakan"/>
+
     <Button
         android:id="@+id/UploadTebakan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/TextTebakanUpload"
+        android:layout_below="@+id/TextKunciTebakan"
+        android:layout_centerHorizontal="true"
         android:onClick="UploadCliced"
         android:text="Upload Tebakan"/>
 
