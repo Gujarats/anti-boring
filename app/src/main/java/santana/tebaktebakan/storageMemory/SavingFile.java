@@ -58,8 +58,8 @@ public class SavingFile {
 
     public String SaveBitmapToExternal() {
 
-        String root = Environment.getExternalStorageDirectory().toString();
-        File directory = new File(root + "/persona");
+//        String root = Environment.getExternalStorageDirectory().toString();
+        File directory = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)+ "/persona");
         directory.mkdirs();
 
 
@@ -82,7 +82,7 @@ public class SavingFile {
     public File SaveBitmapToExternalFile() {
 
         String root = Environment.getExternalStorageDirectory().toString();
-        File directory = new File(root + "/persona");
+        File directory = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)+ "/persona");
         directory.mkdirs();
 
 
