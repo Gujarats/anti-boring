@@ -4,21 +4,35 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/GambarTebakanAnswer"
-        android:layout_width="400dp"
-        android:layout_height="400dp"/>
-    <TextView
-        android:id="@+id/TextTebakanAnswer"
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/GambarTebakan_Answer"
+        android:layout_width="400px"
+        android:layout_height="400px"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/TextTebakan_Answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/GambarTebakanAnswer"
+        android:layout_below="@+id/GambarTebakan_Answer"
         android:text="text tebakan"/>
 
-    <EditText
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/TextAnswer_Answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/TextTebakanAnswer"
+        android:layout_below="@+id/TextTebakan_Answer"
         android:hint="@string/hints_answer"/>
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/AnswerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TextAnswer_Answer"
+        android:onClick="AnswerTebakan"
+        android:text="Answer"
+        />
 
 </RelativeLayout>

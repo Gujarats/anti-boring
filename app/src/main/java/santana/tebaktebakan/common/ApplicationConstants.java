@@ -14,6 +14,16 @@ public class ApplicationConstants {
     public static final String ImageVisibiliy = "no_data";
 
 
+    //important data to answer activity
+    public static final String imageUrl = "ImageUrl";
+    public static final String kunciTebakan = "KunciTebakan";
+    public static final String textTebakan = "TextTebakan";
+    public static final String gcmID = "gcmID";
+    public static final String _idUserTebakan = "_idUserTebakan";
+    public static final String _idTebakan = "_idTebakan";
+
+
+
 
     public static final String SENDER_ID_GCM = "390993870271";
 

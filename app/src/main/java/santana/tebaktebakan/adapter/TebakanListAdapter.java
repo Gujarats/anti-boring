@@ -91,6 +91,9 @@ public class TebakanListAdapter extends BaseAdapter implements Response.Listener
             holder.TextTebakan = (AppCompatTextView) view.findViewById(R.id.TextTebakan);
             holder.GambarTebakan = (NetworkImageView) view.findViewById(R.id.GambarTebakan);
             holder.kunciTebakan = (TextView) view.findViewById(R.id.kunciTebakan);
+            holder._idUser = (TextView) view.findViewById(R.id._idUser);
+            holder.gcmID = (TextView) view.findViewById(R.id.gcmID);
+            holder.gambarUrl = (TextView) view.findViewById(R.id.gambarUrl);
             view.setTag(holder);
         } else {
             holder = (viewHoler) view.getTag();
@@ -107,6 +110,8 @@ public class TebakanListAdapter extends BaseAdapter implements Response.Listener
         Holder._idTebakan.setText(tebakanObject.get_idTebakan());
         Holder.TextTebakan.setText(tebakanObject.getTextTebakan());
         Holder.kunciTebakan.setText(tebakanObject.getKunciTebakan());
+        Holder.gambarUrl.setText(tebakanObject.getUrlGambarTebakan());
+        //load image
         if(tebakanObject.getUrlGambarTebakan().equalsIgnoreCase(ApplicationConstants.ImageVisibiliy)){
             Holder.GambarTebakan.setVisibility(View.GONE);
         }else{
@@ -139,6 +144,8 @@ public class TebakanListAdapter extends BaseAdapter implements Response.Listener
                             tebakanObject.setKunciTebakan(jsonResult.getJSONObject(i).getString(ServerConstants.mParamsKunciTebakan));
                             tebakanObject.setTextTebakan(jsonResult.getJSONObject(i).getString(ServerConstants.textTebakan));
                             tebakanObject.setUrlGambarTebakan(jsonResult.getJSONObject(i).getString(ServerConstants.gambarTebakan));
+                            tebakanObject.set_idUser(jsonResult.getJSONObject(i).getString(ServerConstants._idUser));
+                            tebakanObject.setGcmID(jsonResult.getJSONObject(i).getString(ServerConstants.gcmID));
                             tebakanObjects.add(tebakanObject);
                             notifyDataSetChanged();
                         }
@@ -147,6 +154,8 @@ public class TebakanListAdapter extends BaseAdapter implements Response.Listener
                         JSONArray jsonArray = jsonObject.getJSONArray(ServerConstants.dataListTebakan);
                         for(int i=0;i<jsonArray.length();i++){
                             TebakanObject tebakanObject = new TebakanObject();
+                            tebakanObject.set_idUser(jsonArray.getJSONObject(i).getString(ServerConstants._idUser));
+                            tebakanObject.setGcmID(jsonArray.getJSONObject(i).getString(ServerConstants.gcmID));
                             tebakanObject.set_idTebakan(jsonArray.getJSONObject(i).getString(ServerConstants._idTebakan));
                             tebakanObject.setKunciTebakan(jsonArray.getJSONObject(i).getString(ServerConstants.mParamsKunciTebakan));
                             tebakanObject.setTextTebakan(jsonArray.getJSONObject(i).getString(ServerConstants.textTebakan));
@@ -160,6 +169,8 @@ public class TebakanListAdapter extends BaseAdapter implements Response.Listener
                         List<TebakanObject> tempList = new ArrayList<TebakanObject>();
                         for(int i=0;i<jsonArrayAtas.length();i++){
                             TebakanObject tebakanObject = new TebakanObject();
+                            tebakanObject.set_idUser(jsonArrayAtas.getJSONObject(i).getString(ServerConstants._idUser));
+                            tebakanObject.setGcmID(jsonArrayAtas.getJSONObject(i).getString(ServerConstants.gcmID));
                             tebakanObject.set_idTebakan(jsonArrayAtas.getJSONObject(i).getString(ServerConstants._idTebakan));
                             tebakanObject.setTextTebakan(jsonArrayAtas.getJSONObject(i).getString(ServerConstants.textTebakan));
                             tebakanObject.setUrlGambarTebakan(jsonArrayAtas.getJSONObject(i).getString(ServerConstants.gambarTebakan));
@@ -180,7 +191,8 @@ public class TebakanListAdapter extends BaseAdapter implements Response.Listener
                             tebakanObject.set_idTebakan(jsonArrayBawah.getJSONObject(i).getString(ServerConstants._idTebakan));
                             tebakanObject.setTextTebakan(jsonArrayBawah.getJSONObject(i).getString(ServerConstants.textTebakan));
                             tebakanObject.setUrlGambarTebakan(jsonArrayBawah.getJSONObject(i).getString(ServerConstants.gambarTebakan));
-
+                            tebakanObject.set_idUser(jsonArrayBawah.getJSONObject(i).getString(ServerConstants._idUser));
+                            tebakanObject.setGcmID(jsonArrayBawah.getJSONObject(i).getString(ServerConstants.gcmID));
                             tebakanObjects.add(tebakanObject);
                             notifyDataSetChanged();
                         }
@@ -201,6 +213,9 @@ public class TebakanListAdapter extends BaseAdapter implements Response.Listener
         NetworkImageView GambarTebakan;
         AppCompatTextView TextTebakan;
         TextView _idTebakan;
+        TextView gambarUrl;
+        TextView _idUser;
+        TextView gcmID;
         TextView kunciTebakan;
     }
 }

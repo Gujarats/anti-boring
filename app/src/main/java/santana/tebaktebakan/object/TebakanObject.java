@@ -5,17 +5,37 @@ package santana.tebaktebakan.object;
  */
 public class TebakanObject {
     private String _idTebakan;
+    private String _idUser;
     private String UrlGambarTebakan;
     private String TextTebakan;
     private String kunciTebakan;
+    private String gcmID;
 
     public TebakanObject(){}
 
-    public TebakanObject(String _idTebakan, String urlGambarTebakan, String textTebakan, String kunciTebakan) {
+    public TebakanObject(String _idTebakan, String _idUser, String urlGambarTebakan, String textTebakan, String kunciTebakan, String gcmID) {
         this._idTebakan = _idTebakan;
+        this._idUser = _idUser;
         UrlGambarTebakan = urlGambarTebakan;
         TextTebakan = textTebakan;
         this.kunciTebakan = kunciTebakan;
+        this.gcmID = gcmID;
+    }
+
+    public String get_idUser() {
+        return _idUser;
+    }
+
+    public void set_idUser(String _idUser) {
+        this._idUser = _idUser;
+    }
+
+    public String getGcmID() {
+        return gcmID;
+    }
+
+    public void setGcmID(String gcmID) {
+        this.gcmID = gcmID;
     }
 
     public String getKunciTebakan() {

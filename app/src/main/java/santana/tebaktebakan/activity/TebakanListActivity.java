@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -121,6 +124,48 @@ public class TebakanListActivity extends AppCompatActivity {
         tebakanListAdapter = new TebakanListAdapter(getApplicationContext(),this,R.layout.item_list_tebakan);
         listView = (ListView)findViewById(R.id.ListTebakan);
         listView.setAdapter(tebakanListAdapter);
+
+        //select one of list view
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                TextView _idUser = (TextView)view.findViewById(R.id._idUser);
+                TextView _idTebakan = (TextView)view.findViewById(R.id._idTebakan);
+                TextView gcmID = (TextView)view.findViewById(R.id.gcmID);
+                TextView kunciTebakan = (TextView)view.findViewById(R.id.kunciTebakan);
+                AppCompatTextView textTebakan = (AppCompatTextView)view.findViewById(R.id.TextTebakan);
+                TextView gambarUrl = (TextView) view.findViewById(R.id.gambarUrl);
+
+                String _idUserString = _idUser.getText().toString();
+                String _idTebakanString = _idTebakan.getText().toString();
+                String gcmIDString = gcmID.getText().toString();
+                String kunciTebakanString = kunciTebakan.getText().toString();
+                String textTebakanString = textTebakan.getText().toString();
+                String gambarUrlString = gambarUrl.getText().toString();
+
+                if(
+                    !_idUserString.trim().isEmpty() &&
+                    !_idTebakanString.trim().isEmpty() &&
+                    !gcmIDString.trim().isEmpty() &&
+                    !kunciTebakanString.trim().isEmpty() &&
+                    !gambarUrlString.trim().isEmpty() &&
+                    !textTebakanString.trim().isEmpty()
+                ){
+
+                    Intent intent = new Intent(TebakanListActivity.this,AnswerTebakanActivity.class);
+                    intent.putExtra(ApplicationConstants.FromActivity,TebakanListActivity.class.toString());
+                    intent.putExtra(ApplicationConstants._idUserTebakan,_idUserString);
+                    intent.putExtra(ApplicationConstants._idTebakan,_idTebakanString);
+                    intent.putExtra(ApplicationConstants.gcmID,gcmIDString);
+                    intent.putExtra(ApplicationConstants.kunciTebakan,kunciTebakanString);
+                    intent.putExtra(ApplicationConstants.imageUrl,gambarUrlString);
+                    intent.putExtra(ApplicationConstants.textTebakan,textTebakanString);
+                    startActivity(intent);
+
+                }
+
+            }
+        });
 
     }
 
