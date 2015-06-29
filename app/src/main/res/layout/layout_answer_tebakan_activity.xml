@@ -26,7 +26,7 @@
         android:layout_below="@+id/TextTebakan_Answer"
         android:hint="@string/hints_answer"/>
 
-    <android.support.v7.widget.AppCompatEditText
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/AnswerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

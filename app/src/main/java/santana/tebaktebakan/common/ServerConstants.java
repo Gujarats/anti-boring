@@ -23,7 +23,9 @@ public class ServerConstants {
 
     public static final String registerUser = UrlBeckend+"register";
     public static final String loginTebakan = UrlBeckend+"login";
-//    /api/v_gs/getImage:file
+
+    //api jawaban benar
+    public static final String jawabanBenar = UrlBeckend+"api/v_gs/jawabanBenar";
 
 
 // sending request
@@ -69,11 +71,13 @@ public class ServerConstants {
     public static final int uploadResult = 5;
     public static final int showTebakanResult = 6;
     public static final int registerGcmResult = 7;
+    public static final int dataFoundResult = 7;
 
     //result from request not_ok
     public static final int ErrorUserNotFound = 11;
     public static final int ErrorQuery = 12;
     public static final int ErrorEmptyParams = 14;
+    public static final int ErrorDataNotFound = 25;
     public static final int GroupAlreadyExist = 20;
     public static final int ErrorUserAlreadyRegistered = 15;
 

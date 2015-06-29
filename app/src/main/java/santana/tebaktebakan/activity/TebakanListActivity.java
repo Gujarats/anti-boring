@@ -129,11 +129,12 @@ public class TebakanListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                TextView _idUser = (TextView)view.findViewById(R.id._idUser);
-                TextView _idTebakan = (TextView)view.findViewById(R.id._idTebakan);
-                TextView gcmID = (TextView)view.findViewById(R.id.gcmID);
-                TextView kunciTebakan = (TextView)view.findViewById(R.id.kunciTebakan);
-                AppCompatTextView textTebakan = (AppCompatTextView)view.findViewById(R.id.TextTebakan);
+                Log.d("Click", "di cclike");
+                TextView _idUser = (TextView) view.findViewById(R.id._idUser);
+                TextView _idTebakan = (TextView) view.findViewById(R.id._idTebakan);
+                TextView gcmID = (TextView) view.findViewById(R.id.gcmID);
+                TextView kunciTebakan = (TextView) view.findViewById(R.id.kunciTebakan);
+                AppCompatTextView textTebakan = (AppCompatTextView) view.findViewById(R.id.TextTebakan);
                 TextView gambarUrl = (TextView) view.findViewById(R.id.gambarUrl);
 
                 String _idUserString = _idUser.getText().toString();
@@ -143,23 +144,23 @@ public class TebakanListActivity extends AppCompatActivity {
                 String textTebakanString = textTebakan.getText().toString();
                 String gambarUrlString = gambarUrl.getText().toString();
 
-                if(
-                    !_idUserString.trim().isEmpty() &&
-                    !_idTebakanString.trim().isEmpty() &&
-                    !gcmIDString.trim().isEmpty() &&
-                    !kunciTebakanString.trim().isEmpty() &&
-                    !gambarUrlString.trim().isEmpty() &&
-                    !textTebakanString.trim().isEmpty()
-                ){
-
-                    Intent intent = new Intent(TebakanListActivity.this,AnswerTebakanActivity.class);
-                    intent.putExtra(ApplicationConstants.FromActivity,TebakanListActivity.class.toString());
-                    intent.putExtra(ApplicationConstants._idUserTebakan,_idUserString);
-                    intent.putExtra(ApplicationConstants._idTebakan,_idTebakanString);
-                    intent.putExtra(ApplicationConstants.gcmID,gcmIDString);
-                    intent.putExtra(ApplicationConstants.kunciTebakan,kunciTebakanString);
-                    intent.putExtra(ApplicationConstants.imageUrl,gambarUrlString);
-                    intent.putExtra(ApplicationConstants.textTebakan,textTebakanString);
+                if (
+                        !_idUserString.trim().isEmpty() &&
+                                !_idTebakanString.trim().isEmpty() &&
+                                !gcmIDString.trim().isEmpty() &&
+                                !kunciTebakanString.trim().isEmpty() &&
+                                !gambarUrlString.trim().isEmpty() &&
+                                !textTebakanString.trim().isEmpty()
+                        ) {
+                    Log.d("Click", "masuk");
+                    Intent intent = new Intent(TebakanListActivity.this, AnswerTebakanActivity.class);
+                    intent.putExtra(ApplicationConstants.FromActivity, TebakanListActivity.class.toString());
+                    intent.putExtra(ApplicationConstants._idUserTebakan, _idUserString);
+                    intent.putExtra(ApplicationConstants._idTebakan, _idTebakanString);
+                    intent.putExtra(ApplicationConstants.gcmID, gcmIDString);
+                    intent.putExtra(ApplicationConstants.kunciTebakan, kunciTebakanString);
+                    intent.putExtra(ApplicationConstants.imageUrl, gambarUrlString);
+                    intent.putExtra(ApplicationConstants.textTebakan, textTebakanString);
                     startActivity(intent);
 
                 }

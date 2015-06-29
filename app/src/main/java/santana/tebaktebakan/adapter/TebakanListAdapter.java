@@ -100,7 +100,7 @@ public class TebakanListAdapter extends BaseAdapter implements Response.Listener
             notifyDataSetChanged();
         }
 
-        TebakanObject tebakanObject = tebakanObjects.get(position);
+        TebakanObject tebakanObject = tebakanObjects.get(getCount()-position-1);
         populateView(holder,tebakanObject);
 
         return view;
@@ -111,6 +111,8 @@ public class TebakanListAdapter extends BaseAdapter implements Response.Listener
         Holder.TextTebakan.setText(tebakanObject.getTextTebakan());
         Holder.kunciTebakan.setText(tebakanObject.getKunciTebakan());
         Holder.gambarUrl.setText(tebakanObject.getUrlGambarTebakan());
+        Holder._idUser.setText(tebakanObject.get_idUser());
+        Holder.gcmID.setText(tebakanObject.getGcmID());
         //load image
         if(tebakanObject.getUrlGambarTebakan().equalsIgnoreCase(ApplicationConstants.ImageVisibiliy)){
             Holder.GambarTebakan.setVisibility(View.GONE);
