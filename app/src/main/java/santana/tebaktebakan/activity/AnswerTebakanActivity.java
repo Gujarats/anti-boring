@@ -52,7 +52,7 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
          * get value from intent
          */
         Bundle intent = getIntent().getExtras();
-        if(intent.getString(ApplicationConstants.FromActivity).equals(TebakanListActivity.class.toString())){
+        if(intent.getString(ApplicationConstants.FromActivity).equals(ApplicationConstants.TebakanListActivity)){
             _idTebakan = intent.getString(ApplicationConstants._idTebakan);
             _idUser = intent.getString(ApplicationConstants._idUserTebakan);
             textTebakan = intent.getString(ApplicationConstants.textTebakan);

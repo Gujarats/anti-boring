@@ -23,6 +23,10 @@ public class ApplicationConstants {
     public static final String _idTebakan = "_idTebakan";
 
 
+    //from activity
+    public static final String TebakanListActivity= "TebakanListActivity";
+
+
 
 
     public static final String SENDER_ID_GCM = "390993870271";
