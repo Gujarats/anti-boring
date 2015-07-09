@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +21,8 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.naver.android.helloyako.imagecrop.util.BitmapLoadUtils;
+import com.naver.android.helloyako.imagecrop.view.ImageCropView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,7 +36,6 @@ import santana.tebaktebakan.AppController;
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.common.ServerConstants;
-import santana.tebaktebakan.imageManager.BitmapLoader;
 import santana.tebaktebakan.imageManager.UploadCompleted;
 import santana.tebaktebakan.requestNetwork.CostumRequest2;
 import santana.tebaktebakan.requestNetwork.CostumRequestString;
@@ -48,7 +48,7 @@ import santana.tebaktebakan.storageMemory.SavingFile;
 public class UploadTebakanActivity extends AppCompatActivity implements UploadCompleted, Response.Listener<String>, Response.ErrorListener{
     //session manager
     SessionManager sessionManager;
-    private ImageView GambarTebakan;
+    private ImageCropView GambarTebakan;
     private Button Upload;
     private EditText TextTebakanUpload,TextKunciTebakan;
     private String UrlGambarTebakan= ApplicationConstants.ImageVisibiliy;
@@ -62,7 +62,7 @@ public class UploadTebakanActivity extends AppCompatActivity implements UploadCo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_upload_tebakan_activity);
+        setContentView(R.layout.activity_crop);
         sessionManager = new SessionManager(getApplicationContext());
         initUI();
     }
@@ -70,7 +70,7 @@ public class UploadTebakanActivity extends AppCompatActivity implements UploadCo
     private void initUI(){
         TextTebakanUpload = (EditText) findViewById(R.id.TextTebakanUpload);
         TextKunciTebakan = (EditText) findViewById(R.id.TextKunciTebakan);
-        GambarTebakan = (ImageView)findViewById(R.id.GambarTebakanUpload);
+        GambarTebakan = (ImageCropView)findViewById(R.id.GambarTebakanUpload);
         percentageUpload = (TextView)findViewById(R.id.PercentageUpload);
         progresbarUpload = (ProgressBar)findViewById(R.id.ProgressBarUpload);
 
@@ -81,14 +81,24 @@ public class UploadTebakanActivity extends AppCompatActivity implements UploadCo
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 101) {
             if (resultCode == RESULT_OK) {
-                selectedimg = data.getData();
-                System.out.println("Paht image"+data.getData().getPath());
-                Gambartampil = BitmapLoader.decodePathtoBitmap(getRealPathFromURI(getApplicationContext(), selectedimg), 400, 400);
-                GambarTebakan.setImageBitmap(Gambartampil);
+
+                Uri uri = data.getData();
+                String filePath = BitmapLoadUtils.getPathFromUri(this, uri);
+                selectedimg = Uri.parse(filePath);
+
+                GambarTebakan.setImageFilePath(selectedimg.toString());
+                GambarTebakan.setAspectRatio(1,1);
+
+                System.out.println("Paht image "+selectedimg);
+//                Gambartampil = BitmapLoader.decodePathtoBitmap(getRealPathFromURI(getApplicationContext(), selectedimg), 400, 400);
+//                GambarTebakan.setImageBitmap(Gambartampil);
             }
+
+
         }
 
     }
+
 
     public String getRealPathFromURI(Context context, Uri contentUri) {
         Cursor cursor =  null;
@@ -107,7 +117,18 @@ public class UploadTebakanActivity extends AppCompatActivity implements UploadCo
 
     public void UploadCliced(View v){
         switch (v.getId()){
-            case R.id.GambarTebakanUpload :
+//            case R.id.GambarTebakanUpload :
+//                //browse the file
+//                Intent fintent = new Intent(Intent.ACTION_GET_CONTENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                fintent.setType("image/jpeg");
+//                try {
+////                    startActivityForResult(fintent, 101);
+//                    startActivityForResult(Intent.createChooser(fintent, "Choose Picture"), 101);
+//                } catch (ActivityNotFoundException e) {
+//
+//                }
+//                break;
+            case R.id.BrowseImage :
                 //browse the file
                 Intent fintent = new Intent(Intent.ACTION_GET_CONTENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 fintent.setType("image/jpeg");
@@ -129,52 +150,37 @@ public class UploadTebakanActivity extends AppCompatActivity implements UploadCo
                          */
 
                         if(selectedimg!=null && !selectedimg.equals("")){
-                            Log.d("UPload","imageUpload");
-//                            Bitmap bitmap = BitmapLoader.decodePathtoBitmap(getRealPathFromURI(getApplicationContext(), selectedimg), 400, 400);
-                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                            Gambartampil.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                            byte[] byteArray = stream.toByteArray();
+                                Gambartampil = GambarTebakan.getCroppedImage();
+                                Log.d("UPload","imageUpload");
+                                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                                Gambartampil.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                                byte[] byteArray = stream.toByteArray();
 
 
-                            String filname = "IMG_" + sessionManager.getUidUser() + "_" + String.valueOf(System.currentTimeMillis())+".jpg";
-                            SavingFile savingFile = new SavingFile(getApplicationContext(),filname,Gambartampil);
-                            File pathImage =null;
-                            if(savingFile.isExternalStorageWritable()){
-                                Log.d("saved","External");
-                                pathImage = savingFile.SaveBitmapToExternalFile();
-                            }
-                            else{
-                                Log.d("saved","internal");
-//                                pathImage = savingFile.saveBitmapToInternalFile();
-                                pathImage = savingFile.saveBitmapToInternalTesting(byteArray);
-                            }
+                                String filname = "IMG_" + sessionManager.getUidUser() + "_" + String.valueOf(System.currentTimeMillis())+".jpg";
+                                SavingFile savingFile = new SavingFile(getApplicationContext(),filname,Gambartampil);
+                                File pathImage =null;
+                                if(savingFile.isExternalStorageWritable()){
+                                    Log.d("saved","External");
+                                    pathImage = savingFile.SaveBitmapToExternalFile();
+                                }
+                                else{
+                                    Log.d("saved","internal");
+                                    pathImage = savingFile.saveBitmapToInternalTesting(byteArray);
+                                }
 
-                            Map<String,String> mParams = new HashMap<String,String>();
-                            mParams.put(ServerConstants.mParamsToken,sessionManager.getToken());
-                            mParams.put(ServerConstants.mParams_idUser,sessionManager.getUidUser());
-                            mParams.put(ServerConstants.mParamsTextTebakan,TextTebakan);
-                            mParams.put(ServerConstants.mParamsGambarTebakan,UrlGambarTebakan);
-                            mParams.put(ServerConstants.mParamsKunciTebakan,KunciTebakan);
-                            mParams.put(ServerConstants.mParamsGcmID, sessionManager.getGcmID());
-                            CostumRequest2 myreq = new CostumRequest2(Request.Method.POST,ServerConstants.insertTebakanTextGambar,mParams, pathImage,filname, UploadTebakanActivity.this,UploadTebakanActivity.this);
-                            myreq.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                            AppController.getInstance().addToRequestQueue(myreq);
+                                Map<String,String> mParams = new HashMap<String,String>();
+                                mParams.put(ServerConstants.mParamsToken,sessionManager.getToken());
+                                mParams.put(ServerConstants.mParams_idUser,sessionManager.getUidUser());
+                                mParams.put(ServerConstants.mParamsTextTebakan,TextTebakan);
+                                mParams.put(ServerConstants.mParamsGambarTebakan,UrlGambarTebakan);
+                                mParams.put(ServerConstants.mParamsKunciTebakan,KunciTebakan);
+                                mParams.put(ServerConstants.mParamsGcmID, sessionManager.getGcmID());
+                                CostumRequest2 myreq = new CostumRequest2(Request.Method.POST,ServerConstants.insertTebakanTextGambar,mParams, pathImage,filname, UploadTebakanActivity.this,UploadTebakanActivity.this);
+                                myreq.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                                AppController.getInstance().addToRequestQueue(myreq);
 
-//                            String filname = "IMG_" + sessionManager.getUidUser() + "_" + String.valueOf(System.currentTimeMillis())+".jpg";
-//
-//
-//
-//                            SavingFile savingFile = new SavingFile(getApplicationContext(),filname,bitmap);
-//                            String pathImage =null;
-//                            if(savingFile.isExternalStorageWritable()){
-//                                pathImage = savingFile.SaveBitmapToExternal();
-//                            }
-//                            else{
-//                                pathImage = savingFile.saveBitmapToInternal();
-//                            }
-//
-//                            UploadImage uploadImage = new UploadImage(getApplicationContext(),pathImage,progresbarUpload,percentageUpload,this);
-//                            uploadImage.execute();
+
                         }else{
                             Log.d("UPload","TextUPload");
                             UploadTebakanText();
@@ -184,6 +190,7 @@ public class UploadTebakanActivity extends AppCompatActivity implements UploadCo
                         if(selectedimg!=null && !selectedimg.equals("")){
                             Log.d("UPload","TextUPload");
 //                            Bitmap bitmap = BitmapLoader.decodePathtoBitmap(getRealPathFromURI(getApplicationContext(), selectedimg), 500, 500);
+                            Gambartampil = GambarTebakan.getCroppedImage();
                             ByteArrayOutputStream stream = new ByteArrayOutputStream();
                             Gambartampil.compress(Bitmap.CompressFormat.PNG, 100, stream);
                             byte[] byteArray = stream.toByteArray();
@@ -200,7 +207,6 @@ public class UploadTebakanActivity extends AppCompatActivity implements UploadCo
                             }
                             else{
                                 Log.d("saved","internal");
-//                                pathImage = savingFile.saveBitmapToInternalFile();
                                 pathImage = savingFile.saveBitmapToInternalTesting(byteArray);
                             }
 
@@ -214,9 +220,6 @@ public class UploadTebakanActivity extends AppCompatActivity implements UploadCo
                             CostumRequest2 myreq = new CostumRequest2(Request.Method.POST,ServerConstants.insertTebakanTextGambar,mParams, pathImage, filname,UploadTebakanActivity.this,UploadTebakanActivity.this);
                             myreq.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                             AppController.getInstance().addToRequestQueue(myreq);
-//
-//                            UploadImage uploadImage = new UploadImage(getApplicationContext(),pathImage,progresbarUpload,percentageUpload,this);
-//                            uploadImage.execute();
                         }
                     }
                 }

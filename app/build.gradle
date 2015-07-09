@@ -43,4 +43,5 @@ dependencies {
     compile 'org.apache.httpcomponents:httpclient:4.4.1'
     compile files('libs/httpcore-4.3.3.jar')
     compile files('libs/httpmime-4.3.6.jar')
+    compile 'com.naver.android.helloyako:imagecropview:1.0.3'
 }

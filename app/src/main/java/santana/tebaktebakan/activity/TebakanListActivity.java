@@ -25,7 +25,6 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.RegistrationIntentService;
-import santana.tebaktebakan.adapter.TebakanListAdapter;
 import santana.tebaktebakan.adapter.TebakanListAdapterCompat;
 import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.session.SessionManager;
@@ -44,7 +43,6 @@ public class TebakanListActivity extends AppCompatActivity {
 
     //listview and adapter
     private ListView listView;
-    private TebakanListAdapter tebakanListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,23 +141,28 @@ public class TebakanListActivity extends AppCompatActivity {
         rv.setAdapter(new TebakanListAdapterCompat(getApplicationContext(), this));
 
         //slide floating button
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+        if (currentapiVersion >= Build.VERSION_CODES.ICE_CREAM_SANDWICH){
+            // Do something for froyo and above versions
+            rv.addOnScrollListener(new RecyclerScrollListener() {
+                @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+                @Override
+                public void show() {
+                    fab.animate().translationY(0).setInterpolator(
+                            new DecelerateInterpolator(2)).start();
+                }
 
-        rv.addOnScrollListener(new RecyclerScrollListener() {
-            @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-            @Override
-            public void show() {
-                fab.animate().translationY(0).setInterpolator(
-                        new DecelerateInterpolator(2)).start();
-            }
+                @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+                @Override
+                public void hide() {
+                    fab.animate().translationY(fab.getHeight() +
+                            getResources().getDimension(R.dimen.fab_margin))
+                            .setInterpolator(new AccelerateInterpolator(2)).start();
+                }
+            });
+        }
 
-            @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-            @Override
-            public void hide() {
-                fab.animate().translationY(fab.getHeight() +
-                        getResources().getDimension(R.dimen.fab_margin))
-                        .setInterpolator(new AccelerateInterpolator(2)).start();
-            }
-        });
+
 
     }
 

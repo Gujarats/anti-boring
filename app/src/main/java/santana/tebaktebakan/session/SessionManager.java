@@ -24,6 +24,8 @@ public class SessionManager {
     private static final String KEY_PASS = "KEY_PASS";
     private static final String KEY_USERNAME = "KEY_USERNAME";
     private static final String KEY_LOGGIN = "KEY_LOGGIN";
+    // uri gambar
+    private static final String KEY_URI = "KEY_URI";
 
     // Shared Preferences
     SharedPreferences pref;
@@ -48,6 +50,15 @@ public class SessionManager {
 
     public void setLoggin(boolean loggin){
         editor.putBoolean(KEY_LOGGIN,loggin);
+        editor.commit();
+    }
+
+    public String getKeyUri(){
+        return pref.getString(KEY_URI,"");
+    }
+
+    public void setKeyUri(String path){
+        editor.putString(KEY_URI,path);
         editor.commit();
     }
 

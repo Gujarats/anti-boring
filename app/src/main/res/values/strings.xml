@@ -9,5 +9,10 @@
 
     //upload tebakan activity
     <string name="hints_upload">Your Answer Here</string>
-    //
+
+    //crop gambar activity
+
+    <string name="can_not_crop">Your image is to small</string>
+
+
 </resources>
