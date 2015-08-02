@@ -1,38 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    >
 
-    <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/GambarTebakan_Answer"
-        android:layout_width="400px"
-        android:layout_height="400px"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
-
-
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/TextTebakan_Answer"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/GambarTebakan_Answer"
-        android:text="text tebakan"/>
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/marginBottom"
+        android:layout_marginLeft="@dimen/marginLeft"
+        android:layout_marginRight="@dimen/marginRight"
+        android:layout_marginTop="@dimen/marginTop"
 
-    <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/TextAnswer_Answer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/TextTebakan_Answer"
-        android:hint="@string/hints_answer"/>
+        android:orientation="vertical">
 
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/AnswerButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/TextAnswer_Answer"
-        android:onClick="AnswerTebakan"
-        android:text="Answer"
-        />
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/GambarTebakan_Answer"
+            android:layout_width="400px"
+            android:layout_height="400px"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
 
-</RelativeLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/TextTebakan_Answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/GambarTebakan_Answer"
+            android:text="text tebakan"/>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/TextAnswer_Answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/TextTebakan_Answer"
+            android:hint="@string/hints_answer"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/AnswerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/TextAnswer_Answer"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:onClick="AnswerTebakan"
+            android:text="Answer"
+            />
+
+    </RelativeLayout>
+
+</ScrollView>

@@ -4,17 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<ImageView-->
-        <!--android:id="@+id/GambarTebakanUpload"-->
-        <!--android:layout_width="500px"-->
-        <!--android:layout_height="500px"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:onClick="UploadCliced"/>-->
 
     <FrameLayout
         android:id="@+id/layout1"
         android:layout_width="500px"
         android:layout_height="500px"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true">
         <com.naver.android.helloyako.imagecrop.view.ImageCropView
             xmlns:imagecrop="http://schemas.android.com/apk/res-auto"

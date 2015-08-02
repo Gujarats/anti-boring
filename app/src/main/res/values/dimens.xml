@@ -3,5 +3,16 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="card_margin">16dp</dimen>
+    <dimen name="card_margin">8dp</dimen>
+
+    //dimen in answer tebakan
+    <dimen name="marginLeft">15dp</dimen>
+    <dimen name="marginRight">15dp</dimen>
+    <dimen name="marginTop">15dp</dimen>
+    <dimen name="marginTop_like">8dp</dimen>
+    <dimen name="marginBottom">15dp</dimen>
+
+    <!--size dimen register-->
+    <dimen name="width_field">200dp</dimen>
+
 </resources>

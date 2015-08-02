@@ -3,6 +3,7 @@ package santana.tebaktebakan.activity;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,6 +42,7 @@ public class TebakanListActivity extends AppCompatActivity {
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     SessionManager sessionManager;
     private String regGcmID;
+    private int WidthPhone;
 
     //listview and adapter
     private ListView listView;
@@ -136,12 +139,35 @@ public class TebakanListActivity extends AppCompatActivity {
             }
         });
 
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+
+         /*get widht of the phone*/
+        if(currentapiVersion >= Build.VERSION_CODES.HONEYCOMB_MR2){
+            Display display = getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            /**
+             * merah di bawah memang sengaja, buat api 13 keatas
+             * itu warning doank
+             */
+            display.getSize(size);
+            WidthPhone =  size.x;
+        }else{
+            Display display = getWindowManager().getDefaultDisplay();
+            WidthPhone = display.getWidth();  // deprecated
+        }
+
+
+        /**
+         * List view untuk gambar dan tebakan
+         */
         RecyclerView rv = (RecyclerView) findViewById(R.id.ListTebakan);
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
-        rv.setAdapter(new TebakanListAdapterCompat(getApplicationContext(), this));
+        rv.setAdapter(new TebakanListAdapterCompat(getApplicationContext(), this, WidthPhone));
 
-        //slide floating button
-        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+
+
+
+        /*slide floating button*/
         if (currentapiVersion >= Build.VERSION_CODES.ICE_CREAM_SANDWICH){
             // Do something for froyo and above versions
             rv.addOnScrollListener(new RecyclerScrollListener() {
@@ -161,9 +187,6 @@ public class TebakanListActivity extends AppCompatActivity {
                 }
             });
         }
-
-
-
     }
 
     @Override

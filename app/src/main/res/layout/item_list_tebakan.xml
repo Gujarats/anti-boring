@@ -1,38 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <android.support.v7.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/card_margin"
-        android:layout_marginLeft="@dimen/card_margin"
-        android:layout_marginRight="@dimen/card_margin">
-
         <RelativeLayout
-            style="@style/Widget.CardContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/TextTebakan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="Related"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="@dimen/marginTop"
+                android:layout_marginLeft="@dimen/marginTop"
+                android:layout_marginRight="@dimen/marginTop"
+                android:layout_marginTop="@dimen/marginTop"
+                android:text="Title Tebakan"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/GambarTebakan"
-                android:layout_width="400px"
-                android:layout_height="400px"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 android:layout_below="@+id/TextTebakan"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:adjustViewBounds="true"
-                android:maxHeight="150dp"
                 android:visibility="visible" />
+
+
+            <ImageView
+                android:id="@+id/like_icon"
+                android:layout_width="30px"
+                android:layout_height="30px"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/GambarTebakan"
+                android:layout_marginLeft="@dimen/marginTop"
+                android:layout_marginTop="@dimen/marginTop_like"
+                android:src="@drawable/heart2" />
             <TextView
                 android:id="@+id/_idTebakan"
                 android:layout_width="wrap_content"
@@ -67,5 +70,4 @@
 
         </RelativeLayout>
 
-    </android.support.v7.widget.CardView>
 

@@ -257,7 +257,7 @@ public class UploadTebakanActivity extends AppCompatActivity implements UploadCo
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.d("Error",error.getMessage());
+//        Log.d("Error",error.getMessage());
         Toast.makeText(getApplicationContext(),"Wooww, Error man",Toast.LENGTH_LONG).show();
     }
 

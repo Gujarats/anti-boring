@@ -45,11 +45,13 @@ public class TebakanListAdapterCompat extends RecyclerView.Adapter<TebakanListAd
     private Activity activity;
     private ImageLoader imageLoader = AppController.getInstance().getImageLoader();
     private SessionManager sessionManager;
+    private int WidthPhone;
 
-    public TebakanListAdapterCompat(Context context, Activity activity){
+    public TebakanListAdapterCompat(Context context, Activity activity,int WidthPhone){
         sessionManager = new SessionManager(context);
         this.context  = context;
         this.activity = activity;
+        this.WidthPhone = WidthPhone;
         tebakanObjects = new ArrayList<TebakanObject>();
         Map<String,String> mParams = new HashMap<String,String>();
         mParams.put(ServerConstants.mParams_idUser,sessionManager.getUidUser());
@@ -153,7 +155,8 @@ public class TebakanListAdapterCompat extends RecyclerView.Adapter<TebakanListAd
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int pos) {
+        int position = getItemCount()-pos-1;
         holder._idTebakan.setText(tebakanObjects.get(position).get_idTebakan());
         holder.TextTebakan.setText(tebakanObjects.get(position).getTextTebakan());
         holder.kunciTebakan.setText(tebakanObjects.get(position).getKunciTebakan());
@@ -164,8 +167,11 @@ public class TebakanListAdapterCompat extends RecyclerView.Adapter<TebakanListAd
         if(tebakanObjects.get(position).getUrlGambarTebakan().equalsIgnoreCase(ApplicationConstants.ImageVisibiliy)){
             holder.GambarTebakan.setVisibility(View.GONE);
         }else{
+            holder.GambarTebakan.getLayoutParams().height=WidthPhone;
             holder.GambarTebakan.setImageUrl(tebakanObjects.get(position).getUrlGambarTebakan(), imageLoader);
             holder.GambarTebakan.setVisibility(View.VISIBLE);
+            holder.GambarTebakan.requestLayout();
+
 
         }
 
