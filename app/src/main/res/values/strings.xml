@@ -14,5 +14,8 @@
 
     <string name="can_not_crop">Your image is to small</string>
 
+    <!--menu dialog correct answer-->
+    <string name="dialog_answer_incorrect">Sorry Incorrect Answer</string>
+
 
 </resources>

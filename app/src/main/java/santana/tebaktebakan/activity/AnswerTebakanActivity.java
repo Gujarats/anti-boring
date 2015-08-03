@@ -1,11 +1,16 @@
 package santana.tebaktebakan.activity;
 
+import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
-import android.view.View;
+import android.view.Display;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -37,9 +42,10 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
     protected AppCompatTextView TextTebakan;
     protected NetworkImageView gambarTebakan;
 
+
     private String _idTebakan,_idUser,textTebakan,gambarUrl,gcmID,kunciTebakan;
     private SessionManager sessionManager;
-
+    private int WidthPhone;
     //image Loader
     private ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
@@ -73,10 +79,43 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
         TextTebakan.setText(textTebakan);
         if(imageLoader==null)
             imageLoader = AppController.getInstance().getImageLoader();
+
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+
+         /*get widht of the phone*/
+        if(currentapiVersion >= Build.VERSION_CODES.HONEYCOMB_MR2){
+            Display display = getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            /**
+             * merah di bawah memang sengaja, buat api 13 keatas
+             * itu warning doank
+             */
+            display.getSize(size);
+            WidthPhone =  size.x;
+        }else{
+            Display display = getWindowManager().getDefaultDisplay();
+            WidthPhone = display.getWidth();  // deprecated
+        }
+        gambarTebakan.getLayoutParams().height=WidthPhone;
+        gambarTebakan.requestLayout();
         gambarTebakan.setImageUrl(gambarUrl, imageLoader);
+
+        /**
+         * listener for done key keyboard
+         */
+        AnswerTebakan.setOnEditorActionListener(new AppCompatTextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if(actionId== EditorInfo.IME_ACTION_DONE){
+                    //do something
+                    AnswerTebakan();
+                }
+                return false;
+            }
+        });
     }
 
-    public void AnswerTebakan(View v){
+    private void AnswerTebakan(){
         String answerTemp = AnswerTebakan.getText().toString();
         if(!answerTemp.trim().isEmpty()){
             if(answerTemp.equalsIgnoreCase(kunciTebakan)){
@@ -94,7 +133,7 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
 
             }else{
                 //Wrong answer give minus point if zero still zero
-                Toast.makeText(getApplicationContext(),"Wrong Answer",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Wrong Answer", Toast.LENGTH_LONG).show();
 
             }
         }else{

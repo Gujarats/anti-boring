@@ -10,9 +10,21 @@
     <dimen name="marginRight">15dp</dimen>
     <dimen name="marginTop">15dp</dimen>
     <dimen name="marginTop_like">8dp</dimen>
+    <dimen name="marginBottom_like">5dp</dimen>
     <dimen name="marginBottom">15dp</dimen>
 
     <!--size dimen register-->
     <dimen name="width_field">200dp</dimen>
+
+    <!--text size in item list tebakan-->
+    <dimen name="text_size_love">18sp</dimen>
+    <dimen name="text_love_margin">8dp</dimen>
+    <dimen name="item_end">35dp</dimen>
+
+    <!--menu answer tebakan-->
+    <dimen name="height_life_point">20px</dimen>
+    <dimen name="width_life_point">18px</dimen>
+    <dimen name="margin_top_life_point">8dp</dimen>
+
 
 </resources>

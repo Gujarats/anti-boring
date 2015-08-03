@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -172,7 +173,6 @@ public class TebakanListAdapterCompat extends RecyclerView.Adapter<TebakanListAd
             holder.GambarTebakan.setVisibility(View.VISIBLE);
             holder.GambarTebakan.requestLayout();
 
-
         }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -229,6 +229,7 @@ public class TebakanListAdapterCompat extends RecyclerView.Adapter<TebakanListAd
         public final View mView;
         public final NetworkImageView GambarTebakan;
         public final AppCompatTextView TextTebakan;
+        public final ImageView like_icon;
         public final TextView _idTebakan;
         public final TextView gambarUrl;
         public final TextView _idUser;
@@ -241,6 +242,7 @@ public class TebakanListAdapterCompat extends RecyclerView.Adapter<TebakanListAd
             _idTebakan = (TextView) view.findViewById(R.id._idTebakan);
             TextTebakan = (AppCompatTextView) view.findViewById(R.id.TextTebakan);
             GambarTebakan = (NetworkImageView) view.findViewById(R.id.GambarTebakan);
+            like_icon = (ImageView) view.findViewById(R.id.like_icon);
             kunciTebakan = (TextView) view.findViewById(R.id.kunciTebakan);
             _idUser = (TextView) view.findViewById(R.id._idUser);
             gcmID = (TextView) view.findViewById(R.id.gcmID);
