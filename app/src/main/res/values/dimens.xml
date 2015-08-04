@@ -19,12 +19,17 @@
     <!--text size in item list tebakan-->
     <dimen name="text_size_love">18sp</dimen>
     <dimen name="text_love_margin">8dp</dimen>
+    <dimen name="like_margin_left">20dp</dimen>
     <dimen name="item_end">35dp</dimen>
 
     <!--menu answer tebakan-->
     <dimen name="height_life_point">20px</dimen>
     <dimen name="width_life_point">18px</dimen>
     <dimen name="margin_top_life_point">8dp</dimen>
+
+    <!--dialog size text-->
+    <dimen name="dialog_text_size_correct">19sp</dimen>
+    <dimen name="dialog_ok">12sp</dimen>
 
 
 </resources>

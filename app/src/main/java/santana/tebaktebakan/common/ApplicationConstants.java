@@ -22,6 +22,9 @@ public class ApplicationConstants {
     public static final String _idUserTebakan = "_idUserTebakan";
     public static final String _idTebakan = "_idTebakan";
 
+    //id tebakan
+    public static final String _listChatBrow = "_listChatBrow";
+
 
     //from activity
     public static final String TebakanListActivity= "TebakanListActivity";

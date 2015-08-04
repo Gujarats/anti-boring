@@ -4,4 +4,5 @@
 <resources>
     <color name="window_background">#FFF5F5F5</color>
     <color name="primary">#303F9F</color>
+    <color name="primary_red">#D32F2F</color>
 </resources>
