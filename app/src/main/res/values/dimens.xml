@@ -13,6 +13,14 @@
     <dimen name="marginBottom_like">5dp</dimen>
     <dimen name="marginBottom">15dp</dimen>
 
+    <!--dimen main menu-->
+    <dimen name="mainMenuMargin">8dp</dimen>
+    <!--size text main menu-->
+    <dimen name="textSizeMainMenu">18sp</dimen>
+
+    <!--dimen rules activity-->
+    <dimen name="marginLineRules">40dp</dimen>
+
     <!--size dimen register-->
     <dimen name="width_field">200dp</dimen>
 
@@ -30,6 +38,9 @@
     <!--dialog size text-->
     <dimen name="dialog_text_size_correct">19sp</dimen>
     <dimen name="dialog_ok">12sp</dimen>
+
+    <!--dialog out of time-->
+    <dimen name="dialog_oot">30dp</dimen>
 
 
 </resources>

@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import santana.tebaktebakan.activity.MainMenuActivity;
 import santana.tebaktebakan.activity.RegisterActivity;
 import santana.tebaktebakan.activity.TebakanListActivity;
 import santana.tebaktebakan.common.ApplicationConstants;
@@ -178,7 +179,7 @@ public class RegistrationIntentService extends IntentService implements Response
             if(jsonObject.getString(ServerConstants.statusBeckend).equalsIgnoreCase(ServerConstants.statusBeckendOk)){
                 switch (jsonObject.getInt(ServerConstants.resultType)){
                     case ServerConstants.registerResult :
-                        Intent intent = new Intent(this,TebakanListActivity.class);
+                        Intent intent = new Intent(this,MainMenuActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         break;

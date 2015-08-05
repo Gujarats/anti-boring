@@ -72,6 +72,7 @@
                     android:layout_width="47px"
                     android:layout_height="47px"
                     android:layout_marginRight="@dimen/marginTop"
+                    android:onClick="HintBrow"
                     android:src="@drawable/hints" />
 
                 <ImageView

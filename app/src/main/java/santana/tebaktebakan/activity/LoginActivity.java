@@ -58,7 +58,6 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
             CostumRequestString myReq = new CostumRequestString(Request.Method.POST,ServerConstants.loginTebakan,mParams,LoginActivity.this,LoginActivity.this);
             myReq.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             AppController.getInstance().addToRequestQueue(myReq);
-
         }
     }
 
@@ -84,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
                     sessionManager.setIsGcmRegistered(true);
                     sessionManager.setAppVersion(ApplicationConstants.getAppVersion(this));
 
-                    Intent intent = new Intent(this,TebakanListActivity.class);
+                    Intent intent = new Intent(this,MainMenuActivity.class);
                     startActivity(intent);
                 }
             }

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/mainMenuMargin"
+        android:text="@string/menu2"/>
+    <View
+        android:id="@+id/line1"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/Title"
+        android:layout_marginLeft="@dimen/marginLineRules"
+        android:layout_marginRight="@dimen/marginLineRules"
+        android:background="@color/primary"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line1"
+        android:layout_marginTop="@dimen/marginTop"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/marginTop">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/rule1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/mainMenuMargin"
+            android:text="@string/rules1"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/rule2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/mainMenuMargin"
+            android:text="@string/rules2"/>
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/rule3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/mainMenuMargin"
+            android:text="@string/rules3"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/rule4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/mainMenuMargin"
+            android:text="@string/rules4"/>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

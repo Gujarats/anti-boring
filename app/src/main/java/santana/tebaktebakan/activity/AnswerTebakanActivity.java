@@ -52,7 +52,8 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
     protected NetworkImageView gambarTebakan;
     protected AppCompatDialog dialog;
     protected Menu menu;
-
+    /*test buat hint*/
+    private String tempTebakan = "Pejalan Kaki";
     private String _idTebakan, _idUser, textTebakan, gambarUrl, gcmID, kunciTebakan;
     private SessionManager sessionManager;
     private int WidthPhone;
@@ -63,14 +64,44 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
     private SavingFile savingFile;
 
 
-    //di brow
+    //id brow
     private JSONObject valuesIdChats;
     private boolean userAlreadyAnswer = true;
     private boolean userFailedAnswer = true;
 
+    /*logic timer for dialog hint*/
+    private long dismissHint;
+    private int hintShow =3;
+
+    public static int countWords(String s){
+
+        int wordCount = 0;
+
+        boolean word = false;
+        int endOfLine = s.length() - 1;
+
+        for (int i = 0; i < s.length(); i++) {
+            // if the char is a letter, word = true.
+            if (Character.isLetter(s.charAt(i)) && i != endOfLine) {
+                word = true;
+                // if char isn't a letter and there have been letters before,
+                // counter goes up.
+            } else if (!Character.isLetter(s.charAt(i)) && word) {
+                wordCount++;
+                word = false;
+                // last word of String; if it doesn't end with a non letter, it
+                // wouldn't count without this.
+            } else if (Character.isLetter(s.charAt(i)) && i == endOfLine) {
+                wordCount++;
+            }
+        }
+        return wordCount;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dismissHint =30000;
         setContentView(R.layout.layout_answer_tebakan_activity);
         sessionManager = new SessionManager(getApplicationContext());
         /***
@@ -226,7 +257,6 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
         return true;
     }
 
-
     @Override
     public boolean onPrepareOptionsMenu(Menu menu1) {
         new CountDownTimer(30000, 1000) {//CountDownTimer(edittext1.getText()+edittext2.getText()) also parse it to long
@@ -234,6 +264,7 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
             public void onTick(long millisUntilFinished) {
                 long count = millisUntilFinished/1000;
                 menu.findItem(R.id.Count).setTitle(String.valueOf(count));
+                dismissHint = millisUntilFinished;
                 //here you can have your logic to set text to edittext
             }
 
@@ -401,6 +432,73 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
         }
     }
 
+    public void HintBrow(View v){
+
+        if(hintShow<1){
+            /**
+             * hint habis gan
+             */
+        }else{
+            if(dismissHint<=4000){
+                /**
+                 * dialog hint tidak akan terbuka jia kurang dari 4 detik atau sama
+                 */
+            }else{
+                String hint = AlgoritmaHint(tempTebakan);
+                dialog.setContentView(R.layout.dialog_correct_answer);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                AppCompatTextView text = (AppCompatTextView) dialog.findViewById(R.id.dialog_text);
+                text.setText(hint);
+                text.setTextColor(getResources().getColor(R.color.primary));
+                AppCompatButton button = (AppCompatButton) dialog.findViewById(R.id.dialog_ok);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                button.setTextColor(getResources().getColor(R.color.primary));
+                dialog.show();
+
+                new CountDownTimer(4000, 1000) {//CountDownTimer(edittext1.getText()+edittext2.getText()) also parse it to long
+
+                    public void onTick(long millisUntilFinished) {
+                        long count = millisUntilFinished/1000;
+//                menu.findItem(R.id.Count).setTitle(String.valueOf(count));
+                        //here you can have your logic to set text to edittext
+                    }
+
+                    public void onFinish() {
+                        dialog.dismiss();
+                    }
+                }.start();
+            }
+        }
+        hintShow=hintShow-1;
+    }
+
+    private String AlgoritmaHint(String JawabanTebakan){
+        String tempJawaban = "";
+
+        String[] arrayWords = JawabanTebakan.split(" ");
+
+        for(int i =0;i<arrayWords.length;i++){
+            Log.d("word",arrayWords[i]);
+            String  firstLetter = String.valueOf(arrayWords[i].charAt(0));
+            String endletter = String.valueOf(arrayWords[i].charAt(arrayWords[i].length()-1));
+            for(int o=0;o<arrayWords[i].length();o++){
+                if(o==0){
+                    tempJawaban=tempJawaban+firstLetter + " ";
+                }else if(o==arrayWords[i].length()-1){
+                    tempJawaban=tempJawaban+endletter+"    ";
+                }else{
+                    tempJawaban=tempJawaban+"_"+" ";
+                }
+                Log.d("loopWord",tempJawaban);
+            }
+        }
+        return tempJawaban;
+    }
 
     @Override
     public void onErrorResponse(VolleyError error) {

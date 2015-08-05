@@ -139,9 +139,9 @@ public class TebakanListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-//                Intent intent = new Intent(TebakanListActivity.this, UploadTebakanActivity.class);
-//                startActivity(intent);
-                menu.findItem(R.id.Point).setTitle("250");
+                Intent intent = new Intent(TebakanListActivity.this, UploadTebakanActivity.class);
+                startActivity(intent);
+//                menu.findItem(R.id.Point).setTitle("250");
 
 
             }

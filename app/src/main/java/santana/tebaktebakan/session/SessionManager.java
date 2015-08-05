@@ -24,6 +24,7 @@ public class SessionManager {
     private static final String KEY_PASS = "KEY_PASS";
     private static final String KEY_USERNAME = "KEY_USERNAME";
     private static final String KEY_LOGGIN = "KEY_LOGGIN";
+    private static final String KEY_HINT = "KEY_HINT";
     // uri gambar
     private static final String KEY_URI = "KEY_URI";
 
@@ -54,11 +55,20 @@ public class SessionManager {
     }
 
     public String getKeyUri(){
-        return pref.getString(KEY_URI,"");
+        return pref.getString(KEY_URI, "");
     }
 
     public void setKeyUri(String path){
-        editor.putString(KEY_URI,path);
+        editor.putString(KEY_URI, path);
+        editor.commit();
+    }
+
+    public int getHint(){
+        return pref.getInt(KEY_HINT, 0);
+    }
+
+    public void setHint(int jumlahHint){
+        editor.putInt(KEY_HINT,jumlahHint);
         editor.commit();
     }
 

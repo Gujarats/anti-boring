@@ -26,4 +26,26 @@
     <!--menu string in option menu-->
     <string name="point_option_menu">100</string>
 
+    <!--main menu-->
+    <string name="menu1">Start Game</string>
+    <string name="menu2">Ranking</string>
+    <string name="menu3">Settings</string>
+    <string name="menu4">Coins</string>
+    <string name="menu5">Rules</string>
+
+    <!--rules-->
+    <string name="TitleRules1">Rules Point</string>
+    <string name="rules1">1. Wrong Answer -100</string>
+    <string name="rules2">2. Try Again  -30</string>
+    <string name="rules3">3. Correct Answer  +150</string>
+    <string name="rules4">4. Next  -50</string>
+    <string name="rules5">5. Hint  -25</string>
+
+    <!--dialog out of time-->
+    <string name="TitleOutOfTime">You're running out of Time</string>
+    <string name="try_again">Try Again</string>
+    <string name="next">Next</string>
+    <string name="rangking">Rangking</string>
+    <string name="more_coins">More Coins</string>
+
 </resources>
