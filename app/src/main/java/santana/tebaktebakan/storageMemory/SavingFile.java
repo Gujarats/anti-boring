@@ -18,6 +18,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import santana.tebaktebakan.common.ApplicationConstants;
+
 /**
  * Created by root on 25/04/15.
  */
@@ -172,7 +174,7 @@ public class SavingFile {
 
             ContextWrapper contextWrapper = new ContextWrapper(context);
             File directory = contextWrapper.getDir("PersonaDir", Context.MODE_PRIVATE);
-            File myInternalFile = new File(directory , "chatConfig.txt");
+            File myInternalFile = new File(directory , ApplicationConstants._listChatBrow);
 
 
             JSONObject jsonObject = new JSONObject();
@@ -197,7 +199,7 @@ public class SavingFile {
         try {
             ContextWrapper contextWrapper = new ContextWrapper(context);
             File directory = contextWrapper.getDir("PersonaDir", Context.MODE_PRIVATE);
-            File myInternalFile = new File(directory , "chatConfig.txt");
+            File myInternalFile = new File(directory , ApplicationConstants._listChatBrow);
 
             FileOutputStream fos = new FileOutputStream(myInternalFile);
             fos.write(data.getBytes());
@@ -215,7 +217,50 @@ public class SavingFile {
         try {
             ContextWrapper contextWrapper = new ContextWrapper(context);
             File directory = contextWrapper.getDir("PersonaDir", Context.MODE_PRIVATE);
-            File myInternalFile = new File(directory , "chatConfig.txt");
+            File myInternalFile = new File(directory , ApplicationConstants._listChatBrow);
+
+            FileInputStream fis = new FileInputStream(myInternalFile);
+            DataInputStream in = new DataInputStream(fis);
+            BufferedReader br =
+                    new BufferedReader(new InputStreamReader(in));
+            String strLine;
+            while ((strLine = br.readLine()) != null) {
+                ret = ret + strLine;
+            }
+            in.close();
+        } catch (FileNotFoundException e) {
+            writeToFile("{ Json : true }");
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            writeToFile("{ Json : true }");
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+
+        return ret;
+    }
+
+    public void writeToFile2(String data) {
+
+        try {
+            ContextWrapper contextWrapper = new ContextWrapper(context);
+            File directory = contextWrapper.getDir("PersonaDir", Context.MODE_PRIVATE);
+            File myInternalFile = new File(directory , ApplicationConstants._listChatBrow2);
+
+            FileOutputStream fos = new FileOutputStream(myInternalFile);
+            fos.write(data.getBytes());
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String readFromFile2() {
+
+        String ret = "";
+        try {
+            ContextWrapper contextWrapper = new ContextWrapper(context);
+            File directory = contextWrapper.getDir("PersonaDir", Context.MODE_PRIVATE);
+            File myInternalFile = new File(directory , ApplicationConstants._listChatBrow2);
 
             FileInputStream fis = new FileInputStream(myInternalFile);
             DataInputStream in = new DataInputStream(fis);
@@ -228,10 +273,14 @@ public class SavingFile {
             in.close();
         } catch (FileNotFoundException e) {
             Log.e("login activity", "File not found: " + e.toString());
+            writeToFile2("{ Json : true }");
         } catch (IOException e) {
+            writeToFile2("{ Json : true }");
             Log.e("login activity", "Can not read file: " + e.toString());
         }
 
         return ret;
     }
+
+
 }

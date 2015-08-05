@@ -5,14 +5,17 @@ import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
@@ -48,6 +51,7 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
     protected AppCompatTextView TextTebakan;
     protected NetworkImageView gambarTebakan;
     protected AppCompatDialog dialog;
+    protected Menu menu;
 
     private String _idTebakan, _idUser, textTebakan, gambarUrl, gcmID, kunciTebakan;
     private SessionManager sessionManager;
@@ -55,10 +59,14 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
     //image Loader
     private ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
+    //saving file id
+    private SavingFile savingFile;
+
 
     //di brow
     private JSONObject valuesIdChats;
-    private boolean userIsExistinGroup = false;
+    private boolean userAlreadyAnswer = true;
+    private boolean userFailedAnswer = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +91,15 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
 
     }
 
+    @Override
+    public void onBackPressed() {
+    }
+
     private void initUi() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        setSupportActionBar(toolbar);
+
         AnswerTebakan = (AppCompatEditText) findViewById(R.id.TextAnswer_Answer);
         TextTebakan = (AppCompatTextView) findViewById(R.id.TextTebakan_Answer);
         gambarTebakan = (NetworkImageView) findViewById(R.id.GambarTebakan_Answer);
@@ -131,38 +147,114 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
 
         /**
          *  checking wheter id is registered on server or not
-         the id which registered on the server saved in file wit JsonObject format
+         the id which registered on the server saved in file with JsonObject format
          */
 
         try {
-            SavingFile savingFile = new SavingFile(getApplicationContext(), ApplicationConstants._listChatBrow, null);
+            savingFile = new SavingFile(getApplicationContext(), ApplicationConstants._listChatBrow, null);
+            /**
+             * readfromfile() method adalah untuk mengambil data json id tebakan yang sudah pernah dijawab
+             * readfromfile2() method adalah untuk mengambil data json id tebakan yang gagal dijawab
+             *
+             * writetofile() method utk menyimpan id tebakan yang berhasil dijawab
+             * writetofile()2 method utk menyimpan id tebakan yg gagal dijawab
+             */
+
+            /**
+             * check idTebakan yang sudah terjawab
+             */
             String idChats = savingFile.readFromFile();
             Log.i("isi", idChats);
             if (idChats != null && !idChats.equals("")) {
                 valuesIdChats = new JSONObject(idChats);
                 if (valuesIdChats.getBoolean(_idTebakan)) {
                     // it will catch the Json Exception if there is no data in json file
-                    userIsExistinGroup = true;
-                    Log.d("idcaht", "true");
+                    userAlreadyAnswer = true;
+                    Log.d("idTebakan", "true");
                 } else {
 //                    user id registered to group
-                    userIsExistinGroup = false;
-                    Log.d("idcaht", "false");
+                    userAlreadyAnswer = false;
+                    Log.d("idTebakan", "false");
                 }
-            } else {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put(_idTebakan, true);
-                savingFile.writeToFile(jsonObject.toString());
             }
-
         } catch (NullPointerException ex) {
             ex.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
             //user is not registered ro Group
-            userIsExistinGroup = false;
-            Log.d("idcaht", "false");
+            userAlreadyAnswer = false;
+            Log.d("idTebakan", "false");
+
         }
+
+        /**
+         * check idTebakan yang gagal terjawab
+         */
+
+            try {
+                String idChats2 = savingFile.readFromFile2();
+                Log.i("isi2", idChats2);
+                if (idChats2 != null && !idChats2.equals("")) {
+
+                    JSONObject valuesTebakan = new JSONObject(idChats2);
+                    if (valuesTebakan.getBoolean(_idTebakan)) {
+                        // it will catch the Json Exception if there is no data in json file
+                        userFailedAnswer = true;
+                        Log.d("idTebakan2", "true");
+                    } else {
+                        //                    user id registered to group
+                        userFailedAnswer = false;
+                        Log.d("idTebakan2", "false");
+                    }
+                }
+            }catch (NullPointerException ex){
+                ex.printStackTrace();
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+                Log.d("idTebakan2", "false");
+                userFailedAnswer = false;
+            }
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.answer_activity, menu);
+        this.menu=menu;
+        return true;
+    }
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu1) {
+        new CountDownTimer(30000, 1000) {//CountDownTimer(edittext1.getText()+edittext2.getText()) also parse it to long
+
+            public void onTick(long millisUntilFinished) {
+                long count = millisUntilFinished/1000;
+                menu.findItem(R.id.Count).setTitle(String.valueOf(count));
+                //here you can have your logic to set text to edittext
+            }
+
+            public void onFinish() {
+//                mTextField.setText("done!");
+                try {
+                    //read data before saving
+                    String data = savingFile.readFromFile2();
+                    //conver string to json and save
+                    JSONObject jsonObject = new JSONObject(data);
+                    jsonObject.put(_idTebakan, true);
+                    savingFile.writeToFile2(jsonObject.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                AnswerTebakanActivity.this.finish();
+
+            }
+        }.start();
+        return super.onPrepareOptionsMenu(menu1);
+
     }
 
     private void AnswerTebakan() {
@@ -174,7 +266,7 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
                 /***
                  * chekck wheter the id has answered or not from memory
                  */
-                if(userIsExistinGroup){
+                if(userAlreadyAnswer){
                     // user sudah menjawab tebakan ini
                     /**
                      * show dialog
@@ -196,16 +288,53 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
 
                 }else{
                     //user belum menjawab tebakan ini
-                    /**
-                     * request penambahan point untuk yang menjawab dengan benar.
-                     */
-                    Map<String, String> mParams = new HashMap<String, String>();
-                    mParams.put(ServerConstants.mParams_idUser, sessionManager.getUidUser());
-                    mParams.put(ServerConstants.mParamsToken, sessionManager.getToken());
-                    CostumRequestString myReq = new CostumRequestString(Request.Method.POST, ServerConstants.jawabanBenar, mParams, AnswerTebakanActivity.this, AnswerTebakanActivity.this);
-                    myReq.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                    AppController.getInstance().addToRequestQueue(myReq);
 
+                    /**
+                     * jika user tidak berhasil menjawab pertanyaan yg sebelumnya maka point tidak maksimal
+                     */
+                    if(userFailedAnswer){
+                        /**
+                         * request untuk penambahan point tidak maksimal
+                         *
+                         */
+                        //TODO here point yang tidak masksimal
+                        Log.d("tebakBrow","point menang kurang");
+                        Map<String, String> mParams = new HashMap<String, String>();
+                        mParams.put(ServerConstants.mParams_idUser, sessionManager.getUidUser());
+                        mParams.put(ServerConstants.mParamsToken, sessionManager.getToken());
+                        CostumRequestString myReq = new CostumRequestString(Request.Method.POST, ServerConstants.jawabanBenar, mParams, AnswerTebakanActivity.this, AnswerTebakanActivity.this);
+                        myReq.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                        AppController.getInstance().addToRequestQueue(myReq);
+
+                    }else{
+                        /**
+                         * request penambahan point untuk yang menjawab dengan benar dengan point maksimal.
+                         */
+                        Log.d("tebakBrow","point menang maksimal");
+                        Map<String, String> mParams = new HashMap<String, String>();
+                        mParams.put(ServerConstants.mParams_idUser, sessionManager.getUidUser());
+                        mParams.put(ServerConstants.mParamsToken, sessionManager.getToken());
+                        CostumRequestString myReq = new CostumRequestString(Request.Method.POST, ServerConstants.jawabanBenar, mParams, AnswerTebakanActivity.this, AnswerTebakanActivity.this);
+                        myReq.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                        AppController.getInstance().addToRequestQueue(myReq);
+                    }
+
+
+
+                    /**
+                     * saving idTebakan to JsonAnswered
+                     */
+
+                    try {
+                        //get data before saving
+                        String data  = savingFile.readFromFile();
+                        //convert to json and save
+                        JSONObject jsonObject = new JSONObject(data);
+                        jsonObject.put(_idTebakan, true);
+                        savingFile.writeToFile(jsonObject.toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     /**
                      * show dialog for winner
                      */
@@ -226,13 +355,25 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
                     dialog.show();
 
                 }
-
-
-
-
             } else {
+
+                /**
+                 * saving idTebakan to Json Failed Answered
+                 */
+
+                try {
+                    //read data before saving
+                    String data = savingFile.readFromFile2();
+                    //conver string to json and save
+                    JSONObject jsonObject = new JSONObject(data);
+                    jsonObject.put(_idTebakan, true);
+                    savingFile.writeToFile2(jsonObject.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
                 //Wrong answer give minus point if zero still zero
-                Toast.makeText(getApplicationContext(), "Wrong Answer", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "Wrong Answer", Toast.LENGTH_LONG).show();
                 dialog.setContentView(R.layout.dialog_correct_answer);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 AppCompatTextView text = (AppCompatTextView) dialog.findViewById(R.id.dialog_text);

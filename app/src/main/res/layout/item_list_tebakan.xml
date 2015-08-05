@@ -31,6 +31,7 @@
             android:src="@drawable/heart2" />
 
         <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/likes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/text_love_margin"

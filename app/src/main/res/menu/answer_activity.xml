@@ -7,4 +7,9 @@
         android:title="100"
         materialdesign:showAsAction="always" />
 
+    <item
+        android:id="@+id/Count"
+        android:title="30"
+        materialdesign:showAsAction="always" />
+
 </menu>

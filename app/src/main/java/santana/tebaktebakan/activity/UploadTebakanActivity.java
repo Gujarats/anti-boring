@@ -36,7 +36,6 @@ import santana.tebaktebakan.AppController;
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.common.ServerConstants;
-import santana.tebaktebakan.imageManager.UploadCompleted;
 import santana.tebaktebakan.requestNetwork.CostumRequest2;
 import santana.tebaktebakan.requestNetwork.CostumRequestString;
 import santana.tebaktebakan.session.SessionManager;
@@ -45,7 +44,7 @@ import santana.tebaktebakan.storageMemory.SavingFile;
 /**
  * Created by Gujarat Santana on 12/06/15.
  */
-public class UploadTebakanActivity extends AppCompatActivity implements UploadCompleted, Response.Listener<String>, Response.ErrorListener{
+public class UploadTebakanActivity extends AppCompatActivity implements Response.Listener<String>, Response.ErrorListener{
     //session manager
     SessionManager sessionManager;
     private ImageCropView GambarTebakan;
@@ -228,16 +227,16 @@ public class UploadTebakanActivity extends AppCompatActivity implements UploadCo
     }
 
 
-    @Override
-    public void UploadCompleted(String result) {
-        try {
-            JSONObject jsonObject = new JSONObject(result);
-            UrlGambarTebakan = jsonObject.getString("response");
-            UploadTebakanText();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
+//    @Override
+//    public void UploadCompleted(String result) {
+//        try {
+//            JSONObject jsonObject = new JSONObject(result);
+//            UrlGambarTebakan = jsonObject.getString("response");
+//            UploadTebakanText();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private void UploadTebakanText(){
 //        if(UrlGambarTebakan.isEmpty()){

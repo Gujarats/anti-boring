@@ -44,6 +44,10 @@ public class TebakanListActivity extends AppCompatActivity {
     private String regGcmID;
     private int WidthPhone;
 
+    /*menu option*/
+    private Menu menu;
+
+
     //listview and adapter
     private ListView listView;
 
@@ -126,6 +130,7 @@ public class TebakanListActivity extends AppCompatActivity {
 
     private void initUI(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.InsertTebakan);
@@ -134,8 +139,11 @@ public class TebakanListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                Intent intent = new Intent(TebakanListActivity.this, UploadTebakanActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(TebakanListActivity.this, UploadTebakanActivity.class);
+//                startActivity(intent);
+                menu.findItem(R.id.Point).setTitle("250");
+
+
             }
         });
 
@@ -192,11 +200,18 @@ public class TebakanListActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.tebakan_activity, menu);
+        this.menu=menu;
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()){
+            case R.id.Point :
+                Toast.makeText(TebakanListActivity.this, "bangkai", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -175,6 +175,13 @@ public class TebakanListAdapterCompat extends RecyclerView.Adapter<TebakanListAd
 
         }
 
+        holder.like_icon_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.likes.setText("20 likes");
+            }
+        });
+
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -229,7 +236,8 @@ public class TebakanListAdapterCompat extends RecyclerView.Adapter<TebakanListAd
         public final View mView;
         public final NetworkImageView GambarTebakan;
         public final AppCompatTextView TextTebakan;
-        public final ImageView like_icon;
+        public final ImageView like_icon_button;
+        public final AppCompatTextView likes;
         public final TextView _idTebakan;
         public final TextView gambarUrl;
         public final TextView _idUser;
@@ -242,7 +250,8 @@ public class TebakanListAdapterCompat extends RecyclerView.Adapter<TebakanListAd
             _idTebakan = (TextView) view.findViewById(R.id._idTebakan);
             TextTebakan = (AppCompatTextView) view.findViewById(R.id.TextTebakan);
             GambarTebakan = (NetworkImageView) view.findViewById(R.id.GambarTebakan);
-            like_icon = (ImageView) view.findViewById(R.id.like_icon);
+            like_icon_button = (ImageView) view.findViewById(R.id.like_icon_button);
+            likes = (AppCompatTextView)view.findViewById(R.id.likes);
             kunciTebakan = (TextView) view.findViewById(R.id.kunciTebakan);
             _idUser = (TextView) view.findViewById(R.id._idUser);
             gcmID = (TextView) view.findViewById(R.id.gcmID);

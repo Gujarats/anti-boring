@@ -23,4 +23,7 @@
     <!--menu dialog has aswered-->
     <string name="dialog_answer_answered">You have Answered this question</string>
 
+    <!--menu string in option menu-->
+    <string name="point_option_menu">100</string>
+
 </resources>
