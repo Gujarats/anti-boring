@@ -15,11 +15,11 @@
     <View
         android:id="@+id/line1"
         android:layout_width="fill_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
         android:layout_below="@+id/Title"
         android:layout_marginLeft="@dimen/marginLineRules"
         android:layout_marginRight="@dimen/marginLineRules"
-        android:background="@color/primary"/>
+        android:background="@color/gray"/>
 
     <LinearLayout
         android:layout_width="match_parent"

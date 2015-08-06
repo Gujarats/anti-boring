@@ -104,6 +104,8 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
         dismissHint =30000;
         setContentView(R.layout.layout_answer_tebakan_activity);
         sessionManager = new SessionManager(getApplicationContext());
+
+
         /***
          * get value from intent
          */

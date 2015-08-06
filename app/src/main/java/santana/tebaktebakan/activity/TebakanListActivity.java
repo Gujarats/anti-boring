@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -46,10 +45,6 @@ public class TebakanListActivity extends AppCompatActivity {
 
     /*menu option*/
     private Menu menu;
-
-
-    //listview and adapter
-    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

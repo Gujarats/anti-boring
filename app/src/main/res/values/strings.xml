@@ -15,10 +15,10 @@
     <string name="can_not_crop">Your image is to small</string>
 
     <!--menu dialog incorrect answer-->
-    <string name="dialog_answer_incorrect">Sorry Incorrect Answer\n-7 Point</string>
+    <string name="dialog_answer_incorrect">Sorry Incorrect Answer \n-7 Point</string>
 
     <!--menu dialog correct answer-->
-    <string name="dialog_answer_correct">Yeah You Got The Answer!\n+15 Point</string>
+    <string name="dialog_answer_correct">Yeah You Got The Answer! \n+15 Point</string>
 
     <!--menu dialog has aswered-->
     <string name="dialog_answer_answered">You have Answered this question</string>
@@ -42,7 +42,7 @@
     <string name="rules5">5. Hint  -25</string>
 
     <!--dialog out of time-->
-    <string name="TitleOutOfTime">You're running out of Time</string>
+    <string name="TitleOutOfTime">You are running out of Time</string>
     <string name="try_again">Try Again</string>
     <string name="next">Next</string>
     <string name="rangking">Rangking</string>
