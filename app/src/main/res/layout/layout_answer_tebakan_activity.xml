@@ -1,66 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
     >
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_scrollFlags="scroll|enterAlways"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_top_life_point"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/life1"
+                android:layout_width="@dimen/width_life_point"
+                android:layout_height="@dimen/width_life_point"
+                android:src="@drawable/heart_life_point3" />
+
+            <ImageView
+                android:id="@+id/life2"
+                android:layout_width="@dimen/width_life_point"
+                android:layout_height="@dimen/width_life_point"
+                android:src="@drawable/heart_life_point3" />
+
+            <ImageView
+                android:id="@+id/life3"
+                android:layout_width="@dimen/width_life_point"
+                android:layout_height="@dimen/width_life_point"
+                android:src="@drawable/heart_life_point3" />
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
 
     <ScrollView
+        android:id="@+id/layoutScroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/TextAnswer_Answer"
+        android:layout_below="@+id/toolbar"
         >
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical">
 
-            <com.android.volley.toolbox.NetworkImageView
-                android:id="@+id/GambarTebakan_Answer"
-                android:layout_width="fill_parent"
-                android:layout_height="400px"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
-
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_top_life_point"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/life1"
-                    android:layout_width="@dimen/width_life_point"
-                    android:layout_height="@dimen/width_life_point"
-                    android:src="@drawable/heart_life_point3" />
-
-                <ImageView
-                    android:id="@+id/life2"
-                    android:layout_width="@dimen/width_life_point"
-                    android:layout_height="@dimen/width_life_point"
-                    android:src="@drawable/heart_life_point3" />
-
-                <ImageView
-                    android:id="@+id/life3"
-                    android:layout_width="@dimen/width_life_point"
-                    android:layout_height="@dimen/width_life_point"
-                    android:src="@drawable/heart_life_point3" />
-            </LinearLayout>
-
-            <LinearLayout
+                android:id="@+id/layout2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/marginTop"
@@ -98,22 +96,68 @@
                 android:layout_marginRight="@dimen/marginRight"
                 android:text="text tebakan" />
 
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/TextAnswer_Answer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/TextTebakan_Answer"
-                android:layout_marginLeft="@dimen/marginLeft"
-                android:layout_marginRight="@dimen/marginRight"
-                android:hint="@string/hints_answer"
-                android:inputType="text" />
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/GambarTebakan_Answer"
+                android:layout_width="fill_parent"
+                android:layout_height="400px"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/layout1"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="@dimen/margin_top_life_point"-->
+                <!--android:gravity="center"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/life1"-->
+                    <!--android:layout_width="@dimen/width_life_point"-->
+                    <!--android:layout_height="@dimen/width_life_point"-->
+                    <!--android:src="@drawable/heart_life_point3" />-->
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/life2"-->
+                    <!--android:layout_width="@dimen/width_life_point"-->
+                    <!--android:layout_height="@dimen/width_life_point"-->
+                    <!--android:src="@drawable/heart_life_point3" />-->
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/life3"-->
+                    <!--android:layout_width="@dimen/width_life_point"-->
+                    <!--android:layout_height="@dimen/width_life_point"-->
+                    <!--android:src="@drawable/heart_life_point3" />-->
+            <!--</LinearLayout>-->
+
+            <ProgressBar
+                android:id="@+id/Loading"
+                android:layout_width="@dimen/sizeLoading"
+                android:layout_height="@dimen/sizeLoading"
+                android:visibility="gone" />
+
+
+
+
+
+
         </LinearLayout>
 
 
     </ScrollView>
 
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/TextAnswer_Answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/marginLeft"
+        android:layout_marginRight="@dimen/marginRight"
+        android:hint="@string/hints_answer"
+        android:inputType="text" />
 
 
 
-</LinearLayout>
+
+</RelativeLayout>
 

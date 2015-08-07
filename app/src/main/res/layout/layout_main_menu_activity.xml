@@ -7,6 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/marginTop"
         android:layout_marginTop="@dimen/marginTop"
         android:gravity="center"
         android:orientation="horizontal">
@@ -58,37 +59,42 @@
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/menu1"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/mainMenuWidthButton"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/mainMenuMargin"
+            android:gravity="center"
             android:onClick="MainMenuClick"
             android:text="@string/menu1"/>
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/menu2"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/mainMenuWidthButton"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/mainMenuMargin"
+            android:gravity="center"
             android:onClick="MainMenuClick"
             android:text="@string/menu2"/>
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/menu3"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/mainMenuWidthButton"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/mainMenuMargin"
+            android:gravity="center"
             android:onClick="MainMenuClick"
             android:text="@string/menu3"/>
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/menu4"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/mainMenuWidthButton"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/mainMenuMargin"
+            android:gravity="center"
             android:onClick="MainMenuClick"
             android:text="@string/menu4"/>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/menu5"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/mainMenuWidthButton"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:onClick="MainMenuClick"
             android:text="@string/menu5"/>
 

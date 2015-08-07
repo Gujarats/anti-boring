@@ -18,6 +18,8 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,16 +30,20 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import santana.tebaktebakan.AppController;
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.common.ServerConstants;
+import santana.tebaktebakan.object.TebakanObject;
 import santana.tebaktebakan.requestNetwork.CostumRequestString;
 import santana.tebaktebakan.session.SessionManager;
 import santana.tebaktebakan.storageMemory.SavingFile;
@@ -50,8 +56,26 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
     protected AppCompatEditText AnswerTebakan;
     protected AppCompatTextView TextTebakan;
     protected NetworkImageView gambarTebakan;
+    protected ProgressBar Loading;
     protected AppCompatDialog dialog;
     protected Menu menu;
+    protected LinearLayout layout2;
+
+    /*
+    coundown variable
+     */
+    private CountDownTimer countDownTimer;
+
+    /*
+    variabel pointer gambar
+     */
+    private int tebakanPointer = 0;
+    private TebakanObject tebakanObject;
+
+    /*list tebakan */
+    private List<TebakanObject> tebakanObjects;
+
+
     /*test buat hint*/
     private String tempTebakan = "Pejalan Kaki";
     private String _idTebakan, _idUser, textTebakan, gambarUrl, gcmID, kunciTebakan;
@@ -73,30 +97,6 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
     private long dismissHint;
     private int hintShow =3;
 
-    public static int countWords(String s){
-
-        int wordCount = 0;
-
-        boolean word = false;
-        int endOfLine = s.length() - 1;
-
-        for (int i = 0; i < s.length(); i++) {
-            // if the char is a letter, word = true.
-            if (Character.isLetter(s.charAt(i)) && i != endOfLine) {
-                word = true;
-                // if char isn't a letter and there have been letters before,
-                // counter goes up.
-            } else if (!Character.isLetter(s.charAt(i)) && word) {
-                wordCount++;
-                word = false;
-                // last word of String; if it doesn't end with a non letter, it
-                // wouldn't count without this.
-            } else if (Character.isLetter(s.charAt(i)) && i == endOfLine) {
-                wordCount++;
-            }
-        }
-        return wordCount;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,22 +104,27 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
         dismissHint =30000;
         setContentView(R.layout.layout_answer_tebakan_activity);
         sessionManager = new SessionManager(getApplicationContext());
-
-
-        /***
-         * get value from intent
+        tebakanObject = new TebakanObject();
+        /**
+         * clear list
          */
-        Bundle intent = getIntent().getExtras();
-        if (intent.getString(ApplicationConstants.FromActivity).equals(ApplicationConstants.TebakanListActivity)) {
-            _idTebakan = intent.getString(ApplicationConstants._idTebakan);
-            _idUser = intent.getString(ApplicationConstants._idUserTebakan);
-            textTebakan = intent.getString(ApplicationConstants.textTebakan);
-            kunciTebakan = intent.getString(ApplicationConstants.kunciTebakan);
-            gambarUrl = intent.getString(ApplicationConstants.imageUrl);
-            gcmID = intent.getString(ApplicationConstants.gcmID);
-
-            Log.d("tebakan : ", _idTebakan);
+        if(tebakanObjects!=null){
+            tebakanObjects.clear();
+        }else{
+            tebakanObjects = new ArrayList<TebakanObject>();
         }
+
+        /**
+         * make request to get list tebakan
+         */
+        Map<String,String> mParams = new HashMap<String,String>();
+        mParams.put(ServerConstants.mParams_idUser,sessionManager.getUidUser());
+        mParams.put(ServerConstants.mParamsToken,sessionManager.getToken());
+
+        CostumRequestString myReq = new CostumRequestString(Request.Method.POST,ServerConstants.ShowAllTebakan,mParams,AnswerTebakanActivity.this,AnswerTebakanActivity.this);
+        myReq.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        AppController.getInstance().addToRequestQueue(myReq);
+
         initUi();
 
     }
@@ -136,10 +141,24 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
         AnswerTebakan = (AppCompatEditText) findViewById(R.id.TextAnswer_Answer);
         TextTebakan = (AppCompatTextView) findViewById(R.id.TextTebakan_Answer);
         gambarTebakan = (NetworkImageView) findViewById(R.id.GambarTebakan_Answer);
+        Loading = (ProgressBar) findViewById(R.id.Loading);
+        layout2 = (LinearLayout)findViewById(R.id.layout2);
+
         dialog = new AppCompatDialog(AnswerTebakanActivity.this);
 
-        //set value
-        TextTebakan.setText(textTebakan);
+        /**
+         * setVisibility of The UI
+         */
+        Loading.setVisibility(View.VISIBLE);
+        TextTebakan.setVisibility(View.GONE);
+        gambarTebakan.setVisibility(View.GONE);
+        AnswerTebakan.setVisibility(View.GONE);
+        layout2.setVisibility(View.GONE);
+
+
+        /**
+         * init the image size in phone and image loader
+         */
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
 
@@ -161,7 +180,7 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
         }
         gambarTebakan.getLayoutParams().height = WidthPhone;
         gambarTebakan.requestLayout();
-        gambarTebakan.setImageUrl(gambarUrl, imageLoader);
+//        gambarTebakan.setImageUrl(gambarUrl, imageLoader);
 
         /**
          * listener for done key keyboard
@@ -252,6 +271,40 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
 
     }
 
+    private void setValueForTheUI(TebakanObject tebakanObject){
+        /**
+         * set variabel
+         */
+        _idTebakan = tebakanObject.get_idTebakan();
+        _idUser = tebakanObject.get_idUser();
+        textTebakan = tebakanObject.getTextTebakan();
+        kunciTebakan = tebakanObject.getKunciTebakan();
+        gambarUrl = tebakanObject.getUrlGambarTebakan();
+        gcmID = tebakanObject.getGcmID();
+
+        Log.d("Gambar", _idTebakan);
+
+        if(this.gambarTebakan!=null){
+            this.gambarTebakan.destroyDrawingCache();
+            this.gambarTebakan.setImageUrl(tebakanObject.getUrlGambarTebakan(),imageLoader);
+            this.TextTebakan.setText(tebakanObject.getTextTebakan());
+        }
+
+
+        /**
+         * setVisibility of The UI
+         */
+        this.Loading.setVisibility(View.GONE);
+        layout2.setVisibility(View.VISIBLE);
+        gambarTebakan.setVisibility(View.VISIBLE);
+        TextTebakan.setVisibility(View.VISIBLE);
+        AnswerTebakan.setVisibility(View.VISIBLE);
+
+
+    }
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.answer_activity, menu);
@@ -261,7 +314,13 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu1) {
-        new CountDownTimer(30000, 1000) {//CountDownTimer(edittext1.getText()+edittext2.getText()) also parse it to long
+        CountDown();
+        return super.onPrepareOptionsMenu(menu1);
+
+    }
+
+    private void CountDown(){
+        countDownTimer = new CountDownTimer(30000, 1000) {//CountDownTimer(edittext1.getText()+edittext2.getText()) also parse it to long
 
             public void onTick(long millisUntilFinished) {
                 long count = millisUntilFinished/1000;
@@ -282,12 +341,71 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                AnswerTebakanActivity.this.finish();
+//                AnswerTebakanActivity.this.finish();
+                dialog.setContentView(R.layout.dialog_out_of_time);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                AppCompatTextView text2 = (AppCompatTextView) dialog.findViewById(R.id.dialog_text);
+                text2.setText(R.string.dialog_answer_answered);
+                text2.setTextColor(getResources().getColor(R.color.primary));
+                AppCompatButton button2 = (AppCompatButton) dialog.findViewById(R.id.dialog_try_again);
+                button2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        /*
+                        set visibily
+                         */
+                        Loading.setVisibility(View.VISIBLE);
+                        TextTebakan.setVisibility(View.GONE);
+                        gambarTebakan.setVisibility(View.GONE);
+                        AnswerTebakan.setVisibility(View.GONE);
+                        layout2.setVisibility(View.GONE);
+
+                        /*
+                        algoritma untuk next image
+                         */
+                        setValueForTheUI(tebakanObjects.get(tebakanPointer));
+
+                        /*
+                        begin again count down
+                         */
+                        if(countDownTimer!=null)
+                            countDownTimer.cancel();
+                        CountDown();
+                        dialog.dismiss();
+                    }
+                });
+
+                ((AppCompatButton)dialog.findViewById(R.id.dialog_next)).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        /*
+                        set visibiliy
+                         */
+                        Loading.setVisibility(View.VISIBLE);
+                        TextTebakan.setVisibility(View.GONE);
+                        gambarTebakan.setVisibility(View.GONE);
+                        AnswerTebakan.setVisibility(View.GONE);
+                        layout2.setVisibility(View.GONE);
+                        /*
+                        algoritma untuk next image
+                         */
+                        setValueForTheUI(NextTebakanObject());
+
+                        /*
+                        begin count down
+                         */
+                        if (countDownTimer != null)
+                            countDownTimer.cancel();
+                        CountDown();
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+                dialog.setCanceledOnTouchOutside(false);
 
             }
         }.start();
-        return super.onPrepareOptionsMenu(menu1);
-
     }
 
     private void AnswerTebakan() {
@@ -318,6 +436,7 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
                         }
                     });
                     dialog.show();
+                    dialog.setCanceledOnTouchOutside(false);
 
                 }else{
                     //user belum menjawab tebakan ini
@@ -381,11 +500,35 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
                     button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+
+                            Loading.setVisibility(View.VISIBLE);
+                            TextTebakan.setVisibility(View.GONE);
+                            gambarTebakan.setVisibility(View.GONE);
+                            AnswerTebakan.setVisibility(View.GONE);
+                            layout2.setVisibility(View.GONE);
+                            //algoritma untuk next image
+                            setValueForTheUI(NextTebakanObject());
+
+                            for(int i=0;i<tebakanObjects.size();i++){
+                                Log.d("Gambar Next",tebakanObjects.get(i).get_idTebakan());
+                            }
+                            if(countDownTimer!=null)
+                                countDownTimer.cancel();
+                            CountDown();
                             dialog.dismiss();
-                            finish();
                         }
                     });
+                    /*
+                    cancel timer before showing out of time dialog
+                     */
+                    countDownTimer.cancel();
+
                     dialog.show();
+                    dialog.setCanceledOnTouchOutside(false);
+
+
+
+
 
                 }
             } else {
@@ -421,6 +564,7 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
                 });
                 button.setTextColor(getResources().getColor(R.color.primary_red));
                 dialog.show();
+                dialog.setCanceledOnTouchOutside(false);
 
                 //TODO here give minus point
                 /**
@@ -434,6 +578,8 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
         }
     }
 
+
+
     public void HintBrow(View v){
 
         if(hintShow<1){
@@ -443,7 +589,7 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
         }else{
             if(dismissHint<=4000){
                 /**
-                 * dialog hint tidak akan terbuka jia kurang dari 4 detik atau sama
+                 * dialog hint tidak akan terbuka jika kurang dari 4 detik atau sama
                  */
             }else{
                 String hint = AlgoritmaHint(tempTebakan);
@@ -461,8 +607,9 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
                 });
                 button.setTextColor(getResources().getColor(R.color.primary));
                 dialog.show();
+                dialog.setCanceledOnTouchOutside(false);
 
-                new CountDownTimer(4000, 1000) {//CountDownTimer(edittext1.getText()+edittext2.getText()) also parse it to long
+                new CountDownTimer(3000, 1000) {//CountDownTimer(edittext1.getText()+edittext2.getText()) also parse it to long
 
                     public void onTick(long millisUntilFinished) {
                         long count = millisUntilFinished/1000;
@@ -476,7 +623,30 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
                 }.start();
             }
         }
+        /**
+         * count show hint dialog
+         */
         hintShow=hintShow-1;
+    }
+
+
+
+    private TebakanObject NextTebakanObject(){
+        tebakanPointer=tebakanPointer+1;
+        if(tebakanPointer==10){
+            tebakanPointer=0;
+            Toast.makeText(getApplicationContext(),"10 Jawaban",Toast.LENGTH_LONG).show();
+        }else{
+            _idTebakan = tebakanObjects.get(tebakanPointer).get_idTebakan();
+            _idUser = tebakanObjects.get(tebakanPointer).get_idUser();
+            textTebakan = tebakanObjects.get(tebakanPointer).getTextTebakan();
+            kunciTebakan = tebakanObjects.get(tebakanPointer).getKunciTebakan();
+            gambarUrl = tebakanObjects.get(tebakanPointer).getUrlGambarTebakan();
+            gcmID = tebakanObjects.get(tebakanPointer).getGcmID();
+            tebakanObject= tebakanObjects.get(tebakanPointer);
+        }
+
+        return tebakanObject;
     }
 
     private String AlgoritmaHint(String JawabanTebakan){
@@ -505,28 +675,97 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
     @Override
     public void onErrorResponse(VolleyError error) {
 //        Log.d("Error", error.getMessage());
-        Toast.makeText(getApplicationContext(), "Wooww, Error man", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Wooww, Error Bray", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onResponse(String response) {
-        Log.d("response", response);
         try {
             JSONObject jsonObject = new JSONObject(response);
-            if (jsonObject.getString(ServerConstants.statusBeckend).equalsIgnoreCase(ServerConstants.statusBeckendOk)) {
+            Log.d("response",response);
+            Log.d("jumlah",String.valueOf(jsonObject.getJSONArray(ServerConstants.dataListTebakan).length()));
+            if(jsonObject.getString(ServerConstants.statusBeckend).equalsIgnoreCase(ServerConstants.statusBeckendOk)){
+                switch (jsonObject.getInt(ServerConstants.resultType)){
+                    case ServerConstants.showTebakanResult:
+                        /**
+                         * saving all the array tebkan to the list
+                         */
+                        JSONArray jsonResult = jsonObject.getJSONArray(ServerConstants.dataListTebakan);
+                        for(int i=0;i<jsonResult.length();i++){
+                            TebakanObject tebakanObject = new TebakanObject();
+                            tebakanObject.set_idTebakan(jsonResult.getJSONObject(i).getString(ServerConstants._idTebakan));
+                            tebakanObject.setKunciTebakan(jsonResult.getJSONObject(i).getString(ServerConstants.mParamsKunciTebakan));
+                            tebakanObject.setTextTebakan(jsonResult.getJSONObject(i).getString(ServerConstants.textTebakan));
+                            tebakanObject.setUrlGambarTebakan(jsonResult.getJSONObject(i).getString(ServerConstants.gambarTebakan));
+                            tebakanObject.set_idUser(jsonResult.getJSONObject(i).getString(ServerConstants._idUser));
+                            tebakanObject.setGcmID(jsonResult.getJSONObject(i).getString(ServerConstants.gcmID));
+                            tebakanObjects.add(tebakanObject);
+                        }
 
-            } else {
-                switch (jsonObject.getInt(ServerConstants.resultType)) {
-                    case ServerConstants.ErrorEmptyParams:
-                        Toast.makeText(getApplicationContext(), "Oops Sorry, Somethings Wrong", Toast.LENGTH_LONG).show();
+                        /**
+                         * set value for the UI
+                         */
+
+                        setValueForTheUI(tebakanObjects.get(3));
+
                         break;
-                    case ServerConstants.ErrorDataNotFound:
-                        Toast.makeText(getApplicationContext(), "Oops Sorry, Somethings Wrong", Toast.LENGTH_LONG).show();
+                    case ServerConstants.addTebakanView :
+                        /**
+                         * saving all the array tebkan to the list
+                         */
+                        JSONArray jsonArray = jsonObject.getJSONArray(ServerConstants.dataListTebakan);
+                        for(int i=0;i<jsonArray.length();i++){
+                            TebakanObject tebakanObject = new TebakanObject();
+                            tebakanObject.set_idUser(jsonArray.getJSONObject(i).getString(ServerConstants._idUser));
+                            tebakanObject.setGcmID(jsonArray.getJSONObject(i).getString(ServerConstants.gcmID));
+                            tebakanObject.set_idTebakan(jsonArray.getJSONObject(i).getString(ServerConstants._idTebakan));
+                            tebakanObject.setKunciTebakan(jsonArray.getJSONObject(i).getString(ServerConstants.mParamsKunciTebakan));
+                            tebakanObject.setTextTebakan(jsonArray.getJSONObject(i).getString(ServerConstants.textTebakan));
+                            tebakanObject.setUrlGambarTebakan(jsonArray.getJSONObject(i).getString(ServerConstants.gambarTebakan));
+                            tebakanObjects.add(tebakanObject);
+                        }
+
+                        /**
+                         * set value for the UI
+                         */
+
                         break;
-                    case ServerConstants.ErrorQuery:
-                        Toast.makeText(getApplicationContext(), "Oops Sorry, Somethings Wrong", Toast.LENGTH_LONG).show();
+                    case ServerConstants.addTebakanAtas :
+                        JSONArray jsonArrayAtas = jsonObject.getJSONArray(ServerConstants.dataListTebakan);
+                        List<TebakanObject> tempList = new ArrayList<TebakanObject>();
+                        for(int i=0;i<jsonArrayAtas.length();i++){
+                            TebakanObject tebakanObject = new TebakanObject();
+                            tebakanObject.set_idUser(jsonArrayAtas.getJSONObject(i).getString(ServerConstants._idUser));
+                            tebakanObject.setGcmID(jsonArrayAtas.getJSONObject(i).getString(ServerConstants.gcmID));
+                            tebakanObject.set_idTebakan(jsonArrayAtas.getJSONObject(i).getString(ServerConstants._idTebakan));
+                            tebakanObject.setTextTebakan(jsonArrayAtas.getJSONObject(i).getString(ServerConstants.textTebakan));
+                            tebakanObject.setUrlGambarTebakan(jsonArrayAtas.getJSONObject(i).getString(ServerConstants.gambarTebakan));
+                            tempList.add(tebakanObject);
+//                            tebakanObjects.add(tebakanObject);
+                        }
+
+                        tempList.addAll(tebakanObjects);
+                        tebakanObjects.clear();
+                        tebakanObjects.addAll(tempList);
+                        break;
+                    case ServerConstants.addITebakanDown :
+                        JSONArray jsonArrayBawah = jsonObject.getJSONArray(ServerConstants.dataListTebakan);
+                        for(int i=0;i<jsonArrayBawah.length();i++){
+                            TebakanObject tebakanObject = new TebakanObject();
+                            tebakanObject.set_idTebakan(jsonArrayBawah.getJSONObject(i).getString(ServerConstants._idTebakan));
+                            tebakanObject.setTextTebakan(jsonArrayBawah.getJSONObject(i).getString(ServerConstants.textTebakan));
+                            tebakanObject.setUrlGambarTebakan(jsonArrayBawah.getJSONObject(i).getString(ServerConstants.gambarTebakan));
+                            tebakanObject.set_idUser(jsonArrayBawah.getJSONObject(i).getString(ServerConstants._idUser));
+                            tebakanObject.setGcmID(jsonArrayBawah.getJSONObject(i).getString(ServerConstants.gcmID));
+                            tebakanObjects.add(tebakanObject);
+                        }
+                        break;
+                    default:
                         break;
                 }
+
+            }else{
+                Log.d("Error", "Load Data Error");
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -18,11 +18,39 @@
         android:textSize="@dimen/dialog_text_size_correct"
         />
 
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginTop"
+        android:text="Your Coin"
+        android:textColor="@color/primary"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/coins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1230"
+        android:textColor="@color/primary"/>
+
+
+    <android.support.v7.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginTop"
+        android:text="@string/rangking"
+        android:textColor="@color/primary"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/more_coins"
+        android:textColor="@color/primary"/>
+
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/dialog_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ok"
+        android:text="Next"
         android:textColor="@color/primary"/>
 
 
