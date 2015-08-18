@@ -19,6 +19,8 @@ package santana.tebaktebakan;
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.ResultReceiver;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -37,7 +39,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import santana.tebaktebakan.activity.MainMenuActivity;
+import santana.tebaktebakan.activity.LoginActivity;
 import santana.tebaktebakan.activity.RegisterActivity;
 import santana.tebaktebakan.activity.TebakanListActivity;
 import santana.tebaktebakan.common.ApplicationConstants;
@@ -47,9 +49,14 @@ import santana.tebaktebakan.session.SessionManager;
 
 public class RegistrationIntentService extends IntentService implements Response.Listener<String>,Response.ErrorListener{
 
+    public static final int STATUS_RUNNING = 0;
+    public static final int STATUS_FINISHED = 1;
+    public static final int STATUS_ERROR = 2;
     private static final String TAG = "RegIntentService";
     private static final String[] TOPICS = {"global"};
     private SessionManager sessionManager;
+    private ResultReceiver receiver;
+    private Bundle bundle;
 
     public RegistrationIntentService() {
         super(TAG);
@@ -59,6 +66,8 @@ public class RegistrationIntentService extends IntentService implements Response
     protected void onHandleIntent(Intent intent) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String fromActivity = intent.getExtras().getString(ApplicationConstants.FromActivity);
+        receiver = intent.getParcelableExtra("receiver");
+        bundle = new Bundle();
 
         try {
             // In the (unlikely) event that multiple refresh operations occur simultaneously,
@@ -82,6 +91,9 @@ public class RegistrationIntentService extends IntentService implements Response
                     sendRegistrationToServer(token);
                 }else if(fromActivity.equals(TebakanListActivity.class.toString())){
                     sendRegistrationToServer2(token);
+                }else if(fromActivity.equals(ApplicationConstants.FirtTime)){
+                    receiver.send(STATUS_RUNNING,bundle);
+                    RegisterGenereteUser(token);
                 }
 
                 // Subscribe to topic channels
@@ -98,6 +110,7 @@ public class RegistrationIntentService extends IntentService implements Response
             // If an exception happens while fetching the new token or updating our registration data
             // on a third-party server, this ensures that we'll attempt the update at a later time.
             sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false).apply();
+            receiver.send(STATUS_ERROR,bundle);
         }
         // Notify UI that registration has completed, so the progress indicator can be hidden.
         Intent registrationComplete = new Intent(QuickstartPreferences.REGISTRATION_COMPLETE);
@@ -132,9 +145,30 @@ public class RegistrationIntentService extends IntentService implements Response
     }
 
     /**
+     * generete user fisrtTime
+     */
+    private void RegisterGenereteUser(String token){
+
+        // Add custom implementation, as needed.
+        Map<String,String> mParams = new HashMap<String,String>();
+
+        //token gcm
+        mParams.put(ServerConstants.mParamsGcmID,token);
+        mParams.put(ServerConstants.mParamsEmail,"bray@gmail.com");
+        mParams.put(ServerConstants.mParamsPassword,"password");
+        mParams.put(ServerConstants.mParamsUsername,"new player");
+
+        //token server
+        CostumRequestString myreq = new CostumRequestString(com.android.volley.Request.Method.POST, ServerConstants.registerTempUser, mParams, RegistrationIntentService.this,RegistrationIntentService.this);
+
+        myreq.setRetryPolicy(new DefaultRetryPolicy(5000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        AppController.getInstance().addToRequestQueue(myreq);
+    }
+
+
+    /**
      * register gcm second time
      */
-
     private void sendRegistrationToServer2(String token) {
 
         // Add custom implementation, as needed.
@@ -179,9 +213,31 @@ public class RegistrationIntentService extends IntentService implements Response
             if(jsonObject.getString(ServerConstants.statusBeckend).equalsIgnoreCase(ServerConstants.statusBeckendOk)){
                 switch (jsonObject.getInt(ServerConstants.resultType)){
                     case ServerConstants.registerResult :
-                        Intent intent = new Intent(this,MainMenuActivity.class);
+                        Intent intent = new Intent(this,LoginActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
+                        break;
+                    case ServerConstants.registerTempResult :
+                        //register result temporary
+                        sessionManager.setUidUser(jsonObject.getString(ServerConstants._idUser));
+                        sessionManager.setToken(jsonObject.getString(ServerConstants.getTokenBeckend));
+                        sessionManager.setUsername("new player");
+                        sessionManager.setIsGcmRegistered(true);
+                        sessionManager.setAppVersion(ApplicationConstants.getAppVersion(this));
+                        sessionManager.setHint(3);
+                        sessionManager.setCoins(1000);
+                        sessionManager.setIdTebakan(jsonObject.getString(ServerConstants.mParamlastIdTebakan));
+                        sessionManager.setLevel(jsonObject.getString(ServerConstants.mParamlevel));
+
+                        //set mode user to true cuz this is temp user
+                        sessionManager.setModeUser(true);
+
+                        //email and password
+                        sessionManager.setEmail("bray");
+                        sessionManager.setPassword("password");
+
+                        receiver.send(STATUS_FINISHED,bundle);
                         break;
                     case ServerConstants.registerGcmResult :
 

@@ -25,6 +25,20 @@ public class SessionManager {
     private static final String KEY_USERNAME = "KEY_USERNAME";
     private static final String KEY_LOGGIN = "KEY_LOGGIN";
     private static final String KEY_HINT = "KEY_HINT";
+    private static final String KEY_POINT = "KEY_POINT";
+    private static final String KEY__IdTebakan = "KEY__IdTebakan";
+    private static final String KEY_LEVEL = "KEY_LEVEL";
+    private static final String MODE_USER= "MODE_USER";
+
+    /**
+     * twitter sessio
+     */
+    private static final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
+    private static final String PREF_KEY_OAUTH_SECRET = "oauth_token_secret";
+    private static final String PREF_KEY_TWITTER_LOGIN = "is_twitter_loggedin";
+    private static final String PREF_USER_NAME = "twitter_user_name";
+
+
     // uri gambar
     private static final String KEY_URI = "KEY_URI";
 
@@ -44,6 +58,49 @@ public class SessionManager {
         editor = pref.edit();
     }
 
+    public boolean getModeUser(){
+        return pref.getBoolean(MODE_USER,false);
+    }
+
+    public void setModeUser(boolean bool){
+        editor.putBoolean(MODE_USER,bool);
+        editor.commit();
+    }
+
+    public boolean getLoginTwitter(){
+        return pref.getBoolean(PREF_KEY_TWITTER_LOGIN,false);
+    }
+
+    public void setLoginTwitter(boolean bol){
+        editor.putBoolean(PREF_KEY_TWITTER_LOGIN,bol);
+        editor.commit();
+    }
+
+    public void saveTwitterInfodong(String token, String tokenSecret, boolean bool, String username) {
+        editor.putString(PREF_KEY_OAUTH_TOKEN, token);
+        editor.putString(PREF_KEY_OAUTH_SECRET, tokenSecret);
+        editor.putBoolean(PREF_KEY_TWITTER_LOGIN, bool);
+        editor.putString(PREF_USER_NAME, username);
+        editor.commit();
+    }
+
+    public String getPrefKeyOauthToken(){
+        return pref.getString(PREF_KEY_OAUTH_TOKEN,"");
+    }
+
+    public void setPrefKeyOauthToken(String token){
+        editor.putString(PREF_KEY_OAUTH_TOKEN,token);
+        editor.commit();
+    }
+
+    public String getPrefKeyOauthSecret(){
+        return pref.getString(PREF_KEY_OAUTH_SECRET,"");
+    }
+
+    public void setPrefKeyOauthSecret(String Secret){
+        editor.putString(PREF_KEY_OAUTH_SECRET,Secret);
+        editor.commit();
+    }
 
     public boolean isLoggin(){
         return pref.getBoolean(KEY_LOGGIN,false);
@@ -60,6 +117,33 @@ public class SessionManager {
 
     public void setKeyUri(String path){
         editor.putString(KEY_URI, path);
+        editor.commit();
+    }
+
+    public String getLevel(){
+        return pref.getString(KEY_LEVEL, "");
+    }
+
+    public void setLevel(String path){
+        editor.putString(KEY_LEVEL, path);
+        editor.commit();
+    }
+
+    public String getIdTebakan(){
+        return pref.getString(KEY__IdTebakan, "");
+    }
+
+    public void setIdTebakan(String path){
+        editor.putString(KEY__IdTebakan, path);
+        editor.commit();
+    }
+
+    public int getCoins(){
+        return pref.getInt(KEY_POINT, 0);
+    }
+
+    public void setCoins(int jumlahHint){
+        editor.putInt(KEY_POINT, jumlahHint);
         editor.commit();
     }
 

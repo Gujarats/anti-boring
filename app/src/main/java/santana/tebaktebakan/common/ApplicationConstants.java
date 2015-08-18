@@ -9,6 +9,13 @@ import android.content.pm.PackageManager;
  */
 public class ApplicationConstants {
 
+    //request to server
+    public static final int loadGambar = 0;
+    public static final int jawabanSalah = 1;
+    public static final int jawabanBenar = 2;
+    public static final int next = 3;
+    public static final int tryAgain = 4;
+
     //intent service from activity
     public static final String FromActivity = "FromActivity";
     public static final String ImageVisibiliy = "no_data";
@@ -25,6 +32,11 @@ public class ApplicationConstants {
     //id tebakan
     public static final String _listChatBrow = "_listChatBrow.txt";
     public static final String _listChatBrow2 = "_listChatBrow2.txt";
+
+    /*
+    * first time lauch
+    * */
+    public static final String FirtTime="FirtTime";
 
 
     //from activity

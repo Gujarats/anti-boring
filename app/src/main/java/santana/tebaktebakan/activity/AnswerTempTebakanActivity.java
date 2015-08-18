@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -51,9 +50,9 @@ import santana.tebaktebakan.session.SessionManager;
 import santana.tebaktebakan.storageMemory.SavingFile;
 
 /**
- * Created by Gujarat Santana on 12/06/15.
+ * Created by Gujarat Santana on 18/08/15.
  */
-public class AnswerTebakanActivity extends AppCompatActivity implements Response.Listener<String>, Response.ErrorListener {
+public class AnswerTempTebakanActivity extends AppCompatActivity implements Response.Listener<String>, Response.ErrorListener{
 
     protected AppCompatEditText AnswerTebakan;
     protected AppCompatTextView TextTebakan;
@@ -63,7 +62,6 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
     protected Menu menu;
     protected LinearLayout layout2;
     protected ImageView life1,life2,life3;
-
 
     //time varibel UI
     protected AppCompatTextView Waktu,CoinSaya;
@@ -144,34 +142,28 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
          */
         if(cd.isConnectingToInternet() && sessionManager.getIdTebakan().isEmpty()){
 //            Log.d("first","first");
-            requestApi(ServerConstants.ShowTebakanFirst);
+            requestApi(ServerConstants.ShowAlltebakanTemp);
             requestServer = ApplicationConstants.loadGambar;
         } else if(cd.isConnectingToInternet() && !sessionManager.getIdTebakan().isEmpty()){
 //            Log.d("first","second");
-            requestApi(ServerConstants.ShowAllTebakanPaging);
+            requestApi(ServerConstants.showTebakanPagingTemp);
             requestServer = ApplicationConstants.loadGambar;
         } else{
-            Toast.makeText(AnswerTebakanActivity.this, "Please Check Your Connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AnswerTempTebakanActivity.this, "Please Check Your Connection", Toast.LENGTH_SHORT).show();
         }
 
         initUi();
         initHint();
     }
 
-    private void setCoin(int point){
-        sessionManager.setCoins(sessionManager.getCoins()+point);
-        CoinSaya.setText(sessionManager.getCoins());
-    }
-
-
     @Override
     public void onBackPressed() {
     }
 
     private void initUi() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+//        setSupportActionBar(toolbar);
 
         AnswerTebakan = (AppCompatEditText) findViewById(R.id.TextAnswer_Answer);
         TextTebakan = (AppCompatTextView) findViewById(R.id.TextTebakan_Answer);
@@ -179,18 +171,17 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
         Loading = (ProgressBar) findViewById(R.id.Loading);
         layout2 = (LinearLayout)findViewById(R.id.layout2);
 
-        //life point
-        life1 = (ImageView)findViewById(R.id.life1);
-        life2 = (ImageView)findViewById(R.id.life2);
-        life3 = (ImageView)findViewById(R.id.life3);
-
-
         //waktu dan coin
         Waktu = (AppCompatTextView)findViewById(R.id.Waktu);
         CoinSaya= (AppCompatTextView)findViewById(R.id.coinSaya);
         CoinSaya.setText(String.valueOf(sessionManager.getCoins()));
 
-        dialog = new AppCompatDialog(AnswerTebakanActivity.this);
+        //life point
+        life1 = (ImageView)findViewById(R.id.life1);
+        life2 = (ImageView)findViewById(R.id.life2);
+        life3 = (ImageView)findViewById(R.id.life3);
+
+        dialog = new AppCompatDialog(AnswerTempTebakanActivity.this);
 
         /**
          * setVisibility of The UI
@@ -309,6 +300,20 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
         }
     }
 
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.answer_activity, menu);
+//        this.menu=menu;
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onPrepareOptionsMenu(Menu menu1) {
+//        this.menu.findItem(R.id.Coins).setTitle(String.valueOf(sessionManager.getCoins()));
+//        return super.onPrepareOptionsMenu(menu1);
+//
+//    }
+
     private void CountDown(){
         countDownTimer = new CountDownTimer(30000, 1000) {//CountDownTimer(edittext1.getText()+edittext2.getText()) also parse it to long
 
@@ -356,8 +361,11 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
                         /**
                          * request minus point tray again
                          */
-                        requestApi(ServerConstants.tryAgain);
-                        requestServer = ApplicationConstants.tryAgain;
+//                        sessionManager.setCoins(sessionManager.getCoins()-30);
+                        setCoin(-30);
+
+//                        requestApi(ServerConstants.tryAgain);
+//                        requestServer = ApplicationConstants.tryAgain;
                         dialog.dismiss();
                     }
                 });
@@ -385,8 +393,10 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
                         /**
                          * request minus point next krn tidak berhasil menjawab pertanyaan dengan benar
                          */
-                        requestApi(ServerConstants.next);
-                        requestServer = ApplicationConstants.next;
+//                        requestApi(ServerConstants.next);
+//                        requestServer = ApplicationConstants.next;
+//                        sessionManager.setCoins(sessionManager.getCoins()-50);
+                        setCoin(-50);
                         dialog.dismiss();
                     }
                 });
@@ -398,10 +408,13 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
         }.start();
     }
 
+    private void setCoin(int point){
+        sessionManager.setCoins(sessionManager.getCoins()+point);
+        CoinSaya.setText(String.valueOf(sessionManager.getCoins()));
+    }
+
 
     private void AnswerTebakan() {
-        countDownTimer.cancel();
-
         String answerTemp = AnswerTebakan.getText().toString();
         if (!answerTemp.trim().isEmpty()) {
             if (answerTemp.equalsIgnoreCase(kunciTebakan)) {
@@ -411,9 +424,12 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
                 /**
                  * making reques for the right answer
                  */
+                //plus point 150
+//                sessionManager.setCoins(sessionManager.getCoins()+150);
+                setCoin(150);
+//                requestApi(ServerConstants.jawabanBenar);
+//                requestServer = ApplicationConstants.jawabanBenar;
 
-                requestApi(ServerConstants.jawabanBenar);
-                requestServer = ApplicationConstants.jawabanBenar;
 
                 /**
                  * show dialog for winner
@@ -480,10 +496,11 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
                          */
 
                         if(sessionManager.getCoins()==0){
-                            Toast.makeText(AnswerTebakanActivity.this, "Please Share to Social Media To get 1000 coins", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AnswerTempTebakanActivity.this, "Please Share to Social Media To get 1000 coins", Toast.LENGTH_SHORT).show();
                         }else{
-                            requestApi(ServerConstants.next);
-                            requestServer = ApplicationConstants.next;
+                            //minus 50 coin
+//                            sessionManager.setCoins(sessionManager.getCoins()-50);
+                            setCoin(-50);
                             /*
                                 algoritma next Image
                              */
@@ -514,13 +531,13 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
                          * next kurangi point 30 krn tidak berhasil menjawab perntanyaan
                          */
                         if(sessionManager.getCoins()==0){
-                            Toast.makeText(AnswerTebakanActivity.this, "Please Share to Social Media To get 1000 coins", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AnswerTempTebakanActivity.this, "Please Share to Social Media To get 1000 coins", Toast.LENGTH_SHORT).show();
                         }else{
                             if(countDownTimer!=null)
                                 countDownTimer.cancel();
                             CountDown();
-                            requestApi(ServerConstants.tryAgain);
-                            requestServer = ApplicationConstants.tryAgain;
+//                            sessionManager.setCoins(sessionManager.getCoins()-30);
+                            setCoin(-30);
                             dialog.dismiss();
                         }
 
@@ -531,19 +548,16 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
                 dialog.setCancelable(false);
                 dialog.setCanceledOnTouchOutside(false);
 
-                /*
-                 set editText to null
-                */
-                AnswerTebakan.setText("");
-
 
                 /**
                  * minus point untuk user yg gagal menjawab pertanyaan
                  */
-                requestApi(ServerConstants.jawabanSalah);
-                requestServer = ApplicationConstants.jawabanSalah;
 
+//                sessionManager.setCoins(sessionManager.getCoins()-100);
+                setCoin(-100);
 
+                //freeze time
+                countDownTimer.cancel();
             }
         } else {
             Toast.makeText(getApplicationContext(), "Please Answer", Toast.LENGTH_LONG).show();
@@ -585,9 +599,7 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
                 new CountDownTimer(3000, 1000) {//CountDownTimer(edittext1.getText()+edittext2.getText()) also parse it to long
 
                     public void onTick(long millisUntilFinished) {
-                        long count = millisUntilFinished/1000;
-//                menu.findItem(R.id.Count).setTitle(String.valueOf(count));
-                        //here you can have your logic to set text to edittext
+
                     }
 
                     public void onFinish() {
@@ -651,7 +663,7 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
         mParams.put(ServerConstants.mParamCoins, String.valueOf(sessionManager.getCoins()));
 //        Log.d("NextPaging1", sessionManager.getIdTebakan());
 //        Log.d("NextPaging2", String.valueOf(sessionManager.getCoins()));
-        CostumRequestString myReq = new CostumRequestString(Request.Method.POST, ServerConstants.ShowAllTebakanPaging, mParams, Request.Priority.NORMAL,AnswerTebakanActivity.this, AnswerTebakanActivity.this);
+        CostumRequestString myReq = new CostumRequestString(Request.Method.POST, ServerConstants.showTebakanPagingTemp, mParams, Request.Priority.NORMAL,AnswerTempTebakanActivity.this, AnswerTempTebakanActivity.this);
         myReq.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         AppController.getInstance().addToRequestQueue(myReq);
     }
@@ -674,7 +686,6 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
 
 
     private TebakanObject NextTebakanObjectList(){
-        tebakanPointer=tebakanPointer+1;
         _idTebakan = tebakanObjects.get(tebakanPointer).get_idTebakan();
         _idUser = tebakanObjects.get(tebakanPointer).get_idUser();
         textTebakan = tebakanObjects.get(tebakanPointer).getTextTebakan();
@@ -682,6 +693,7 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
         gambarUrl = tebakanObjects.get(tebakanPointer).getUrlGambarTebakan();
         gcmID = tebakanObjects.get(tebakanPointer).getGcmID();
         tebakanObject= tebakanObjects.get(tebakanPointer);
+        tebakanPointer=tebakanPointer+1;
         return tebakanObject;
     }
 
@@ -692,7 +704,7 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
         mParams.put(ServerConstants.mParamsIdTebakan, sessionManager.getIdTebakan());
         mParams.put(ServerConstants.mParamCoins, String.valueOf(sessionManager.getCoins()));
 //        Log.d("IDBRow", sessionManager.getIdTebakan());
-        CostumRequestString myReq = new CostumRequestString(Request.Method.POST, urlApi, mParams, AnswerTebakanActivity.this, AnswerTebakanActivity.this);
+        CostumRequestString myReq = new CostumRequestString(Request.Method.POST, urlApi, mParams, AnswerTempTebakanActivity.this, AnswerTempTebakanActivity.this);
         myReq.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         AppController.getInstance().addToRequestQueue(myReq);
     }
@@ -730,31 +742,13 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
                 switch (requestServer){
                     case ApplicationConstants.loadGambar :
 //                        Log.d("reques","load gambar");
-                        requestApi(ServerConstants.ShowTebakanFirst);
+                        requestApi(ServerConstants.ShowAlltebakanTemp);
                         break;
-                    case ApplicationConstants.next :
-                        dialog.dismiss();
-//                        Log.d("reques", "next");
-                        requestApi(ServerConstants.next);
-                        break;
-                    case ApplicationConstants.tryAgain:
-                        dialog.dismiss();
-//                        Log.d("reques", "try again");
-                        requestApi(ServerConstants.tryAgain);
-                        break;
-                    case ApplicationConstants.jawabanBenar:
-                        dialog.dismiss();
-//                        Log.d("reques", "jawabanBenar");
-                        requestApi(ServerConstants.jawabanBenar);
-                        break;
-                    case ApplicationConstants.jawabanSalah:
-                        dialog.dismiss();
-//                        Log.d("reques", "jawabanSalah");
-                        requestApi(ServerConstants.jawabanSalah);
-                        break;
+                   default:
+                       break;
                 }
             }else{
-                Toast.makeText(AnswerTebakanActivity.this, "Please Check Your Connectiosn", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AnswerTempTebakanActivity.this, "Please Check Your Connectiosn", Toast.LENGTH_SHORT).show();
             }
         }
         retryConnect = retryConnect+1;
@@ -772,9 +766,9 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
                 switch (jsonObject.getInt(ServerConstants.resultType)){
                     case ServerConstants.dataFoundResult:
                         //algoritma to set point in local
-                        sessionManager.setCoins(jsonObject.getInt(ServerConstants.point));
+                        setCoin(jsonObject.getInt(ServerConstants.point));
+//                        sessionManager.setCoins(jsonObject.getInt(ServerConstants.point));
 //                        this.menu.findItem(R.id.Coins).setTitle(String.valueOf(jsonObject.getInt(ServerConstants.point)));
-                        CoinSaya.setText(String.valueOf(jsonObject.getInt(ServerConstants.point)));
                         ((AppCompatTextView)dialog.findViewById(R.id.coins)).setText(String.valueOf(jsonObject.getInt(ServerConstants.point)));
                         break;
                     case ServerConstants.showTebakanResult:
@@ -806,7 +800,7 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
                         if(tebakanObjects.size()>0) {
                             setValueForTheUI(tebakanObjects.get(0));
                         }else{
-                            Toast.makeText(AnswerTebakanActivity.this, "We Will add more the Content Soon", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AnswerTempTebakanActivity.this, "We Will add more the Content Soon", Toast.LENGTH_SHORT).show();
                         }
                         break;
 
@@ -830,17 +824,17 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
 //                Log.d("Error", "Load Data Error");
                 switch (jsonObject.getInt(ServerConstants.resultType)){
                     case ServerConstants.ErrorTokenExpired:
-                        Toast.makeText(AnswerTebakanActivity.this, "Please Wait...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AnswerTempTebakanActivity.this, "Please Wait...", Toast.LENGTH_SHORT).show();
                         Map<String,String> mParams = new HashMap<String,String>();
                         mParams.put(ServerConstants.mParamsPassword, sessionManager.getPassword());
                         mParams.put(ServerConstants.mParamsEmail,sessionManager.getEmail());
 
-                        CostumRequestString myReq = new CostumRequestString(Request.Method.POST,ServerConstants.loginTebakan,mParams,AnswerTebakanActivity.this,AnswerTebakanActivity.this);
+                        CostumRequestString myReq = new CostumRequestString(Request.Method.POST,ServerConstants.loginTebakan,mParams,AnswerTempTebakanActivity.this,AnswerTempTebakanActivity.this);
                         myReq.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                         AppController.getInstance().addToRequestQueue(myReq);
                         break;
                     case ServerConstants.ErrorDataNotFound :
-                        Toast.makeText(AnswerTebakanActivity.this, "Sorry We Couldn't find any data", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AnswerTempTebakanActivity.this, "Sorry We Couldn't find any data", Toast.LENGTH_SHORT).show();
                         break;
                     default:
                         break;

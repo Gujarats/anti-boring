@@ -21,20 +21,32 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import santana.tebaktebakan.AppController;
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.RegistrationIntentService;
 import santana.tebaktebakan.adapter.TebakanListAdapterCompat;
 import santana.tebaktebakan.common.ApplicationConstants;
+import santana.tebaktebakan.common.ServerConstants;
+import santana.tebaktebakan.requestNetwork.CostumRequestString;
 import santana.tebaktebakan.session.SessionManager;
 import santana.tebaktebakan.utilityUI.RecyclerScrollListener;
 
 /**
  * Created by Gujarat Santana on 12/06/15.
  */
-public class TebakanListActivity extends AppCompatActivity {
+public class TebakanListActivity extends AppCompatActivity implements Response.Listener<String>,Response.ErrorListener{
     /**
      * gcm variable
      */
@@ -49,15 +61,30 @@ public class TebakanListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         /**
          * before init the ui check whether user is registered or loggon
          */
         sessionManager = new SessionManager(getApplicationContext());
         if(sessionManager.getUidUser().isEmpty() || sessionManager.getToken().isEmpty()){
             sessionManager.clearAllSession();
-            Intent intent = new Intent(this,RegisterActivity.class);
-            finish();
-            startActivity(intent);
+//            Intent intent = new Intent(this,RegisterActivity.class);
+//            finish();
+//            startActivity(intent);
+
+
+            /*
+                if the first time opening the apps regsiter the user using generated user
+             */
+            if(checkPlayServices()){
+                Intent intent = new Intent(this, RegistrationIntentService.class);
+                intent.putExtra(ApplicationConstants.FromActivity,TebakanListActivity.class.toString());
+                startService(intent);
+            }else{
+                Toast.makeText(TebakanListActivity.this, "Please install google play service", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
         }
 
@@ -81,6 +108,8 @@ public class TebakanListActivity extends AppCompatActivity {
 
         initUI();
     }
+
+
 
 
     private String getRegistrationId(Context context) {
@@ -207,6 +236,60 @@ public class TebakanListActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void RegisterGenereteUser(){
+
+        // Add custom implementation, as needed.
+        Map<String,String> mParams = new HashMap<String,String>();
+
+        //token gcm
+        mParams.put(ServerConstants.mParamsGcmID,"token");
+        mParams.put(ServerConstants.mParamsEmail,"bray@gmail.com");
+        mParams.put(ServerConstants.mParamsPassword,"password");
+        mParams.put(ServerConstants.mParamsUsername,"new player");
+
+        //token server
+        CostumRequestString myreq = new CostumRequestString(com.android.volley.Request.Method.POST, ServerConstants.registerUser , mParams, TebakanListActivity.this,TebakanListActivity.this);
+
+        myreq.setRetryPolicy(new DefaultRetryPolicy(5000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        AppController.getInstance().addToRequestQueue(myreq);
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Toast.makeText(TebakanListActivity.this, "Error Bray", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResponse(String response) {
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            if(jsonObject.getString(ServerConstants.statusBeckend).equalsIgnoreCase(ServerConstants.statusBeckendOk)){
+                switch (jsonObject.getInt(ServerConstants.resultType)){
+                    case ServerConstants.registerResult:
+                        //login result
+                        sessionManager.setUidUser(jsonObject.getString(ServerConstants._idUser));
+                        sessionManager.setToken(jsonObject.getString(ServerConstants.getTokenBeckend));
+                        sessionManager.setUsername(jsonObject.getString(ServerConstants.username));
+                        sessionManager.setIsGcmRegistered(false);
+                        sessionManager.setAppVersion(ApplicationConstants.getAppVersion(this));
+                        sessionManager.setHint(3);
+                        sessionManager.setCoins(Integer.parseInt(jsonObject.getString(ServerConstants.point)));
+                        sessionManager.setIdTebakan(jsonObject.getString(ServerConstants.mParamlastIdTebakan));
+                        sessionManager.setLevel(jsonObject.getString(ServerConstants.mParamlevel));
+
+                        //email and password
+                        sessionManager.setEmail("bray@gmail.com");
+                        sessionManager.setPassword("password");
+                        break;
+                }
+            }else{
+                //not ok
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 }

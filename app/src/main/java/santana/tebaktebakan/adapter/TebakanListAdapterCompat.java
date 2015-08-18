@@ -58,7 +58,7 @@ public class TebakanListAdapterCompat extends RecyclerView.Adapter<TebakanListAd
         mParams.put(ServerConstants.mParams_idUser,sessionManager.getUidUser());
         mParams.put(ServerConstants.mParamsToken,sessionManager.getToken());
 
-        CostumRequestString myReq = new CostumRequestString(Request.Method.POST,ServerConstants.ShowAllTebakan,mParams,TebakanListAdapterCompat.this,TebakanListAdapterCompat.this);
+        CostumRequestString myReq = new CostumRequestString(Request.Method.POST,ServerConstants.ShowTebakanFirst,mParams,TebakanListAdapterCompat.this,TebakanListAdapterCompat.this);
         myReq.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         AppController.getInstance().addToRequestQueue(myReq);
     }

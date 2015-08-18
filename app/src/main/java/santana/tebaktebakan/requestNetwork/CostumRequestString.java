@@ -19,6 +19,8 @@ public class CostumRequestString extends Request<String> {
     private Response.Listener<String> listener;
     private Response.ErrorListener errorListener;
     private Map<String, String> params;
+    private Priority mPriority = Priority.HIGH;
+
 
     public CostumRequestString(int method, String url, Map<String, String> mParams, Response.Listener<String> reponseListener, Response.ErrorListener errorListener) {
         super(method, url, errorListener);
@@ -27,7 +29,26 @@ public class CostumRequestString extends Request<String> {
         this.params = mParams;
     }
 
+    public CostumRequestString(int method, String url, Map<String, String> mParams, Priority mPriority,Response.Listener<String> reponseListener, Response.ErrorListener errorListener) {
+        super(method, url, errorListener);
+        this.listener = reponseListener;
+        this.errorListener = errorListener;
+        this.params = mParams;
+        this.mPriority = mPriority;
+    }
 
+
+
+
+
+    @Override
+    public Priority getPriority() {
+        return mPriority;
+    }
+
+    public void setPriority(Priority priority) {
+        mPriority = priority;
+    }
 
     @Override
     protected Map<String, String> getParams()

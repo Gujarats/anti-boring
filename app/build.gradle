@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.0"
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         applicationId "santana.tebaktebakan"
@@ -28,11 +28,10 @@ android {
 
 repositories {
     mavenCentral()
-
 }
 
 dependencies {
-
+    compile files('libs/twitter4j-core-4.0.2.jar')
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.android.support:cardview-v7:22.2.0'
     compile 'com.android.support:recyclerview-v7:22.2.0'
@@ -44,4 +43,5 @@ dependencies {
     compile files('libs/httpcore-4.3.3.jar')
     compile files('libs/httpmime-4.3.6.jar')
     compile 'com.naver.android.helloyako:imagecropview:1.0.3'
+
 }

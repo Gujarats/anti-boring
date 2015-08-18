@@ -3,7 +3,7 @@
     xmlns:materialdesign="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/Point"
+        android:id="@+id/Coins"
         android:title="100"
         materialdesign:showAsAction="always" />
 

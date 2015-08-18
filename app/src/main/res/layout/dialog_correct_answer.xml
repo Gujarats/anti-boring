@@ -46,6 +46,15 @@
         android:text="@string/more_coins"
         android:textColor="@color/primary"/>
 
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/dialog_try_again"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Try Again"
+        android:textColor="@color/primary"/>
+
+
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/dialog_ok"
         android:layout_width="wrap_content"

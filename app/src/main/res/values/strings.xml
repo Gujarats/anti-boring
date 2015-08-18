@@ -1,7 +1,6 @@
 <resources>
-    <string name="app_name">Tebak Tebakan</string>
+    <string name="app_name">Anti Boring</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
     //answer tebakan activity
@@ -15,13 +14,16 @@
     <string name="can_not_crop">Your image is to small</string>
 
     <!--menu dialog incorrect answer-->
-    <string name="dialog_answer_incorrect">Sorry Incorrect Answer \n-7 Point</string>
+    <string name="dialog_answer_incorrect">Sorry Incorrect Answer</string>
 
     <!--menu dialog correct answer-->
-    <string name="dialog_answer_correct">Yeah You Got The Answer! \n+15 Point</string>
+    <string name="dialog_answer_correct">Yeah You Got The Answer!</string>
 
     <!--menu dialog has aswered-->
     <string name="dialog_answer_answered">You have Answered this question</string>
+
+    <!--menu dialog out of time-->
+    <string name="dialog_out_of_time">You are Running Out Of Time</string>
 
     <!--menu string in option menu-->
     <string name="point_option_menu">100</string>
@@ -32,6 +34,7 @@
     <string name="menu3">Settings</string>
     <string name="menu4">Coins</string>
     <string name="menu5">Rules</string>
+    <string name="menu6">Register</string>
 
     <!--rules-->
     <string name="TitleRules1">Rules Point</string>
@@ -47,5 +50,9 @@
     <string name="next">Next</string>
     <string name="rangking">Rangking</string>
     <string name="more_coins">More Coins</string>
+
+    <!--dialgo warning registration-->
+    <string name="TitleWarning">Please Register Your Account \nto Save Your Progress</string>
+
 
 </resources>

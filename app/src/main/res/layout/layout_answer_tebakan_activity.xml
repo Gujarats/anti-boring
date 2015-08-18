@@ -6,18 +6,18 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     >
-    <android.support.v7.widget.Toolbar
+    <RelativeLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentTop="true"
         android:background="?attr/colorPrimary"
+        android:gravity="center_vertical"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:layout_scrollFlags="scroll|enterAlways"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
+        app:layout_scrollFlags="scroll|enterAlways">
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_top_life_point"
             android:gravity="center_vertical"
@@ -42,7 +42,34 @@
                 android:src="@drawable/heart_life_point3" />
         </LinearLayout>
 
-    </android.support.v7.widget.Toolbar>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/coinSaya"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="1000"
+                android:textColor="@color/white" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/Waktu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/marginLeft"
+                android:layout_marginRight="@dimen/marginRight"
+                android:gravity="center"
+                android:text="30"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
 
     <ScrollView
         android:id="@+id/layoutScroll"
@@ -62,6 +89,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/marginTop"
+                android:layout_marginTop="@dimen/margin_top_life_point"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -96,7 +124,7 @@
                 android:layout_marginRight="@dimen/marginRight"
                 android:text="text tebakan" />
 
-            <com.android.volley.toolbox.NetworkImageView
+            <santana.tebaktebakan.requestNetwork.VolleyImageView
                 android:id="@+id/GambarTebakan_Answer"
                 android:layout_width="fill_parent"
                 android:layout_height="400px"

@@ -19,13 +19,22 @@ public class ServerConstants {
     public static final String insertTebakanText = UrlBeckend+"api/v_gs/insertTebakanText";
 
     //show all tebakan
-    public static final String ShowAllTebakan = UrlBeckend+"api/v_gs/showAllTebakan";
+    public static final String ShowTebakanFirst = UrlBeckend+"api/v_gs/showAllTebakanFirst";
+    public static final String ShowAllTebakanPaging = UrlBeckend+"api/v_gs/showTebakanPaging";
 
     public static final String registerUser = UrlBeckend+"register";
+    public static final String registerTempUser = UrlBeckend+"registerTemp";
     public static final String loginTebakan = UrlBeckend+"login";
 
     //api jawaban benar
     public static final String jawabanBenar = UrlBeckend+"api/v_gs/jawabanBenar";
+    public static final String jawabanSalah = UrlBeckend+"api/v_gs/jawabanSalah";
+    public static final String next = UrlBeckend+"api/v_gs/next";
+    public static final String tryAgain = UrlBeckend+"api/v_gs/tryAgain";
+
+    //api for tempUser
+    public static final String showTebakanPagingTemp = UrlBeckend+"api/v_gs/showTebakanPagingTemp";
+    public static final String ShowAlltebakanTemp = UrlBeckend+"api/v_gs/showAllTebakanFirstTemp";
 
 
 // sending request
@@ -35,6 +44,8 @@ public class ServerConstants {
     public static final String mParamsIdChat = "idChatGroup";
     public static final String mParamsEmail = "email";
     public static final String mParamsToken = "access_token";
+    public static final String mParamsIdTebakan = "_idTebakan";
+    public static final String mParamCoins = "coins";
     public static final String mParams_idUser = "_idUser";
     public static final String mParamsTextTebakan = "textTebakan";
     public static final String mParamsGambarTebakan = "gambarTebakanFile";
@@ -43,6 +54,8 @@ public class ServerConstants {
     public static final String mParamsKunciTebakan= "kunciTebakan";
     public static final String mParamsQuestion = "question";
     public static final String mParamGender = "gender";
+    public static final String mParamlastIdTebakan = "lastIdTebakan";
+    public static final String mParamlevel = "level";
 
     //result from request
     public static final String resultBeckend = "result";
@@ -59,6 +72,7 @@ public class ServerConstants {
     public static final String _idUser = "_idUser";
     public static final String gcmID = "gcmID";
     public static final String username = "username";
+    public static final String point = "point";
 
 
     //result type
@@ -68,6 +82,7 @@ public class ServerConstants {
     public static final int addTebakanAtas = 2;
     public static final int loginResult = 3;
     public static final int registerResult = 4;
+    public static final int registerTempResult = 44;
     public static final int uploadResult = 5;
     public static final int showTebakanResult = 6;
     public static final int registerGcmResult = 7;

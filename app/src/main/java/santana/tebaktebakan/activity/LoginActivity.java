@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
-import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -63,13 +63,13 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.d("Error",error.getMessage());
+//        Log.d("Error",error.getMessage());
+        Toast.makeText(LoginActivity.this, "We're sorry for this please try again later", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onResponse(String response) {
-        Log.d("respone",response);
-
+//        Log.d("respone",response);
         try {
             JSONObject jsonObject = new JSONObject(response);
             if(jsonObject.getString(ServerConstants.statusBeckend).equalsIgnoreCase(ServerConstants.statusBeckendOk)){
@@ -82,6 +82,14 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
                     sessionManager.setUsername(jsonObject.getString(ServerConstants.username));
                     sessionManager.setIsGcmRegistered(true);
                     sessionManager.setAppVersion(ApplicationConstants.getAppVersion(this));
+                    sessionManager.setHint(3);
+                    sessionManager.setCoins(Integer.parseInt(jsonObject.getString(ServerConstants.point)));
+                    sessionManager.setIdTebakan(jsonObject.getString(ServerConstants.mParamlastIdTebakan));
+                    sessionManager.setLevel(jsonObject.getString(ServerConstants.mParamlevel));
+
+                    //email and password
+                    sessionManager.setEmail(Email.getText().toString());
+                    sessionManager.setPassword(Password.getText().toString());
 
                     Intent intent = new Intent(this,MainMenuActivity.class);
                     startActivity(intent);

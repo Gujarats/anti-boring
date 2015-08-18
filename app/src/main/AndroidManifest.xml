@@ -48,16 +48,46 @@
         <activity android:name=".activity.SettingsActivity" />
         <activity android:name=".activity.RankingActivity" />
         <activity android:name=".activity.RulesActivity" />
+
+        <activity android:name=".activity.WebViewActivity" />
         <activity
             android:name=".activity.UploadTebakanActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden"
             />
+
+        //user registered
         <activity
             android:name=".activity.AnswerTebakanActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"
-            />
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="t4jsample"
+                    android:scheme="oauth" />
+            </intent-filter>
+        </activity>
+
+        //user temporary
+        <activity android:name=".activity.AnswerTempTebakanActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="t4jsample"
+                    android:scheme="oauth" />
+            </intent-filter>
+        </activity>
 
 
         //gcm new
