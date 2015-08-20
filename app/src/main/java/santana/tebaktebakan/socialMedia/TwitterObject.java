@@ -31,12 +31,14 @@ public class TwitterObject extends AsyncTask<String, String, Void> {
     private SessionManager sessionManager;
     private String callbackUrl = "http://www.personatalk.com";
     private AppCompatActivity activity;
-    private int WEBVIEW_REQUEST_CODE = 100;
+    private FinishShare finishShare;
+
     private Bitmap ImageTebakan;
 
-    public TwitterObject(AppCompatActivity activity,Context context){
+    public TwitterObject(AppCompatActivity activity,Context context, FinishShare finishShare){
         this.context = context;
         this.activity = activity;
+        this.finishShare=finishShare;
         sessionManager = new SessionManager(context);
     }
 
@@ -44,19 +46,18 @@ public class TwitterObject extends AsyncTask<String, String, Void> {
 
     }
 
-    private void loginToTwitter() {
+    public void loginToTwitter(RequestToken requestToken,Twitter twitter) {
         //boolean isLoggedIn = mSharedPreferences.getBoolean(PREF_KEY_TWITTER_LOGIN, false);
 
         boolean isLoggedIn = sessionManager.getLoginTwitter();
         if (!isLoggedIn) {
             final ConfigurationBuilder builder = new ConfigurationBuilder();
-            builder.setOAuthConsumerKey(SocialMediaConstant.consumerKey);
-            builder.setOAuthConsumerSecret(SocialMediaConstant.consumerSecret);
+            builder.setOAuthConsumerKey(SocialMediaConstant.consumerKeyTwitter);
+            builder.setOAuthConsumerSecret(SocialMediaConstant.consumerSecretTwitter);
 
             final Configuration configuration = builder.build();
             final TwitterFactory factory = new TwitterFactory(configuration);
             twitter = factory.getInstance();
-
             try {
                 requestToken = twitter.getOAuthRequestToken(callbackUrl);
 
@@ -66,7 +67,7 @@ public class TwitterObject extends AsyncTask<String, String, Void> {
                  *  */
                 final Intent intent = new Intent(context, WebViewActivity.class);
                 intent.putExtra(WebViewActivity.EXTRA_URL, requestToken.getAuthenticationURL());
-                activity.startActivityForResult(intent, WEBVIEW_REQUEST_CODE);
+                activity.startActivityForResult(intent, SocialMediaConstant.WEBVIEW_REQUEST_CODE_Twitter);
 
             } catch (TwitterException e) {
                 e.printStackTrace();
@@ -131,8 +132,8 @@ public class TwitterObject extends AsyncTask<String, String, Void> {
         String statusku;
         try {
             ConfigurationBuilder builder = new ConfigurationBuilder();
-            builder.setOAuthConsumerKey(SocialMediaConstant.consumerKey);
-            builder.setOAuthConsumerSecret(SocialMediaConstant.consumerSecret);
+            builder.setOAuthConsumerKey(SocialMediaConstant.consumerKeyTwitter);
+            builder.setOAuthConsumerSecret(SocialMediaConstant.consumerSecretTwitter);
 
             // Access Token
             //String access_token = mSharedPreferences.getString(PREF_KEY_OAUTH_TOKEN, "");
@@ -174,4 +175,9 @@ public class TwitterObject extends AsyncTask<String, String, Void> {
         return null;
     }
 
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+        finishShare.finishShare();
+    }
 }

@@ -101,17 +101,18 @@
                     android:onClick="HintBrow"
                     android:src="@drawable/hints" />
 
-                <ImageView
+                <com.facebook.share.widget.ShareButton
                     android:id="@+id/share1"
                     android:layout_width="47px"
                     android:layout_height="47px"
                     android:layout_marginRight="@dimen/marginTop"
-                    android:src="@drawable/facebook2" />
+                     />
 
                 <ImageView
                     android:id="@+id/share2"
                     android:layout_width="47px"
                     android:layout_height="47px"
+                    android:onClick="ShareTwitter"
                     android:src="@drawable/twitter2" />
 
             </LinearLayout>

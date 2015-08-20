@@ -1,11 +1,16 @@
 package santana.tebaktebakan.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.AppCompatButton;
@@ -28,6 +33,14 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,13 +60,32 @@ import santana.tebaktebakan.object.TebakanObject;
 import santana.tebaktebakan.requestNetwork.CostumRequestString;
 import santana.tebaktebakan.requestNetwork.VolleyImageView;
 import santana.tebaktebakan.session.SessionManager;
+import santana.tebaktebakan.socialMedia.FinishShare;
+import santana.tebaktebakan.socialMedia.SocialMediaConstant;
+import santana.tebaktebakan.socialMedia.TwitterObject;
 import santana.tebaktebakan.storageMemory.SavingFile;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.User;
+import twitter4j.auth.AccessToken;
+import twitter4j.auth.RequestToken;
+import twitter4j.conf.Configuration;
+import twitter4j.conf.ConfigurationBuilder;
 
 /**
  * Created by Gujarat Santana on 18/08/15.
  */
-public class AnswerTempTebakanActivity extends AppCompatActivity implements Response.Listener<String>, Response.ErrorListener{
+public class AnswerTempTebakanActivity extends AppCompatActivity implements Response.Listener<String>, Response.ErrorListener, FinishShare{
 
+    // Twitter oauth urls
+    static final String URL_TWITTER_AUTH = "auth_url";
+    static final String URL_TWITTER_OAUTH_VERIFIER = "oauth_verifier";
+    static final String URL_TWITTER_OAUTH_TOKEN = "oauth_token";
+    private static final String PERMISSION = "publish_actions";
+    //Twitter variable
+    private static Twitter twitter;
+    private static RequestToken requestToken;
     protected AppCompatEditText AnswerTebakan;
     protected AppCompatTextView TextTebakan;
     protected VolleyImageView gambarTebakan;
@@ -62,25 +94,20 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
     protected Menu menu;
     protected LinearLayout layout2;
     protected ImageView life1,life2,life3;
-
     //time varibel UI
     protected AppCompatTextView Waktu,CoinSaya;
-
+    protected ShareButton shareButton;
     /*
     coundown variable
      */
     private CountDownTimer countDownTimer;
-
     /*
     variabel pointer gambar
      */
     private int tebakanPointer = 0;
     private TebakanObject tebakanObject;
-
     /*list tebakan */
     private List<TebakanObject> tebakanObjects;
-
-
     /*test buat hint*/
     private String tempTebakan = "Pejalan Kaki";
     private String _idTebakan = "";
@@ -89,39 +116,58 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
     private int WidthPhone;
     //image Loader
     private ImageLoader imageLoader = AppController.getInstance().getImageLoader();
-
     //saving file id
     private SavingFile savingFile;
-
-
     //id brow
     private JSONObject valuesIdChats;
     private boolean userAlreadyAnswer = true;
     private boolean userFailedAnswer = true;
-
     /*logic timer for dialog hint*/
     private long dismissHint;
     private int hintShow;
-
     /*
     logic succes request to server
      */
     private int requestServer=0;
-
     /**
      * logic connection detector
      */
     private int retryConnect = 0;
     private ConnectionDetector cd;
+    /**
+     * variable facebook
+     */
+    private CallbackManager callbackManager;
 
+//    private void shareImageFacebook(Bitmap bitmap){
+//        SharePhoto photo = new SharePhoto.Builder()
+//                .setBitmap(bitmap)
+//                .build();
+//        SharePhotoContent content = new SharePhotoContent.Builder()
+//                .addPhoto(photo)
+//                .build();
+//
+//        ShareButton shareButton = (ShareButton)findViewById(R.id.share1);
+//        shareButton.setShareContent(content);
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /**
+         * init facebook
+         */
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+
         /*
         connection detector
          */
         cd = new ConnectionDetector(getApplicationContext());
+
+        /* Enabling strict mode */
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         dismissHint =30000;
         setContentView(R.layout.layout_answer_tebakan_activity);
@@ -154,6 +200,44 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
 
         initUi();
         initHint();
+        initTwitter();
+        initFacebook();
+    }
+
+    private void initFacebook(){
+        shareButton = (ShareButton)findViewById(R.id.share1);
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postPhotoFacebook();
+            }
+        });
+    }
+
+    private void postPhotoFacebook(){
+        SharePhoto photo = new SharePhoto.Builder()
+                .setBitmap(((BitmapDrawable)gambarTebakan.getDrawable()).getBitmap())
+                .build();
+        SharePhotoContent content = new SharePhotoContent.Builder()
+                .addPhoto(photo)
+                .build();
+        shareButton.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+            @Override
+            public void onSuccess(Sharer.Result result) {
+                Log.d("fb","success");
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d("fb","cancel");
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+                Log.d("fb","error");
+            }
+        });
+        shareButton.setShareContent(content);
     }
 
     @Override
@@ -228,6 +312,39 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
         });
     }
 
+    private void initTwitter(){
+        if (!sessionManager.getLoginTwitter()) {
+
+            Uri uri = getIntent().getData();
+            if (uri != null && uri.toString().startsWith(SocialMediaConstant.callbackTwitter)) {
+                // oAuth verifier
+                Log.d("masukkk","gan");
+                String verifier = uri
+                        .getQueryParameter(URL_TWITTER_OAUTH_VERIFIER);
+
+                try {
+                    // Get the access token
+                    AccessToken accessToken = twitter.getOAuthAccessToken(
+                            requestToken, verifier);
+
+                    // Getting user details from twitter
+                    // For now i am getting his name only
+                    long userID = accessToken.getUserId();
+                    User user = twitter.showUser(userID);
+                    String username = user.getName();
+
+                    sessionManager.saveTwitterInfodong(accessToken.getToken(),accessToken.getTokenSecret(),true,username);
+
+
+                    // Displaying in xml ui
+                } catch (Exception e) {
+                    // Check log for login errors
+                    Log.e("Twitter Login Error", "> " + e.getMessage());
+                }
+            }
+        }
+    }
+
     private void setValueForTheUI(final TebakanObject tebakanObject){
         /**
          * set variabel
@@ -299,20 +416,6 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
             this.TextTebakan.setText(tebakanObject.getTextTebakan());
         }
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.answer_activity, menu);
-//        this.menu=menu;
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onPrepareOptionsMenu(Menu menu1) {
-//        this.menu.findItem(R.id.Coins).setTitle(String.valueOf(sessionManager.getCoins()));
-//        return super.onPrepareOptionsMenu(menu1);
-//
-//    }
 
     private void CountDown(){
         countDownTimer = new CountDownTimer(30000, 1000) {//CountDownTimer(edittext1.getText()+edittext2.getText()) also parse it to long
@@ -567,6 +670,7 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
 
 
     public void HintBrow(View v){
+        hintShow = sessionManager.getHint();
         if(hintShow<1){
             /**
              * hint habis gan
@@ -635,12 +739,17 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
             case 1 :
                 life3.setImageResource(R.drawable.heart_life_point2);
                 life2.setImageResource(R.drawable.heart_life_point2);
-
+                life1.setImageResource(R.drawable.heart_life_point3);
                 break;
             case 2 :
                 life3.setImageResource(R.drawable.heart_life_point2);
+                life2.setImageResource(R.drawable.heart_life_point3);
+                life1.setImageResource(R.drawable.heart_life_point3);
                 break;
             case 3 :
+                life1.setImageResource(R.drawable.heart_life_point3);
+                life2.setImageResource(R.drawable.heart_life_point3);
+                life3.setImageResource(R.drawable.heart_life_point3);
                 break;
         }
     }
@@ -686,6 +795,7 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
 
 
     private TebakanObject NextTebakanObjectList(){
+        tebakanPointer=tebakanPointer+1;
         _idTebakan = tebakanObjects.get(tebakanPointer).get_idTebakan();
         _idUser = tebakanObjects.get(tebakanPointer).get_idUser();
         textTebakan = tebakanObjects.get(tebakanPointer).getTextTebakan();
@@ -693,8 +803,89 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
         gambarUrl = tebakanObjects.get(tebakanPointer).getUrlGambarTebakan();
         gcmID = tebakanObjects.get(tebakanPointer).getGcmID();
         tebakanObject= tebakanObjects.get(tebakanPointer);
-        tebakanPointer=tebakanPointer+1;
         return tebakanObject;
+    }
+
+    public void ShareTwitter(View v){
+        TwitterObject twitterObject = new TwitterObject(AnswerTempTebakanActivity.this,getApplicationContext(),AnswerTempTebakanActivity.this);
+        if(sessionManager.getLoginTwitter()){
+
+            twitterObject.setBitmap(((BitmapDrawable)gambarTebakan.getDrawable()).getBitmap());
+            twitterObject.execute("#Bray Gambar Apa itu?");
+        }else{
+            loginToTwitter();
+        }
+
+
+    }
+
+    public void loginToTwitter() {
+        //boolean isLoggedIn = mSharedPreferences.getBoolean(PREF_KEY_TWITTER_LOGIN, false);
+
+        boolean isLoggedIn = sessionManager.getLoginTwitter();
+        if (!isLoggedIn) {
+            final ConfigurationBuilder builder = new ConfigurationBuilder();
+            builder.setOAuthConsumerKey(SocialMediaConstant.consumerKeyTwitter);
+            builder.setOAuthConsumerSecret(SocialMediaConstant.consumerSecretTwitter);
+
+            final Configuration configuration = builder.build();
+            final TwitterFactory factory = new TwitterFactory(configuration);
+            twitter = factory.getInstance();
+            try {
+                requestToken = twitter.getOAuthRequestToken(SocialMediaConstant.callbackTwitter);
+
+                /**
+                 *  Loading twitter login page on webview for authorization
+                 *  Once authorized, results are received at onActivityResult
+                 *  */
+                final Intent intent = new Intent(getApplicationContext(), WebViewActivity.class);
+                intent.putExtra(WebViewActivity.EXTRA_URL, requestToken.getAuthenticationURL());
+                startActivityForResult(intent, SocialMediaConstant.WEBVIEW_REQUEST_CODE_Twitter);
+
+            } catch (TwitterException e) {
+                e.printStackTrace();
+            }
+        } else {
+            /**
+             * twitter sudah login
+             */
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SocialMediaConstant.WEBVIEW_REQUEST_CODE_Twitter) {
+            if (resultCode == Activity.RESULT_OK) {
+                String verifier = data.getExtras().getString(SocialMediaConstant.oAuthVerifier);
+                try {
+                    AccessToken accessToken = twitter.getOAuthAccessToken(requestToken, verifier);
+
+                    long userID = accessToken.getUserId();
+                    final User user = twitter.showUser(userID);
+                    String username = user.getName();
+
+//                    saveTwitterInfo(accessToken);
+                    sessionManager.saveTwitterInfodong(accessToken.getToken(),accessToken.getTokenSecret(),true,user.getName());
+
+//                    Fragment fragment = getFragmentManager()
+//                            .findFragmentByTag(ApplicationConstants.tagEmojiFragmet);
+//                    if (fragment != null) {
+//                        fragment.onActivityResult(requestCode, resultCode, data);
+//                    }
+
+                    TwitterObject twitterObject = new TwitterObject(AnswerTempTebakanActivity.this,getApplicationContext(),AnswerTempTebakanActivity.this);
+                    twitterObject.setBitmap(((BitmapDrawable)gambarTebakan.getDrawable()).getBitmap());
+                    twitterObject.execute("#Bray Gambar Apa itu?");
+
+
+                } catch (Exception e) {
+                    //Log.e("Twitter Login Failed", e.getMessage());
+                }
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void requestApi(String urlApi){
@@ -843,5 +1034,15 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void finishShare() {
+        /**
+         * finishing share about social media twitter
+         */
+        setCoin(1000);
+        sessionManager.setHint(3);
+        initHint();
     }
 }

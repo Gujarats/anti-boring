@@ -36,6 +36,11 @@
     <string name="menu5">Rules</string>
     <string name="menu6">Register</string>
 
+    <!--faceboook app id-->
+    <string name="facebook_app_id">463332880514941</string>
+
+
+
     <!--rules-->
     <string name="TitleRules1">Rules Point</string>
     <string name="rules1">1. Wrong Answer -100</string>

@@ -28,6 +28,18 @@
         android:label="@string/app_name"
         android:theme="@style/TemaKu" >
 
+        //facebook
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <provider android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider463332880514941"
+            android:exported="true" />
+
         //list activity
         <activity
             android:name=".activity.MainMenuActivity"

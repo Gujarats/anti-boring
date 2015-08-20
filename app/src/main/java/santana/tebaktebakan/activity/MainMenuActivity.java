@@ -2,18 +2,26 @@ package santana.tebaktebakan.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.facebook.FacebookSdk;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import santana.tebaktebakan.FinishRegistrationIntentService;
 import santana.tebaktebakan.R;
@@ -51,9 +59,17 @@ public class MainMenuActivity extends AppCompatActivity implements FinishRegistr
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /**
+         * init facebook
+         */
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
+
         setContentView(R.layout.layout_main_menu_activity);
         /**
          * connection detector
@@ -102,6 +118,26 @@ public class MainMenuActivity extends AppCompatActivity implements FinishRegistr
         }
 
         /**
+         * pricn key hash
+         */
+        // Add code to print out the key hash
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.gapcer.personaworld",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
+
+
+        /**
          * checking the gcmID for this session
          */
 //        if (checkPlayServices()) {
@@ -118,7 +154,7 @@ public class MainMenuActivity extends AppCompatActivity implements FinishRegistr
 //        }
 
 
-
+        printKeyhashDevelopment();
     }
 
     private void initUI(){
@@ -135,6 +171,24 @@ public class MainMenuActivity extends AppCompatActivity implements FinishRegistr
         infoLoading.setVisibility(View.VISIBLE);
         coin2.setVisibility(View.GONE);
         coin1.setVisibility(View.GONE);
+    }
+
+    private void printKeyhashDevelopment(){
+        // Add code to print out the key hash
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.gapcer.personaworld",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
     }
 
     private void finishLoading(){
