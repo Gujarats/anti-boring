@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Anti Boring</string>
+    <string name="app_name">LetsBray</string>
 
     <string name="action_settings">Settings</string>
 
@@ -17,19 +17,19 @@
     <string name="dialog_answer_incorrect">Sorry Incorrect Answer</string>
 
     <!--menu dialog correct answer-->
-    <string name="dialog_answer_correct">Yeah You Got The Answer!</string>
+    <string name="dialog_answer_correct">Okay Bray, You Got The Point!</string>
 
     <!--menu dialog has aswered-->
     <string name="dialog_answer_answered">You have Answered this question</string>
 
     <!--menu dialog out of time-->
-    <string name="dialog_out_of_time">You are Running Out Of Time</string>
+    <string name="dialog_out_of_time">Sorry Bray, Running Out Of Time</string>
 
     <!--menu string in option menu-->
     <string name="point_option_menu">100</string>
 
     <!--main menu-->
-    <string name="menu1">Start Game</string>
+    <string name="menu1">Let's Start Bray</string>
     <string name="menu2">Ranking</string>
     <string name="menu3">Settings</string>
     <string name="menu4">Coins</string>
@@ -50,7 +50,7 @@
     <string name="rules5">5. Hint  -25</string>
 
     <!--dialog out of time-->
-    <string name="TitleOutOfTime">You are running out of Time</string>
+    <string name="TitleOutOfTime">Sorry Bray, Running Out Of Time</string>
     <string name="try_again">Try Again</string>
     <string name="next">Next</string>
     <string name="rangking">Rangking</string>

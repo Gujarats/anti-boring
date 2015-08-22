@@ -240,6 +240,11 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
         shareButton.setShareContent(content);
     }
 
+    private void setCoin(int point){
+        sessionManager.setCoins(sessionManager.getCoins() + point);
+        CoinSaya.setText(String.valueOf(sessionManager.getCoins()));
+    }
+
     @Override
     public void onBackPressed() {
     }
@@ -511,11 +516,6 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
         }.start();
     }
 
-    private void setCoin(int point){
-        sessionManager.setCoins(sessionManager.getCoins()+point);
-        CoinSaya.setText(String.valueOf(sessionManager.getCoins()));
-    }
-
 
     private void AnswerTebakan() {
         String answerTemp = AnswerTebakan.getText().toString();
@@ -554,7 +554,7 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
                             /*
                             algoritma untuk next image
                              */
-                        if(tebakanPointer<=tebakanObjects.size()-1){
+                        if(tebakanPointer<tebakanObjects.size()-1){
                             NextTebakanRequest();
                         }else{
                             setValueForTheUI(NextTebakanObjectList());
@@ -607,7 +607,7 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
                             /*
                                 algoritma next Image
                              */
-                            if(tebakanPointer<=tebakanObjects.size()-1){
+                            if(tebakanPointer<tebakanObjects.size()-1){
                                 NextTebakanRequest();
                             }else{
                                 setValueForTheUI(NextTebakanObjectList());
@@ -713,13 +713,11 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
             }
         }
 
-        if(hintShow==3){
-            life3.setImageResource(R.drawable.heart_life_point2);
-        }else if(hintShow==2){
-            life2.setImageResource(R.drawable.heart_life_point2);
-        }else if(hintShow== 1){
-            life1.setImageResource(R.drawable.heart_life_point2);
-        }
+
+        /**
+         * checking hint
+         */
+        ChecktHint();
 
         /**
          * count show hint dialog
@@ -727,6 +725,16 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
         if(hintShow > 0)
             hintShow=hintShow-1;
         sessionManager.setHint(hintShow);
+    }
+
+    private void ChecktHint(){
+        if(hintShow==3){
+            life3.setImageResource(R.drawable.heart_life_point2);
+        }else if(hintShow==2){
+            life2.setImageResource(R.drawable.heart_life_point2);
+        }else if(hintShow== 1){
+            life1.setImageResource(R.drawable.heart_life_point2);
+        }
     }
 
     private void initHint(){

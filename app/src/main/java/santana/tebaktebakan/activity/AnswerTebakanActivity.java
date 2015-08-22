@@ -33,7 +33,15 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -88,6 +96,7 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
     protected ImageView life1,life2,life3;
     //time varibel UI
     protected AppCompatTextView Waktu,CoinSaya;
+    protected ShareButton shareButton;
     /*
     coundown variable
      */
@@ -125,10 +134,32 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
      */
     private int retryConnect = 0;
     private ConnectionDetector cd;
+    /**
+     * variable facebook
+     */
+    private CallbackManager callbackManager;
+
+//    private void shareImageFacebook(Bitmap bitmap){
+//        SharePhoto photo = new SharePhoto.Builder()
+//                .setBitmap(bitmap)
+//                .build();
+//        SharePhotoContent content = new SharePhotoContent.Builder()
+//                .addPhoto(photo)
+//                .build();
+//
+//        ShareButton shareButton = (ShareButton)findViewById(R.id.share1);
+//        shareButton.setShareContent(content);
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /**
+         * init facebook
+         */
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+
         /*
         connection detector
          */
@@ -170,6 +201,43 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
         initUi();
         initHint();
         initTwitter();
+        initFacebook();
+    }
+
+    private void initFacebook(){
+        shareButton = (ShareButton)findViewById(R.id.share1);
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postPhotoFacebook();
+            }
+        });
+    }
+
+    private void postPhotoFacebook(){
+        SharePhoto photo = new SharePhoto.Builder()
+                .setBitmap(((BitmapDrawable)gambarTebakan.getDrawable()).getBitmap())
+                .build();
+        SharePhotoContent content = new SharePhotoContent.Builder()
+                .addPhoto(photo)
+                .build();
+        shareButton.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+            @Override
+            public void onSuccess(Sharer.Result result) {
+                Log.d("fb","success");
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d("fb","cancel");
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+                Log.d("fb","error");
+            }
+        });
+        shareButton.setShareContent(content);
     }
 
     private void setCoin(int point){
@@ -478,7 +546,7 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
                             /*
                             algoritma untuk next image
                              */
-                        if(tebakanPointer<=tebakanObjects.size()-1){
+                        if(tebakanPointer<tebakanObjects.size()-1){
                             NextTebakanRequest();
                         }else{
                             setValueForTheUI(NextTebakanObjectList());
@@ -530,7 +598,7 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
                             /*
                                 algoritma next Image
                              */
-                            if(tebakanPointer<=tebakanObjects.size()-1){
+                            if(tebakanPointer<tebakanObjects.size()-1){
                                 NextTebakanRequest();
                             }else{
                                 setValueForTheUI(NextTebakanObjectList());
@@ -592,6 +660,7 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
 
 
     public void HintBrow(View v){
+        hintShow = sessionManager.getHint();
         if(hintShow<1){
             /**
              * hint habis gan
@@ -668,12 +737,17 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
             case 1 :
                 life3.setImageResource(R.drawable.heart_life_point2);
                 life2.setImageResource(R.drawable.heart_life_point2);
-
+                life1.setImageResource(R.drawable.heart_life_point3);
                 break;
             case 2 :
                 life3.setImageResource(R.drawable.heart_life_point2);
+                life2.setImageResource(R.drawable.heart_life_point3);
+                life1.setImageResource(R.drawable.heart_life_point3);
                 break;
             case 3 :
+                life1.setImageResource(R.drawable.heart_life_point3);
+                life2.setImageResource(R.drawable.heart_life_point3);
+                life3.setImageResource(R.drawable.heart_life_point3);
                 break;
         }
     }
@@ -719,6 +793,7 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
 
 
     private TebakanObject NextTebakanObjectList(){
+        tebakanPointer=tebakanPointer+1;
         _idTebakan = tebakanObjects.get(tebakanPointer).get_idTebakan();
         _idUser = tebakanObjects.get(tebakanPointer).get_idUser();
         textTebakan = tebakanObjects.get(tebakanPointer).getTextTebakan();
@@ -726,7 +801,6 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
         gambarUrl = tebakanObjects.get(tebakanPointer).getUrlGambarTebakan();
         gcmID = tebakanObjects.get(tebakanPointer).getGcmID();
         tebakanObject= tebakanObjects.get(tebakanPointer);
-        tebakanPointer=tebakanPointer+1;
         return tebakanObject;
     }
     public void ShareTwitter(View v){
@@ -808,6 +882,7 @@ public class AnswerTebakanActivity extends AppCompatActivity implements Response
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void requestApi(String urlApi){
