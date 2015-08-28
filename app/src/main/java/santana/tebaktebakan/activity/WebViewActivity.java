@@ -9,6 +9,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import santana.tebaktebakan.R;
+import santana.tebaktebakan.socialMedia.SocialMediaConstant;
 
 /**
  * Created by Gujarat Santana on 16/08/15.
@@ -43,7 +44,7 @@ public class WebViewActivity extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-            if (url.contains("http://www.personatalk.com")) {
+            if (url.contains(SocialMediaConstant.callbackTwitter)) {
                 Uri uri = Uri.parse(url);
 
 				/* Sending results back */

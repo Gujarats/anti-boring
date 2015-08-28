@@ -41,11 +41,12 @@ import java.util.Map;
 
 import santana.tebaktebakan.activity.LoginActivity;
 import santana.tebaktebakan.activity.RegisterActivity;
-import santana.tebaktebakan.activity.TebakanListActivity;
 import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.common.ServerConstants;
 import santana.tebaktebakan.requestNetwork.CostumRequestString;
 import santana.tebaktebakan.session.SessionManager;
+
+//import santana.tebaktebakan.activity.TebakanListActivity;
 
 public class RegistrationIntentService extends IntentService implements Response.Listener<String>,Response.ErrorListener{
 
@@ -89,8 +90,6 @@ public class RegistrationIntentService extends IntentService implements Response
 
                 if(fromActivity.equals(RegisterActivity.class.toString())){
                     sendRegistrationToServer(token);
-                }else if(fromActivity.equals(TebakanListActivity.class.toString())){
-                    sendRegistrationToServer2(token);
                 }else if(fromActivity.equals(ApplicationConstants.FirtTime)){
                     receiver.send(STATUS_RUNNING,bundle);
                     RegisterGenereteUser(token);

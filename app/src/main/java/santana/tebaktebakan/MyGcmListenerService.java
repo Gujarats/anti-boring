@@ -29,7 +29,9 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
-import santana.tebaktebakan.activity.TebakanListActivity;
+import santana.tebaktebakan.activity.MainMenuActivity;
+
+//import santana.tebaktebakan.activity.TebakanListActivity;
 
 public class MyGcmListenerService extends GcmListenerService {
 
@@ -97,7 +99,7 @@ public class MyGcmListenerService extends GcmListenerService {
         NotificationManager mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Intent resultIntent = new Intent(this, TebakanListActivity.class);
+        Intent resultIntent = new Intent(this, MainMenuActivity.class);
         resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 

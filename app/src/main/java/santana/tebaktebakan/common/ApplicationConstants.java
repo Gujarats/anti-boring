@@ -16,6 +16,10 @@ public class ApplicationConstants {
     public static final int next = 3;
     public static final int tryAgain = 4;
 
+    //admob
+    public static final String AdmobKey = "ca-app-pub-7786975749587909/8076194272";
+
+
     //intent service from activity
     public static final String FromActivity = "FromActivity";
     public static final String ImageVisibiliy = "no_data";

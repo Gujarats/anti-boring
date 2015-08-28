@@ -18,6 +18,25 @@
         android:textSize="@dimen/dialog_text_size_correct"
         />
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/share1"
+            android:layout_width="47px"
+            android:layout_height="47px"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/facebook2"
+            android:visibility="gone" />
+        <ImageView
+            android:id="@+id/share2"
+            android:layout_width="47px"
+            android:layout_height="47px"
+            android:src="@drawable/twitter2" />
+    </LinearLayout>
+
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

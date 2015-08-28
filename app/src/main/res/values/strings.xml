@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LetsBray</string>
+    <string name="app_name">Anti Boring</string>
 
     <string name="action_settings">Settings</string>
 
@@ -29,12 +29,16 @@
     <string name="point_option_menu">100</string>
 
     <!--main menu-->
-    <string name="menu1">Let's Start Bray</string>
+    <string name="menu1">Start Game</string>
     <string name="menu2">Ranking</string>
     <string name="menu3">Settings</string>
     <string name="menu4">Coins</string>
     <string name="menu5">Rules</string>
     <string name="menu6">Register</string>
+
+    <!--admob ads unit-->
+    <string name="banner_ad_unit_id">ca-app-pub-7786975749587909/8076194272</string>
+
 
     <!--faceboook app id-->
     <string name="facebook_app_id">463332880514941</string>

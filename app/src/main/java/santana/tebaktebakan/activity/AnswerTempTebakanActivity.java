@@ -18,14 +18,12 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.Display;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -33,14 +31,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.share.Sharer;
-import com.facebook.share.model.SharePhoto;
-import com.facebook.share.model.SharePhotoContent;
-import com.facebook.share.widget.ShareButton;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,7 +68,7 @@ import twitter4j.conf.ConfigurationBuilder;
 /**
  * Created by Gujarat Santana on 18/08/15.
  */
-public class AnswerTempTebakanActivity extends AppCompatActivity implements Response.Listener<String>, Response.ErrorListener, FinishShare{
+public class AnswerTempTebakanActivity extends AppCompatActivity implements Response.Listener<String>, Response.ErrorListener, FinishShare, OnClickListener{
 
     // Twitter oauth urls
     static final String URL_TWITTER_AUTH = "auth_url";
@@ -86,17 +78,23 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
     //Twitter variable
     private static Twitter twitter;
     private static RequestToken requestToken;
+
+    /**
+     * UI variable
+     */
     protected AppCompatEditText AnswerTebakan;
     protected AppCompatTextView TextTebakan;
     protected VolleyImageView gambarTebakan;
+    protected ImageView hintBrow,twitterShareButton;
     protected ProgressBar Loading;
     protected AppCompatDialog dialog;
+    protected AppCompatButton CheckAnswer;
     protected Menu menu;
     protected LinearLayout layout2;
     protected ImageView life1,life2,life3;
     //time varibel UI
     protected AppCompatTextView Waktu,CoinSaya;
-    protected ShareButton shareButton;
+
     /*
     coundown variable
      */
@@ -137,7 +135,8 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
     /**
      * variable facebook
      */
-    private CallbackManager callbackManager;
+//    private CallbackManager callbackManager;
+//    protected ShareButton shareButton;
 
 //    private void shareImageFacebook(Bitmap bitmap){
 //        SharePhoto photo = new SharePhoto.Builder()
@@ -157,15 +156,17 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
         /**
          * init facebook
          */
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        callbackManager = CallbackManager.Factory.create();
+//        FacebookSdk.sdkInitialize(getApplicationContext());
+//        callbackManager = CallbackManager.Factory.create();
 
         /*
         connection detector
          */
         cd = new ConnectionDetector(getApplicationContext());
 
-        /* Enabling strict mode */
+        /**
+         *  Enabling strict mode for twitter
+         *  */
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -201,47 +202,60 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
         initUi();
         initHint();
         initTwitter();
-        initFacebook();
+//        initFacebook();
+        loadAds();
     }
 
-    private void initFacebook(){
-        shareButton = (ShareButton)findViewById(R.id.share1);
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                postPhotoFacebook();
-            }
-        });
-    }
+//    private void initFacebook(){
+//        shareButton = (ShareButton)findViewById(R.id.share1);
+//        shareButton.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                postPhotoFacebook();
+//            }
+//        });
+//    }
 
-    private void postPhotoFacebook(){
-        SharePhoto photo = new SharePhoto.Builder()
-                .setBitmap(((BitmapDrawable)gambarTebakan.getDrawable()).getBitmap())
+    private void loadAds(){
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest request = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // My Galaxy Nexus test phone
                 .build();
-        SharePhotoContent content = new SharePhotoContent.Builder()
-                .addPhoto(photo)
-                .build();
-        shareButton.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
-            @Override
-            public void onSuccess(Sharer.Result result) {
-                Log.d("fb","success");
-            }
-
-            @Override
-            public void onCancel() {
-                Log.d("fb","cancel");
-            }
-
-            @Override
-            public void onError(FacebookException e) {
-                Log.d("fb","error");
-            }
-        });
-        shareButton.setShareContent(content);
+        mAdView.loadAd(request);
     }
+
+//    private void postPhotoFacebook(){
+//        SharePhoto photo = new SharePhoto.Builder()
+//                .setBitmap(((BitmapDrawable)gambarTebakan.getDrawable()).getBitmap())
+//                .build();
+//        SharePhotoContent content = new SharePhotoContent.Builder()
+//                .addPhoto(photo)
+//                .build();
+//        shareButton.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+//            @Override
+//            public void onSuccess(Sharer.Result result) {
+//                Log.d("fb","success");
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//                Log.d("fb","cancel");
+//            }
+//
+//            @Override
+//            public void onError(FacebookException e) {
+//                Log.d("fb","error");
+//            }
+//        });
+//        shareButton.setShareContent(content);
+//    }
 
     private void setCoin(int point){
+
         sessionManager.setCoins(sessionManager.getCoins() + point);
+        isPointZero(sessionManager.getCoins());
         CoinSaya.setText(String.valueOf(sessionManager.getCoins()));
     }
 
@@ -257,8 +271,11 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
         AnswerTebakan = (AppCompatEditText) findViewById(R.id.TextAnswer_Answer);
         TextTebakan = (AppCompatTextView) findViewById(R.id.TextTebakan_Answer);
         gambarTebakan = (VolleyImageView) findViewById(R.id.GambarTebakan_Answer);
+        hintBrow = (ImageView) findViewById(R.id.hints1);
+        twitterShareButton = (ImageView) findViewById(R.id.share2);
         Loading = (ProgressBar) findViewById(R.id.Loading);
         layout2 = (LinearLayout)findViewById(R.id.layout2);
+        CheckAnswer = (AppCompatButton)findViewById(R.id.CekAnswer);
 
         //waktu dan coin
         Waktu = (AppCompatTextView)findViewById(R.id.Waktu);
@@ -271,6 +288,14 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
         life3 = (ImageView)findViewById(R.id.life3);
 
         dialog = new AppCompatDialog(AnswerTempTebakanActivity.this);
+
+        /**
+         * set on click listener
+         */
+
+        hintBrow.setOnClickListener(AnswerTempTebakanActivity.this);
+        twitterShareButton.setOnClickListener(AnswerTempTebakanActivity.this);
+        CheckAnswer.setOnClickListener(AnswerTempTebakanActivity.this);
 
         /**
          * setVisibility of The UI
@@ -301,20 +326,6 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
         }
         gambarTebakan.getLayoutParams().height = WidthPhone;
         gambarTebakan.requestLayout();
-
-        /**
-         * listener for done key keyboard
-         */
-        AnswerTebakan.setOnEditorActionListener(new AppCompatTextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    //do something
-                    AnswerTebakan();
-                }
-                return false;
-            }
-        });
     }
 
     private void initTwitter(){
@@ -423,7 +434,7 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
     }
 
     private void CountDown(){
-        countDownTimer = new CountDownTimer(30000, 1000) {//CountDownTimer(edittext1.getText()+edittext2.getText()) also parse it to long
+        countDownTimer = new CountDownTimer(60000, 1000) {//CountDownTimer(edittext1.getText()+edittext2.getText()) also parse it to long
 
             public void onTick(long millisUntilFinished) {
                 long count = millisUntilFinished/1000;
@@ -437,15 +448,33 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
 
                 dialog.setContentView(R.layout.dialog_out_of_time);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                /**
+                 * ini ui Dialog
+                 */
                 AppCompatTextView text2 = (AppCompatTextView) dialog.findViewById(R.id.dialog_text);
                 text2.setText(R.string.dialog_out_of_time);
+                ImageView facebook = (ImageView)dialog.findViewById(R.id.share1);
+                ImageView twitter = (ImageView)dialog.findViewById(R.id.share2);
                 text2.setTextColor(getResources().getColor(R.color.primary));
                 //coins
                 AppCompatTextView coins = (AppCompatTextView) dialog.findViewById(R.id.coins);
                 coins.setText(String.valueOf(sessionManager.getCoins()));
-
                 AppCompatButton button2 = (AppCompatButton) dialog.findViewById(R.id.dialog_try_again);
-                button2.setOnClickListener(new View.OnClickListener() {
+
+
+                /**
+                 * set onclick listener
+                 */
+                twitter.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ShareTwitter();
+                    }
+                });
+
+
+                button2.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
@@ -478,7 +507,7 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
                     }
                 });
 
-                ((AppCompatButton)dialog.findViewById(R.id.dialog_next)).setOnClickListener(new View.OnClickListener() {
+                ((AppCompatButton)dialog.findViewById(R.id.dialog_next)).setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         /*
@@ -540,12 +569,31 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
 
                 dialog.setContentView(R.layout.dialog_correct_answer);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                /**
+                 * init UI dialog
+                 */
                 AppCompatTextView text = (AppCompatTextView) dialog.findViewById(R.id.dialog_text);
+                AppCompatTextView coins = (AppCompatTextView) dialog.findViewById(R.id.coins);
+                ImageView facebook = (ImageView)dialog.findViewById(R.id.share1);
+                ImageView twitter = (ImageView)dialog.findViewById(R.id.share2);
+                coins.setText(String.valueOf(sessionManager.getCoins()));
                 text.setText(R.string.dialog_answer_correct);
                 text.setTextColor(getResources().getColor(R.color.primary));
+
+                /**
+                 * set onclick listener
+                 */
+                twitter.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ShareTwitter();
+                    }
+                });
+
+
                 ((AppCompatButton) dialog.findViewById(R.id.dialog_try_again)).setVisibility(View.GONE);
                 AppCompatButton button = (AppCompatButton) dialog.findViewById(R.id.dialog_ok);
-                button.setOnClickListener(new View.OnClickListener() {
+                button.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
@@ -587,23 +635,42 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
 //                Toast.makeText(getApplicationContext(), "Wrong Answer", Toast.LENGTH_LONG).show();
                 dialog.setContentView(R.layout.dialog_correct_answer);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                /**
+                 * init UI dialog
+                 */
                 AppCompatTextView text = (AppCompatTextView) dialog.findViewById(R.id.dialog_text);
+                AppCompatTextView coins = (AppCompatTextView) dialog.findViewById(R.id.coins);
+                ImageView facebook = (ImageView)dialog.findViewById(R.id.share1);
+                ImageView twitter = (ImageView)dialog.findViewById(R.id.share2);
+                coins.setText(String.valueOf(sessionManager.getCoins()));
                 text.setText(R.string.dialog_answer_incorrect);
                 text.setTextColor(getResources().getColor(R.color.primary_red));
                 AppCompatButton button = (AppCompatButton) dialog.findViewById(R.id.dialog_ok);
-                button.setOnClickListener(new View.OnClickListener() {
+
+                /**
+                 * set Onclick listener
+                 */
+                twitter.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ShareTwitter();
+                    }
+                });
+
+                button.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         /**
                          * next kurangi point 50 krn tidak berhasil menjawab perntanyaan
                          */
 
-                        if(sessionManager.getCoins()==0){
+                        if(isPointZero(sessionManager.getCoins())){
                             Toast.makeText(AnswerTempTebakanActivity.this, "Please Share to Social Media To get 1000 coins", Toast.LENGTH_SHORT).show();
                         }else{
                             //minus 50 coin
-//                            sessionManager.setCoins(sessionManager.getCoins()-50);
                             setCoin(-50);
+
                             /*
                                 algoritma next Image
                              */
@@ -627,13 +694,13 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
                 try again
                  */
                 AppCompatButton tryAgain = (AppCompatButton) dialog.findViewById(R.id.dialog_try_again);
-                tryAgain.setOnClickListener(new View.OnClickListener() {
+                tryAgain.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         /**
                          * next kurangi point 30 krn tidak berhasil menjawab perntanyaan
                          */
-                        if(sessionManager.getCoins()==0){
+                        if(isPointZero(sessionManager.getCoins())){
                             Toast.makeText(AnswerTempTebakanActivity.this, "Please Share to Social Media To get 1000 coins", Toast.LENGTH_SHORT).show();
                         }else{
                             if(countDownTimer!=null)
@@ -669,7 +736,7 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
 
 
 
-    public void HintBrow(View v){
+    public void HintBrow(){
         hintShow = sessionManager.getHint();
         if(hintShow<1){
             /**
@@ -791,9 +858,11 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
         gambarTebakan.setVisibility(View.GONE);
         AnswerTebakan.setVisibility(View.GONE);
         layout2.setVisibility(View.GONE);
+        CheckAnswer.setVisibility(View.GONE);
     }
 
     private void LoadingFinish(){
+        CheckAnswer.setVisibility(View.VISIBLE);
         Loading.setVisibility(View.GONE);
         layout2.setVisibility(View.VISIBLE);
         gambarTebakan.setVisibility(View.VISIBLE);
@@ -804,22 +873,38 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
 
     private TebakanObject NextTebakanObjectList(){
         tebakanPointer=tebakanPointer+1;
-        _idTebakan = tebakanObjects.get(tebakanPointer).get_idTebakan();
-        _idUser = tebakanObjects.get(tebakanPointer).get_idUser();
-        textTebakan = tebakanObjects.get(tebakanPointer).getTextTebakan();
-        kunciTebakan = tebakanObjects.get(tebakanPointer).getKunciTebakan();
-        gambarUrl = tebakanObjects.get(tebakanPointer).getUrlGambarTebakan();
-        gcmID = tebakanObjects.get(tebakanPointer).getGcmID();
-        tebakanObject= tebakanObjects.get(tebakanPointer);
-        return tebakanObject;
+
+        if(tebakanObjects.size()<=tebakanPointer){
+
+            Toast.makeText(AnswerTempTebakanActivity.this, "We will Add more Content Soon", Toast.LENGTH_SHORT).show();
+            _idTebakan = tebakanObjects.get(tebakanPointer-1).get_idTebakan();
+            _idUser = tebakanObjects.get(tebakanPointer-1).get_idUser();
+            textTebakan = tebakanObjects.get(tebakanPointer-1).getTextTebakan();
+            kunciTebakan = tebakanObjects.get(tebakanPointer-1).getKunciTebakan();
+            gambarUrl = tebakanObjects.get(tebakanPointer-1).getUrlGambarTebakan();
+            gcmID = tebakanObjects.get(tebakanPointer-1).getGcmID();
+            tebakanObject= tebakanObjects.get(tebakanPointer-1);
+            return tebakanObject;
+
+        }else{
+            _idTebakan = tebakanObjects.get(tebakanPointer).get_idTebakan();
+            _idUser = tebakanObjects.get(tebakanPointer).get_idUser();
+            textTebakan = tebakanObjects.get(tebakanPointer).getTextTebakan();
+            kunciTebakan = tebakanObjects.get(tebakanPointer).getKunciTebakan();
+            gambarUrl = tebakanObjects.get(tebakanPointer).getUrlGambarTebakan();
+            gcmID = tebakanObjects.get(tebakanPointer).getGcmID();
+            tebakanObject= tebakanObjects.get(tebakanPointer);
+
+            return tebakanObject;
+        }
     }
 
-    public void ShareTwitter(View v){
+    public void ShareTwitter(){
         TwitterObject twitterObject = new TwitterObject(AnswerTempTebakanActivity.this,getApplicationContext(),AnswerTempTebakanActivity.this);
         if(sessionManager.getLoginTwitter()){
 
             twitterObject.setBitmap(((BitmapDrawable)gambarTebakan.getDrawable()).getBitmap());
-            twitterObject.execute("#Bray Gambar Apa itu?");
+            twitterObject.execute("#AntiBoring Gambar Apa itu?");
         }else{
             loginToTwitter();
         }
@@ -881,9 +966,10 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
 //                        fragment.onActivityResult(requestCode, resultCode, data);
 //                    }
 
-                    TwitterObject twitterObject = new TwitterObject(AnswerTempTebakanActivity.this,getApplicationContext(),AnswerTempTebakanActivity.this);
-                    twitterObject.setBitmap(((BitmapDrawable)gambarTebakan.getDrawable()).getBitmap());
-                    twitterObject.execute("#Bray Gambar Apa itu?");
+//                    TwitterObject twitterObject = new TwitterObject(AnswerTempTebakanActivity.this,getApplicationContext(),AnswerTempTebakanActivity.this);
+//                    twitterObject.setBitmap(((BitmapDrawable)gambarTebakan.getDrawable()).getBitmap());
+//                    twitterObject.execute("#Anti Boring Gambar Apa itu?");
+                    ShareTwitter();
 
 
                 } catch (Exception e) {
@@ -893,7 +979,7 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
         }
 
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+//        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void requestApi(String urlApi){
@@ -968,7 +1054,7 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
                         setCoin(jsonObject.getInt(ServerConstants.point));
 //                        sessionManager.setCoins(jsonObject.getInt(ServerConstants.point));
 //                        this.menu.findItem(R.id.Coins).setTitle(String.valueOf(jsonObject.getInt(ServerConstants.point)));
-                        ((AppCompatTextView)dialog.findViewById(R.id.coins)).setText(String.valueOf(jsonObject.getInt(ServerConstants.point)));
+                        ((AppCompatTextView)dialog.findViewById(R.id.coins)).setText(String.valueOf(sessionManager.getCoins()));
                         break;
                     case ServerConstants.showTebakanResult:
                         /**
@@ -1035,6 +1121,11 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
                     case ServerConstants.ErrorDataNotFound :
                         Toast.makeText(AnswerTempTebakanActivity.this, "Sorry We Couldn't find any data", Toast.LENGTH_SHORT).show();
                         break;
+                    case ServerConstants.CoinsZero :
+                        LoadingFinish();
+                        CheckAnswer.setVisibility(View.GONE);
+                        Toast.makeText(AnswerTempTebakanActivity.this, "Please Help Us Share the app, and get 200 coins", Toast.LENGTH_SHORT).show();
+                        break;
                     default:
                         break;
                 }
@@ -1049,8 +1140,37 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
         /**
          * finishing share about social media twitter
          */
-        setCoin(1000);
+        setCoin(200);
         sessionManager.setHint(3);
         initHint();
+        CheckAnswer.setVisibility(View.VISIBLE);
+    }
+
+    private boolean isPointZero(int point){
+        if(point<=0){
+            sessionManager.setCoins(0);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.hints1:
+                HintBrow();
+                break;
+
+            case R.id.share2:
+                ShareTwitter();
+                break;
+
+            case R.id.CekAnswer:
+                AnswerTebakan();
+                break;
+            default:
+                break;
+        }
     }
 }

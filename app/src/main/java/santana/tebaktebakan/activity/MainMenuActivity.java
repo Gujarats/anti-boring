@@ -1,22 +1,29 @@
 package santana.tebaktebakan.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.facebook.FacebookSdk;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
@@ -29,15 +36,31 @@ import santana.tebaktebakan.RegistrationIntentService;
 import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.common.ConnectionDetector;
 import santana.tebaktebakan.session.SessionManager;
+import santana.tebaktebakan.socialMedia.FinishShare;
+import santana.tebaktebakan.socialMedia.SocialMediaConstant;
+import santana.tebaktebakan.socialMedia.TwitterObject;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.User;
+import twitter4j.auth.AccessToken;
+import twitter4j.auth.RequestToken;
+import twitter4j.conf.Configuration;
+import twitter4j.conf.ConfigurationBuilder;
 
 /**
  * Created by Gujarat Santana on 05/08/15.
  */
-public class MainMenuActivity extends AppCompatActivity implements FinishRegistrationIntentService.Receiver{
+public class MainMenuActivity extends AppCompatActivity implements FinishRegistrationIntentService.Receiver, FinishShare, View.OnClickListener {
     /**
      * gcm variable
      */
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    /**
+     * Twitter variable
+     */
+    private static Twitter twitter;
+    private static RequestToken requestToken;
     /**
      * UI variable
      */
@@ -45,6 +68,7 @@ public class MainMenuActivity extends AppCompatActivity implements FinishRegistr
     protected ProgressBar Loading;
     protected LinearLayout layout1;
     protected AppCompatTextView coin2,infoLoading;
+    protected ImageView shareTwitter,shareFacebook;
     SessionManager sessionManager;
     /**
      * variabel result receiver for get progress from intentService
@@ -67,7 +91,7 @@ public class MainMenuActivity extends AppCompatActivity implements FinishRegistr
         /**
          * init facebook
          */
-        FacebookSdk.sdkInitialize(getApplicationContext());
+//        FacebookSdk.sdkInitialize(getApplicationContext());
 
 
         setContentView(R.layout.layout_main_menu_activity);
@@ -75,6 +99,13 @@ public class MainMenuActivity extends AppCompatActivity implements FinishRegistr
          * connection detector
          */
         cd = new ConnectionDetector(getApplicationContext());
+
+        /**
+         *  Enabling strict mode for twitter
+         *  */
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
 
 
         initUI();
@@ -154,6 +185,7 @@ public class MainMenuActivity extends AppCompatActivity implements FinishRegistr
 //        }
 
 
+        loadAds();
         printKeyhashDevelopment();
     }
 
@@ -163,6 +195,13 @@ public class MainMenuActivity extends AppCompatActivity implements FinishRegistr
         Loading = (ProgressBar)findViewById(R.id.Loading);
         coin1 = (AppCompatTextView)findViewById(R.id.coinSaya);
         coin2 = (AppCompatTextView)findViewById(R.id.coin1);
+        shareFacebook = (ImageView)findViewById(R.id.share1);
+        shareTwitter = (ImageView)findViewById(R.id.share2);
+
+        /**
+         * set onClikc Listter
+         */
+        shareTwitter.setOnClickListener(MainMenuActivity.this);
     }
 
     private void LoadingUI(){
@@ -191,6 +230,16 @@ public class MainMenuActivity extends AppCompatActivity implements FinishRegistr
         }
     }
 
+    private void loadAds(){
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest request = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // My Galaxy Nexus test phone
+                .build();
+        mAdView.loadAd(request);
+    }
+
     private void finishLoading(){
         layout1.setVisibility(View.VISIBLE);
         Loading.setVisibility(View.GONE);
@@ -204,15 +253,23 @@ public class MainMenuActivity extends AppCompatActivity implements FinishRegistr
         Intent intent;
         switch (v.getId()){
             case R.id.menu1 :
-                if(cd.isConnectingToInternet()){
-                    if(sessionManager.getModeUser()){
-                        intent = new Intent(MainMenuActivity.this,AnswerTempTebakanActivity.class);
-                        startActivity(intent);
-                    }else{
-                        intent = new Intent(MainMenuActivity.this,AnswerTebakanActivity.class);
-                        startActivity(intent);
-                    }
+
+                if(sessionManager.getCoins()==0){
+                    Toast.makeText(MainMenuActivity.this, "Please Help Us to Share, and you'll get 200 coins", Toast.LENGTH_SHORT).show();
+                }else{
+                    intent = new Intent(MainMenuActivity.this,AnswerTempTebakanActivity.class);
+                    startActivity(intent);
                 }
+
+//                if(cd.isConnectingToInternet()){
+//                    if(sessionManager.getModeUser()){
+//                        intent = new Intent(MainMenuActivity.this,AnswerTempTebakanActivity.class);
+//                        startActivity(intent);
+//                    }else{
+//                        intent = new Intent(MainMenuActivity.this,AnswerTebakanActivity.class);
+//                        startActivity(intent);
+//                    }
+//                }
                 break;
             case R.id.menu2 :
                 Toast.makeText(getApplicationContext(),"This Feature is Coming Soon",Toast.LENGTH_LONG).show();
@@ -228,9 +285,6 @@ public class MainMenuActivity extends AppCompatActivity implements FinishRegistr
                 break;
             case R.id.menu4 :
                 Toast.makeText(getApplicationContext(),"This Feature is Coming Soon",Toast.LENGTH_LONG).show();
-                intent = new Intent(MainMenuActivity.this, UploadTebakanActivity.class);
-                startActivity(intent);
-
                 break;
             case R.id.menu5 :
                 Toast.makeText(getApplicationContext(),"This Feature is Coming Soon",Toast.LENGTH_LONG).show();
@@ -306,5 +360,107 @@ public class MainMenuActivity extends AppCompatActivity implements FinishRegistr
             return "";
         }
         return registrationId;
+    }
+
+    public void ShareTwitter(){
+        TwitterObject twitterObject = new TwitterObject(MainMenuActivity.this,getApplicationContext(),MainMenuActivity.this);
+        if(sessionManager.getLoginTwitter()){
+
+            Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.share_image_zero);
+
+            twitterObject.setBitmap(((BitmapDrawable)drawable).getBitmap());
+            twitterObject.execute("#AntiBoring Gambar Apa itu?");
+        }else{
+            loginToTwitter();
+        }
+
+
+    }
+
+    public void loginToTwitter() {
+        //boolean isLoggedIn = mSharedPreferences.getBoolean(PREF_KEY_TWITTER_LOGIN, false);
+
+        boolean isLoggedIn = sessionManager.getLoginTwitter();
+        if (!isLoggedIn) {
+            final ConfigurationBuilder builder = new ConfigurationBuilder();
+            builder.setOAuthConsumerKey(SocialMediaConstant.consumerKeyTwitter);
+            builder.setOAuthConsumerSecret(SocialMediaConstant.consumerSecretTwitter);
+
+            final Configuration configuration = builder.build();
+            final TwitterFactory factory = new TwitterFactory(configuration);
+            twitter = factory.getInstance();
+            try {
+                requestToken = twitter.getOAuthRequestToken(SocialMediaConstant.callbackTwitter);
+
+                /**
+                 *  Loading twitter login page on webview for authorization
+                 *  Once authorized, results are received at onActivityResult
+                 *  */
+                final Intent intent = new Intent(getApplicationContext(), WebViewActivity.class);
+                intent.putExtra(WebViewActivity.EXTRA_URL, requestToken.getAuthenticationURL());
+                startActivityForResult(intent, SocialMediaConstant.WEBVIEW_REQUEST_CODE_Twitter);
+
+            } catch (TwitterException e) {
+                e.printStackTrace();
+            }
+        }else{
+            /**
+             * twitter is Login
+             */
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == SocialMediaConstant.WEBVIEW_REQUEST_CODE_Twitter) {
+            if (resultCode == Activity.RESULT_OK) {
+                String verifier = data.getExtras().getString(SocialMediaConstant.oAuthVerifier);
+                try {
+                    AccessToken accessToken = twitter.getOAuthAccessToken(requestToken, verifier);
+
+                    long userID = accessToken.getUserId();
+                    final User user = twitter.showUser(userID);
+                    String username = user.getName();
+
+//                    saveTwitterInfo(accessToken);
+                    sessionManager.saveTwitterInfodong(accessToken.getToken(),accessToken.getTokenSecret(),true,user.getName());
+
+//                    Fragment fragment = getFragmentManager()
+//                            .findFragmentByTag(ApplicationConstants.tagEmojiFragmet);
+//                    if (fragment != null) {
+//                        fragment.onActivityResult(requestCode, resultCode, data);
+//                    }
+
+                    ShareTwitter();
+
+
+                } catch (Exception e) {
+                    //Log.e("Twitter Login Failed", e.getMessage());
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void finishShare() {
+        sessionManager.setCoins(sessionManager.getCoins()+200);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+
+            case R.id.share1 :
+                break;
+
+            case R.id.share2 :
+                ShareTwitter();
+                break;
+
+            default:
+                break;
+        }
     }
 }

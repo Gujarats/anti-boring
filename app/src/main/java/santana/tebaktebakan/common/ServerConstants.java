@@ -101,4 +101,5 @@ public class ServerConstants {
     public static final int ErrorGenereteToken = 13;
     public static final int ErrorTokenExpired = 17;
     public static final int ErrorVerifyToken = 18;
+    public static final int CoinsZero = 31;
 }

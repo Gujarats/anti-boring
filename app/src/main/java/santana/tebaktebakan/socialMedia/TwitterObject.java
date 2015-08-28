@@ -153,7 +153,7 @@ public class TwitterObject extends AsyncTask<String, String, Void> {
             } else {
                 statusku = status;
             }
-            StatusUpdate statusUpdate = new StatusUpdate(statusku + "www.gambarBray.com");
+            StatusUpdate statusUpdate = new StatusUpdate(statusku + "Game AntiBoring");
 
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             // Bitmap bmp = Bitmap.createBitmap(bmImage.getDrawingCache());
@@ -165,7 +165,7 @@ public class TwitterObject extends AsyncTask<String, String, Void> {
             //InputStream is = getResources().openRawResource(R.drawable.ic_launcher);
             statusUpdate.setMedia("bray.jpg", is);
 
-            twitter4j.Status response = twitter.updateStatus(statusUpdate);
+            twitter.updateStatus(statusUpdate);
 
 //                Log.d("Status", response.getText());
 
