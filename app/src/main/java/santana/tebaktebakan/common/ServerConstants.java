@@ -25,6 +25,7 @@ public class ServerConstants {
     public static final String registerUser = UrlBeckend+"register";
     public static final String registerTempUser = UrlBeckend+"registerTemp";
     public static final String loginTebakan = UrlBeckend+"login";
+    public static final String loginTebakanTemp = UrlBeckend+"loginTemp";
 
     //api jawaban benar
     public static final String jawabanBenar = UrlBeckend+"api/v_gs/jawabanBenar";

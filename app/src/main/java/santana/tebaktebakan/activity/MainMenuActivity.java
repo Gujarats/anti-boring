@@ -233,11 +233,7 @@ public class MainMenuActivity extends AppCompatActivity implements FinishRegistr
     private void loadAds(){
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        AdRequest request = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // My Galaxy Nexus test phone
-                .build();
-        mAdView.loadAd(request);
+        mAdView.loadAd(adRequest);
     }
 
     private void finishLoading(){
@@ -446,6 +442,7 @@ public class MainMenuActivity extends AppCompatActivity implements FinishRegistr
     @Override
     public void finishShare() {
         sessionManager.setCoins(sessionManager.getCoins()+200);
+        coin1.setText(String.valueOf(sessionManager.getCoins()));
     }
 
     @Override

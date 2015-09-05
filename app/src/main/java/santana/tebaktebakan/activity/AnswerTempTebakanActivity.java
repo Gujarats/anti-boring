@@ -219,11 +219,7 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
     private void loadAds(){
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        AdRequest request = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // My Galaxy Nexus test phone
-                .build();
-        mAdView.loadAd(request);
+        mAdView.loadAd(adRequest);
     }
 
 //    private void postPhotoFacebook(){
@@ -666,7 +662,7 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
                          */
 
                         if(isPointZero(sessionManager.getCoins())){
-                            Toast.makeText(AnswerTempTebakanActivity.this, "Please Share to Social Media To get 1000 coins", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AnswerTempTebakanActivity.this, "Please Share to Social Media To get 200 coins", Toast.LENGTH_SHORT).show();
                         }else{
                             //minus 50 coin
                             setCoin(-50);
@@ -701,7 +697,7 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
                          * next kurangi point 30 krn tidak berhasil menjawab perntanyaan
                          */
                         if(isPointZero(sessionManager.getCoins())){
-                            Toast.makeText(AnswerTempTebakanActivity.this, "Please Share to Social Media To get 1000 coins", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AnswerTempTebakanActivity.this, "Please Share to Social Media To get 200 coins", Toast.LENGTH_SHORT).show();
                         }else{
                             if(countDownTimer!=null)
                                 countDownTimer.cancel();
@@ -872,18 +868,19 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
 
 
     private TebakanObject NextTebakanObjectList(){
+
         tebakanPointer=tebakanPointer+1;
-
         if(tebakanObjects.size()<=tebakanPointer){
-
+//            CheckAnswer.setVisibility(View.GONE);
             Toast.makeText(AnswerTempTebakanActivity.this, "We will Add more Content Soon", Toast.LENGTH_SHORT).show();
-            _idTebakan = tebakanObjects.get(tebakanPointer-1).get_idTebakan();
-            _idUser = tebakanObjects.get(tebakanPointer-1).get_idUser();
-            textTebakan = tebakanObjects.get(tebakanPointer-1).getTextTebakan();
-            kunciTebakan = tebakanObjects.get(tebakanPointer-1).getKunciTebakan();
-            gambarUrl = tebakanObjects.get(tebakanPointer-1).getUrlGambarTebakan();
-            gcmID = tebakanObjects.get(tebakanPointer-1).getGcmID();
-            tebakanObject= tebakanObjects.get(tebakanPointer-1);
+            tebakanPointer = tebakanPointer-1;
+            _idTebakan = tebakanObjects.get(tebakanPointer).get_idTebakan();
+            _idUser = tebakanObjects.get(tebakanPointer).get_idUser();
+            textTebakan = tebakanObjects.get(tebakanPointer).getTextTebakan();
+            kunciTebakan = tebakanObjects.get(tebakanPointer).getKunciTebakan();
+            gambarUrl = tebakanObjects.get(tebakanPointer).getUrlGambarTebakan();
+            gcmID = tebakanObjects.get(tebakanPointer).getGcmID();
+            tebakanObject= tebakanObjects.get(tebakanPointer);
             return tebakanObject;
 
         }else{
@@ -894,7 +891,6 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
             gambarUrl = tebakanObjects.get(tebakanPointer).getUrlGambarTebakan();
             gcmID = tebakanObjects.get(tebakanPointer).getGcmID();
             tebakanObject= tebakanObjects.get(tebakanPointer);
-
             return tebakanObject;
         }
     }
@@ -1040,6 +1036,17 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
     }
 
 
+    public void restartActivity() {
+
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+    }
+
 
     @Override
     public void onResponse(String response) {
@@ -1098,7 +1105,8 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
                         sessionManager.setIsGcmRegistered(true);
                         sessionManager.setAppVersion(ApplicationConstants.getAppVersion(this));
                         sessionManager.setHint(3);
-                        sessionManager.setCoins(Integer.parseInt(jsonObject.getString(ServerConstants.point)));
+//                        sessionManager.setCoins(Integer.parseInt(jsonObject.getString(ServerConstants.point)));
+                        restartActivity();
                         break;
 
                     default:
@@ -1110,13 +1118,36 @@ public class AnswerTempTebakanActivity extends AppCompatActivity implements Resp
                 switch (jsonObject.getInt(ServerConstants.resultType)){
                     case ServerConstants.ErrorTokenExpired:
                         Toast.makeText(AnswerTempTebakanActivity.this, "Please Wait...", Toast.LENGTH_SHORT).show();
+
+//                        Log.d("mode user", String.valueOf(sessionManager.getModeUser()));
                         Map<String,String> mParams = new HashMap<String,String>();
                         mParams.put(ServerConstants.mParamsPassword, sessionManager.getPassword());
-                        mParams.put(ServerConstants.mParamsEmail,sessionManager.getEmail());
+                        mParams.put(ServerConstants.mParamsEmail, sessionManager.getEmail());
+                        mParams.put(ServerConstants.mParams_idUser, sessionManager.getUidUser());
 
-                        CostumRequestString myReq = new CostumRequestString(Request.Method.POST,ServerConstants.loginTebakan,mParams,AnswerTempTebakanActivity.this,AnswerTempTebakanActivity.this);
-                        myReq.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                        AppController.getInstance().addToRequestQueue(myReq);
+                        Log.d("email", sessionManager.getEmail());
+                        Log.d("uidUser", sessionManager.getUidUser());
+
+                        if(sessionManager.getModeUser()){
+                            /**
+                             * this is temp user
+                             */
+
+//                            Log.d("mode user", String.valueOf(sessionManager.getModeUser()));
+                            CostumRequestString myReq = new CostumRequestString(Request.Method.POST,ServerConstants.loginTebakanTemp,mParams,AnswerTempTebakanActivity.this,AnswerTempTebakanActivity.this);
+                            myReq.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                            AppController.getInstance().addToRequestQueue(myReq);
+
+                        }else{
+                            /**
+                             * this is login for registered user
+                             */
+                            CostumRequestString myReq = new CostumRequestString(Request.Method.POST,ServerConstants.loginTebakan,mParams,AnswerTempTebakanActivity.this,AnswerTempTebakanActivity.this);
+                            myReq.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                            AppController.getInstance().addToRequestQueue(myReq);
+                        }
+
+
                         break;
                     case ServerConstants.ErrorDataNotFound :
                         Toast.makeText(AnswerTempTebakanActivity.this, "Sorry We Couldn't find any data", Toast.LENGTH_SHORT).show();
