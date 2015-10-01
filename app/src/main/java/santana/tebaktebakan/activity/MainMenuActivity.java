@@ -18,8 +18,8 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -66,7 +66,7 @@ public class MainMenuActivity extends AppCompatActivity implements FinishRegistr
      */
     protected AppCompatTextView coin1;
     protected ProgressBar Loading;
-    protected LinearLayout layout1;
+    protected RelativeLayout layout1;
     protected AppCompatTextView coin2,infoLoading;
     protected ImageView shareTwitter,shareFacebook;
     SessionManager sessionManager;
@@ -190,7 +190,7 @@ public class MainMenuActivity extends AppCompatActivity implements FinishRegistr
     }
 
     private void initUI(){
-        layout1 = (LinearLayout)findViewById(R.id.layout1);
+        layout1 = (RelativeLayout)findViewById(R.id.layout1);
         infoLoading = (AppCompatTextView)findViewById(R.id.infoLoading);
         Loading = (ProgressBar)findViewById(R.id.Loading);
         coin1 = (AppCompatTextView)findViewById(R.id.coinSaya);

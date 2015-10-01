@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/layoutmenu">
 
     <ProgressBar
         android:id="@+id/Loading"
@@ -30,7 +31,8 @@
         android:layout_marginRight="@dimen/marginTop"
         android:layout_marginTop="@dimen/marginTop"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout">
 
         <ImageView
             android:id="@+id/share1"
@@ -67,69 +69,85 @@
         android:layout_centerInParent="true"
         android:text="1230"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/layout1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_width="300px"
+        android:layout_height="250px"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="@dimen/marginTop">
-
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/menu1"
-            android:layout_width="@dimen/mainMenuWidthButton"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/mainMenuMargin"
-            android:gravity="center"
-            android:onClick="MainMenuClick"
-            android:text="@string/menu1"/>
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/menu2"
-            android:layout_width="@dimen/mainMenuWidthButton"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/mainMenuMargin"
-            android:gravity="center"
-            android:onClick="MainMenuClick"
-            android:text="@string/menu2"/>
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/menu3"
-            android:layout_width="@dimen/mainMenuWidthButton"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/mainMenuMargin"
-            android:gravity="center"
-            android:onClick="MainMenuClick"
-            android:text="@string/menu3"/>
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/menu4"
-            android:layout_width="@dimen/mainMenuWidthButton"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/mainMenuMargin"
-            android:gravity="center"
-            android:onClick="MainMenuClick"
-            android:text="@string/menu4"/>
-
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/menu5"
-            android:layout_width="@dimen/mainMenuWidthButton"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:onClick="MainMenuClick"
-            android:text="@string/menu5"/>
+        android:padding="2dp"
+        android:layout_above="@+id/adView"
+        android:layout_centerHorizontal="true">
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/menu6"
-            android:layout_width="@dimen/mainMenuWidthButton"
-            android:layout_height="wrap_content"
+            android:layout_width="72px"
+            android:layout_height="72px"
             android:gravity="center"
             android:onClick="MainMenuClick"
-            android:text="@string/menu6"/>
+            android:background="@drawable/adduser"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/menu1"
+            android:layout_alignStart="@+id/menu1" />
 
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/menu5"
+            android:layout_width="72px"
+            android:layout_height="72px"
+            android:background="@drawable/form"
+            android:onClick="MainMenuClick"
+            android:layout_below="@+id/menu6"
+            android:layout_alignRight="@+id/menu2"
+            android:layout_alignEnd="@+id/menu2"
+            android:layout_marginRight="11dp"
+            android:layout_marginEnd="11dp" />
 
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/menu4"
+            android:layout_width="72px"
+            android:layout_height="72px"
+            android:onClick="MainMenuClick"
+            android:background="@drawable/coin"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_below="@+id/menu6"
+            android:layout_alignLeft="@+id/menu3"
+            android:layout_alignStart="@+id/menu3" />
 
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/menu3"
+            android:layout_width="72px"
+            android:layout_height="72px"
+            android:background="@drawable/setting"
+            android:gravity="center"
+            android:onClick="MainMenuClick"
+            android:layout_below="@+id/menu1"
+            android:layout_toRightOf="@+id/menu1"
+            android:layout_toEndOf="@+id/menu1" />
 
-    </LinearLayout>
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/menu2"
+            android:layout_width="72px"
+            android:layout_height="72px"
+            android:background="@drawable/rank"
+            android:gravity="center"
+            android:onClick="MainMenuClick"
+            android:layout_below="@+id/menu1"
+            android:layout_toLeftOf="@+id/menu1"
+            android:layout_toStartOf="@+id/menu1" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/menu1"
+            android:layout_width="72px"
+            android:layout_height="72px"
+            android:background="@drawable/play"
+            android:gravity="center"
+            android:onClick="MainMenuClick"
+            android:layout_marginTop="15dp"
+            android:layout_alignTop="@+id/menu4"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
@@ -140,6 +158,16 @@
         ads:adSize="BANNER"
         ads:adUnitId="@string/banner_ad_unit_id">
     </com.google.android.gms.ads.AdView>
+
+    <ImageView
+        android:layout_width="47px"
+        android:layout_height="47px"
+        android:background="@drawable/sound"
+        android:layout_alignTop="@+id/linearLayout"
+        android:layout_toRightOf="@+id/Loading"
+        android:layout_toEndOf="@+id/Loading"
+        android:layout_marginLeft="18dp"
+        android:layout_marginStart="18dp" />
 
 
 </RelativeLayout>
