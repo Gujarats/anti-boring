@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/marginTop"
         android:gravity="center"
-        android:text="@string/TitleWarning"
         android:textColor="@color/primary"
         android:textSize="@dimen/dialog_text_size_correct"
         />
