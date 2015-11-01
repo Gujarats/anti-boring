@@ -62,6 +62,9 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/layout_nested_baru" />
-
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/list"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    />
 </android.support.design.widget.CoordinatorLayout>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout android:id="@+id/background"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+              android:layout_height="match_parent"
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="100dp"
@@ -26,13 +27,13 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="5dp">
             <ImageView
-                android:id="@+id/bintang1LvlKecil"
+                android:id="@+id/bintang1LvlSedang"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
                 android:src="@drawable/bintang" />
             <ImageView
-                android:id="@+id/bintang2LvlKecil"
+                android:id="@+id/bintang2LvlSedang"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
