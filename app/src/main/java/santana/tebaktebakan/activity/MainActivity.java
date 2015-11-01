@@ -8,7 +8,7 @@ import santana.tebaktebakan.R;
 /**
  * Created by AdrianEkaFikri on 11/1/2015.
  */
-public class MainActivityBaru extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity{
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
