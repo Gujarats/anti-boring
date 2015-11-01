@@ -4,4 +4,7 @@
     <!-- Stage Activity-->
     <string name="level">Level</string>
 
+    <string name="tebakkata">Tebak\nKata</string>
+    <string name="tebakgambar">Tebak\nGambar</string>
+
 </resources>
