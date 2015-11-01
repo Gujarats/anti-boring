@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="#e7e0e0"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:src="@drawable/panahback" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#6eccec"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:layout_width="160dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="#348dcc">
+                <requestFocus/>
+            </android.support.v7.widget.AppCompatEditText>
+
+            <ImageView
+                android:id="@+id/btnCek"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#348dcc"
+                android:src="@drawable/tambah" />
+
+            <ImageView
+                android:id="@+id/btnShare"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:src="@drawable/share" />
+            <ImageView
+                android:id="@+id/btnHelp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:src="@drawable/help" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

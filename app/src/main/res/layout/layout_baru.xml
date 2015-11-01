@@ -62,5 +62,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <include layout="@layout/layout_nested_baru" />
 
 </android.support.design.widget.CoordinatorLayout>
