@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
@@ -11,7 +12,8 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:id="@+id/linear1"
@@ -22,6 +24,7 @@
                 <RelativeLayout
                     android:layout_width="100dp"
                     android:layout_height="100dp"
+                    android:layout_margin="2dp"
                     android:layout_weight="1"
                     android:background="#0379f7">
                     <TextView
@@ -58,8 +61,10 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/relLayout"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
+                    android:layout_margin="2dp"
                     android:layout_weight="1"
                     android:background="#0379f7">
                     <TextView
@@ -101,6 +106,7 @@
                 android:layout_height="100dp"
                 android:layout_below="@+id/linear1"
                 android:layout_margin="2dp"
+                android:layout_toRightOf="@+id/relLayout"
                 android:background="#882245a4">
                 <TextView
                     android:id="@+id/txtLvlSedang"
@@ -144,6 +150,7 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_margin="2dp"
+            android:layout_weight="1"
             android:background="#3a43de">
             <LinearLayout
                 android:layout_width="70dp"
@@ -166,12 +173,12 @@
             </LinearLayout>
             <TextView
                 android:id="@+id/txtLvlBesar"
-                android:layout_width="120dp"
+                android:layout_width="110dp"
                 android:layout_height="120dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:gravity="bottom"
+                android:gravity="bottom|center_horizontal"
                 android:text="08"
                 android:textColor="#ffffff"
                 android:textSize="95sp" />
