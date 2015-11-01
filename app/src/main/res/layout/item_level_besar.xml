@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    
+    <RelativeLayout
+        android:id="@+id/itemLvlBesar"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="#3a43de">
+            <TextView
+                android:id="@+id/txtLvlBesar"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:gravity="bottom|end"
+                android:text="01"
+                android:textColor="#ffffff"
+                android:textSize="95sp" />
+        <LinearLayout
+            android:layout_width="70dp"
+            android:layout_height="35dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_toRightOf="@+id/txtLvlBesar">
+            <ImageView
+                android:id="@+id/bintang1LvlBesar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:src="@drawable/bintang" />
+            <ImageView
+                android:id="@+id/bintang2LvlBesar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:src="@drawable/bintang" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>
