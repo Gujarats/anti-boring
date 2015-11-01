@@ -2,15 +2,10 @@ package santana.tebaktebakan.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-
-import santana.tebaktebakan.R;
 
 /**
  * Created by AdrianEkaFikri on 11/1/2015.
@@ -49,19 +44,19 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final AppCompatTextView level;
-        public final ImageView bintang1;
-        public final ImageView bintang2;
-        public final LinearLayoutCompat background;
+//        public final AppCompatTextView level;
+//        public final ImageView bintang1;
+//        public final ImageView bintang2;
+//        public final LinearLayoutCompat background;
 
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            level = (AppCompatTextView) view.findViewById(R.id.txtLvlSedang);
-            bintang1 = (ImageView) view.findViewById(R.id.layoutBintangKecil);
-            bintang2 = (ImageView) view.findViewById(R.id.layoutBintangKecil);
-            background = (LinearLayoutCompat) view.findViewById(R.id.background);
+//            level = (AppCompatTextView) view.findViewById(R.id.txtLvlSedang);
+//            bintang1 = (ImageView) view.findViewById(R.id.layoutBintangKecil);
+//            bintang2 = (ImageView) view.findViewById(R.id.layoutBintangKecil);
+//            background = (LinearLayoutCompat) view.findViewById(R.id.background);
 
         }
 
