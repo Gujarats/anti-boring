@@ -45,5 +45,9 @@
     <!--dialog out of time-->
     <dimen name="dialog_oot">30dp</dimen>
 
+    <!-- Stage Activity-->
+    <dimen name="level">20sp</dimen>
+    <dimen name="level01">80sp</dimen>
+
 
 </resources>

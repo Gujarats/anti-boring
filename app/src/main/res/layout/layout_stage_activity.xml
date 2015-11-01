@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+    android:gravity="center">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/level"
+        android:textSize="@dimen/level"/>
+
+    <LinearLayout
+        android:layout_width="310dp"
+        android:layout_height="310dp"
+        android:layout_below="@+id/level"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:gravity="center"
+                android:text="01"
+                android:textSize="@dimen/level01"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/TebakKata"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/backgorund_selector"
+                android:text="Tebak Kata"/>
+
+
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/TebakGambar"
+            android:layout_width="150dp"
+            android:layout_height="300dp"
+            android:background="@drawable/backgorund_selector"
+            android:text="Tebak Gambar"/>
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

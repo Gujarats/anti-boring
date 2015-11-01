@@ -1,67 +1,7 @@
 <resources>
     <string name="app_name">Anti Boring</string>
 
-    <string name="action_settings">Settings</string>
-
-    //answer tebakan activity
-    <string name="hints_answer">Your Answer Here</string>
-
-    //upload tebakan activity
-    <string name="hints_upload">Your Answer Here</string>
-
-    //crop gambar activity
-
-    <string name="can_not_crop">Your image is to small</string>
-
-    <!--menu dialog incorrect answer-->
-    <string name="dialog_answer_incorrect">Sorry Incorrect Answer</string>
-
-    <!--menu dialog correct answer-->
-    <string name="dialog_answer_correct">Okay Bray, You Got The Point!</string>
-
-    <!--menu dialog has aswered-->
-    <string name="dialog_answer_answered">You have Answered this question</string>
-
-    <!--menu dialog out of time-->
-    <string name="dialog_out_of_time">Sorry Bray, Running Out Of Time</string>
-
-    <!--menu string in option menu-->
-    <string name="point_option_menu">100</string>
-
-    <!--main menu-->
-    <string name="menu1">Start Game</string>
-    <string name="menu2">Ranking</string>
-    <string name="menu3">Settings</string>
-    <string name="menu4">Coins</string>
-    <string name="menu5">Rules</string>
-    <string name="menu6">Register</string>
-
-    <!--admob ads unit-->
-    <string name="banner_ad_unit_id">ca-app-pub-7786975749587909/8076194272</string>
-
-
-    <!--faceboook app id-->
-    <string name="facebook_app_id">463332880514941</string>
-
-
-
-    <!--rules-->
-    <string name="TitleRules1">Rules Point</string>
-    <string name="rules1">1. Wrong Answer -100</string>
-    <string name="rules2">2. Try Again  -30</string>
-    <string name="rules3">3. Correct Answer  +150</string>
-    <string name="rules4">4. Next  -50</string>
-    <string name="rules5">5. Hint  -25</string>
-
-    <!--dialog out of time-->
-    <string name="TitleOutOfTime">Sorry Bray, Running Out Of Time</string>
-    <string name="try_again">Try Again</string>
-    <string name="next">Next</string>
-    <string name="rangking">Rangking</string>
-    <string name="more_coins">More Coins</string>
-
-    <!--dialgo warning registration-->
-    <string name="TitleWarning">Please Register Your Account \nto Save Your Progress</string>
-
+    <!-- Stage Activity-->
+    <string name="level">Level</string>
 
 </resources>
