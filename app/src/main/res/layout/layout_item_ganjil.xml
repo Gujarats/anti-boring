@@ -12,12 +12,12 @@
 
         <RelativeLayout
             android:id="@+id/itemLvlBesar"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="202dp"
+            android:layout_height="202dp"
             android:layout_margin="2dp"
             android:layout_weight="1"
             android:background="#3a43de">
-            <TextView
+            <view.CostumFont
                 android:id="@+id/txtLvlBesar"
                 android:layout_width="110dp"
                 android:layout_height="120dp"
@@ -66,7 +66,7 @@
                     android:layout_margin="2dp"
                     android:layout_weight="1"
                     android:background="#0379f7">
-                    <TextView
+                    <view.CostumFont
                         android:id="@+id/txtLvlKecil1"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
@@ -105,7 +105,7 @@
                     android:layout_margin="2dp"
                     android:layout_weight="1"
                     android:background="#0379f7">
-                    <TextView
+                    <view.CostumFont
                         android:id="@+id/txtLvlKecil2"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
@@ -145,7 +145,7 @@
                 android:layout_below="@+id/linear1"
                 android:layout_margin="2dp"
                 android:background="#882245a4">
-                <TextView
+                <view.CostumFont
                     android:id="@+id/txtLvlSedang"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
