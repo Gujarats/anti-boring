@@ -12,8 +12,8 @@
 
         <RelativeLayout
             android:id="@+id/itemLvlBesar"
-            android:layout_width="202dp"
-            android:layout_height="202dp"
+            android:layout_width="200dp"
+            android:layout_height="203dp"
             android:layout_margin="2dp"
             android:layout_weight="1"
             android:background="#3a43de">
