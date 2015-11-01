@@ -18,10 +18,10 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_baru);
+        setContentView(R.layout.layout_main);
 
-        initUI();
-        buttonAction();
+//        initUI();
+//        buttonAction();
     }
 
     private void buttonAction() {

@@ -46,8 +46,8 @@
     <dimen name="dialog_oot">30dp</dimen>
 
     <!-- Stage Activity-->
-    <dimen name="level">20sp</dimen>
-    <dimen name="level01">80sp</dimen>
+    <dimen name="level">30sp</dimen>
+    <dimen name="level01">140sp</dimen>
 
 
 </resources>
