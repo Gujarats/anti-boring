@@ -2,16 +2,17 @@ package santana.tebaktebakan.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
-import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Slide;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -27,8 +28,9 @@ import santana.tebaktebakan.adapter.MainActivityAdapter;
 public class MainActivity extends AppCompatActivity{
 
     protected RecyclerView list_level;
-    AppCompatButton btnMenu1;
+    ImageView btnSetting;
     private CollapsingToolbarLayout collapsingToolbarLayout;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +41,39 @@ public class MainActivity extends AppCompatActivity{
 
 
         initUI();
-//        buttonAction();
+        buttonAction();
     }
 
     private void buttonAction() {
-        btnMenu1.setOnClickListener(new View.OnClickListener() {
+        btnSetting.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, StageActivity.class);
+            public boolean onTouch(View v, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        ImageView view = (ImageView) v;
+                        //overlay is black with transparency of 0x77 (119)
+                        view.getDrawable().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
+                        view.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                    }
+                    case MotionEvent.ACTION_CANCEL: {
+                        ImageView view = (ImageView) v;
+                        //clear the overlay
+                        view.getDrawable().clearColorFilter();
+                        view.invalidate();
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
+
+        btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SettingActivity.class);
                 startActivity(intent);
             }
         });
@@ -54,7 +81,7 @@ public class MainActivity extends AppCompatActivity{
 
     private void initUI() {
         list_level = (RecyclerView)findViewById(R.id.list_level);
-        btnMenu1 = (AppCompatButton) findViewById(R.id.btnMenu1);
+        btnSetting = (ImageView) findViewById(R.id.btnSetting);
 
         supportPostponeEnterTransition();
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -79,10 +106,9 @@ public class MainActivity extends AppCompatActivity{
         });
 
 
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        list_level.setLayoutManager(llm);
-        list_level.setAdapter(new MainActivityAdapter(getApplicationContext(),this,R.layout.layout_item_ganjil));
+        mLayoutManager = new GridLayoutManager(this, 2);
+        list_level.setLayoutManager(mLayoutManager);
+        list_level.setAdapter(new MainActivityAdapter(getApplicationContext(),this,R.layout.layout_grid_level));
     }
 
     private void initActivityTransitions() {

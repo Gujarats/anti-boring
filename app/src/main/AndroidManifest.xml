@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="santana.tebaktebakan"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="santana.tebaktebakan" >
 
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -48,6 +48,7 @@
         <activity android:name=".activity.AnswerTebakGambarActivity"/>
         <activity android:name=".activity.ChooseImageTebakanActivity"/>
         <activity android:name=".activity.StageActivity"/>
+        <activity android:name=".activity.SettingActivity"/>
     </application>
 
 

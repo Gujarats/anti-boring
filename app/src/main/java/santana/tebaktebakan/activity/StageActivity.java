@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.view.View;
 
 import santana.tebaktebakan.R;
@@ -14,6 +15,7 @@ import santana.tebaktebakan.R;
 public class StageActivity extends AppCompatActivity {
 
     protected AppCompatTextView tebakKata, tebakGambar;
+    private int lvl;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +23,21 @@ public class StageActivity extends AppCompatActivity {
 
         initUI();
         buttonAction();
+        getValuefromBundle();
+    }
+
+    private void getValuefromBundle(){
+        Intent intent = getIntent();
+        try {
+            if(intent.getExtras()!=null){
+                lvl = intent.getExtras().getInt("lvl");
+                Log.d("LVL BRo ",String.valueOf(lvl));
+            }
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+
+
     }
 
     private void buttonAction() {
