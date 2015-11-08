@@ -51,15 +51,15 @@
                 android:orientation="vertical">
 
                 <view.CostumFont
+                    android:id="@+id/txtLvl"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:gravity="center"
-                    android:text="01"
                     android:textSize="@dimen/level01"/>
 
                 <view.CostumFont
                     android:id="@+id/TebakKata"
-                    android:layout_width="150dp"
+                    android:layout_width="140dp"
                     android:layout_height="150dp"
                     android:background="@drawable/backgorund_selector"
                     android:gravity="center"
@@ -71,7 +71,7 @@
 
             <view.CostumFont
                 android:id="@+id/TebakGambar"
-                android:layout_width="150dp"
+                android:layout_width="130dp"
                 android:layout_height="300dp"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/backgorund_selector"

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import santana.tebaktebakan.R;
 
@@ -14,7 +15,8 @@ import santana.tebaktebakan.R;
  */
 public class StageActivity extends AppCompatActivity {
 
-    protected AppCompatTextView tebakKata, tebakGambar;
+    protected AppCompatTextView tebakKata, tebakGambar, txtLevel;
+    protected ImageView btnBack;
     private int lvl;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
@@ -30,8 +32,9 @@ public class StageActivity extends AppCompatActivity {
         Intent intent = getIntent();
         try {
             if(intent.getExtras()!=null){
-                lvl = intent.getExtras().getInt("lvl");
-                Log.d("LVL BRo ",String.valueOf(lvl));
+                lvl = intent.getExtras().getInt("LEVEL_STAGE");
+                txtLevel.setText(""+lvl);
+                Log.d("LVL BRo ", String.valueOf(lvl));
             }
         }catch (NullPointerException e){
             e.printStackTrace();
@@ -48,10 +51,19 @@ public class StageActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        tebakGambar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StageActivity.this, ChooseImageTebakanActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initUI() {
+        txtLevel = (AppCompatTextView) findViewById(R.id.txtLvl);
         tebakKata = (AppCompatTextView) findViewById(R.id.TebakKata);
         tebakGambar = (AppCompatTextView) findViewById(R.id.TebakGambar);
+
     }
 }
