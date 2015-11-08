@@ -2,20 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_marginTop="6dp"
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="120dp"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
         android:background="@drawable/background_level"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <view.CostumFont
             android:id="@+id/txtLvl"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center_vertical|center_horizontal"
             android:text="01"
