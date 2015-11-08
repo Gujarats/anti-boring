@@ -1,0 +1,34 @@
+{
+  "1" : [
+    {
+      "gambar_url": "gambar_easy1",
+      "jawaban": "balik papan"
+    },
+
+    {
+      "gambar_url": "gambar_medium1",
+      "jawaban": "bambu runcing"
+    },
+    {
+      "gambar_url": "gambar_hard1",
+      "jawaban": "bantal guling"
+    }
+  ],
+
+  "2" : [
+    {
+      "gambar_url": "gambar_easy2",
+      "jawaban": "belah_ketupan"
+    },
+
+    {
+      "gambar_url": "gambar_medium2",
+      "jawaban": "benang kusut"
+    },
+    {
+      "gambar_url": "gambar_hard2",
+      "jawaban": "botol kemenyan"
+    }
+  ]
+
+}

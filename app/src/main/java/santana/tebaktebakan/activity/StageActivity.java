@@ -58,7 +58,9 @@ public class StageActivity extends AppCompatActivity {
         tebakGambar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(StageActivity.this, ChooseImageTebakanActivity.class);
+                intent.putExtra("LEVEL_STAGE",lvl);
                 startActivity(intent);
             }
         });
