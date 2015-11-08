@@ -33,7 +33,11 @@ public class StageActivity extends AppCompatActivity {
         try {
             if(intent.getExtras()!=null){
                 lvl = intent.getExtras().getInt("LEVEL_STAGE");
-                txtLevel.setText(""+lvl);
+                if (lvl<10){
+                    txtLevel.setText("0"+lvl);
+                } else {
+                    txtLevel.setText(""+lvl);
+                }
                 Log.d("LVL BRo ", String.valueOf(lvl));
             }
         }catch (NullPointerException e){
@@ -58,12 +62,18 @@ public class StageActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void initUI() {
         txtLevel = (AppCompatTextView) findViewById(R.id.txtLvl);
         tebakKata = (AppCompatTextView) findViewById(R.id.TebakKata);
         tebakGambar = (AppCompatTextView) findViewById(R.id.TebakGambar);
-
+        btnBack = (ImageView) findViewById(R.id.btnBack);
     }
 }

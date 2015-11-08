@@ -45,7 +45,12 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.txtLevel.setText(String.valueOf(position+1));
+        int lvl = position+1;
+        if (position<9){
+            holder.txtLevel.setText("0"+lvl);
+        } else {
+            holder.txtLevel.setText(""+lvl);
+        }
         holder.layoutLevel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
