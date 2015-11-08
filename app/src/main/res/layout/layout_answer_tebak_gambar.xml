@@ -8,21 +8,6 @@
     android:fitsSystemWindows="true"
     tools:context="santana.tebaktebakan.activity.AnswerTebakKataActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:layout_collapseMode="pin"
-        app:popupTheme="@style/TemaKu.PopupOverlay" >
-
-        <ImageView
-            android:id="@+id/btnBack"
-            android:layout_width="35dp"
-            android:layout_height="30dp"
-            android:src="@drawable/panahback" />
-
-    </android.support.v7.widget.Toolbar>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -92,5 +77,20 @@
 
         </LinearLayout>
     </LinearLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_collapseMode="pin"
+        app:popupTheme="@style/TemaKu.PopupOverlay" >
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="20dp"
+            android:layout_height="25dp"
+            android:src="@drawable/panahback" />
+
+    </android.support.v7.widget.Toolbar>
 
 </android.support.design.widget.CoordinatorLayout>

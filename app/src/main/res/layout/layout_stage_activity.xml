@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#0069b9"
     android:fitsSystemWindows="true"
     tools:context=".StageActivity">
 
@@ -17,8 +18,8 @@
 
         <ImageView
             android:id="@+id/btnBack"
-            android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="25dp"
             android:src="@drawable/panahback" />
 
     </android.support.v7.widget.Toolbar>

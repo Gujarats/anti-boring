@@ -21,14 +21,14 @@ import santana.tebaktebakan.object.TebakanGambarObject;
 /**
  * Created by Gujarat Santana on 08/11/15.
  */
-public class LoadTebakan {
+public class Tebakan {
 
-    public static LoadTebakan instance;
+    public static Tebakan instance;
 
-    private LoadTebakan() {}
+    private Tebakan() {}
 
-    public static LoadTebakan getInstance() {
-        if (instance == null) instance = new LoadTebakan();
+    public static Tebakan getInstance() {
+        if (instance == null) instance = new Tebakan();
         return instance;
     }
 

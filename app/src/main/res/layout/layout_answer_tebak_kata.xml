@@ -8,27 +8,12 @@
     android:fitsSystemWindows="true"
     tools:context="santana.tebaktebakan.activity.AnswerTebakKataActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:layout_collapseMode="pin"
-        app:popupTheme="@style/TemaKu.PopupOverlay" >
-
-        <ImageView
-            android:id="@+id/btnBack"
-            android:layout_width="35dp"
-            android:layout_height="30dp"
-            android:src="@drawable/panahback" />
-
-    </android.support.v7.widget.Toolbar>
-
-    <LinearLayout
+    <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:background="#6eccec"
@@ -41,19 +26,19 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="00000000000000000000000"
+                android:text="Advasjnviwhefkndn"
                 android:textColor="#ffffff"
                 android:textSize="50sp" />
 
-        </LinearLayout>
+        </android.support.v7.widget.LinearLayoutCompat>
 
-        <LinearLayout
+        <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#6eccec"
             android:padding="10dp">
 
-            <LinearLayout
+            <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -67,7 +52,7 @@
                     <requestFocus/>
                 </android.support.v7.widget.AppCompatEditText>
 
-                <LinearLayout
+                <android.support.v7.widget.LinearLayoutCompat
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:background="#348dcc">
@@ -78,7 +63,7 @@
                         android:layout_height="35dp"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/tambah" />
-                </LinearLayout>
+                </android.support.v7.widget.LinearLayoutCompat>
 
                 <ImageView
                     android:id="@+id/btnShare"
@@ -93,9 +78,24 @@
                     android:layout_weight="1"
                     android:src="@drawable/help" />
 
-            </LinearLayout>
+            </android.support.v7.widget.LinearLayoutCompat>
 
-        </LinearLayout>
-    </LinearLayout>
+        </android.support.v7.widget.LinearLayoutCompat>
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_collapseMode="pin"
+        app:popupTheme="@style/TemaKu.PopupOverlay" >
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="20dp"
+            android:layout_height="25dp"
+            android:src="@drawable/panahback" />
+
+    </android.support.v7.widget.Toolbar>
 
 </android.support.design.widget.CoordinatorLayout>
