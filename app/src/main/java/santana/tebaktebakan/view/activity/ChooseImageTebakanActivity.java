@@ -9,7 +9,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import santana.tebaktebakan.R;
-import santana.tebaktebakan.controller.UIManager.UserInterfaceManager;
+import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
 import santana.tebaktebakan.controller.tebakanManager.Tebakan;
 import santana.tebaktebakan.model.object.TebakanGambarObject;
 
@@ -34,7 +34,7 @@ public class ChooseImageTebakanActivity extends AppCompatActivity {
     }
 
     private void initAction() {
-        UserInterfaceManager.getInstance().backAction(this, btnBack);
+        LogicInterfaceManager.getInstance().backAction(this, btnBack);
     }
 
 
@@ -48,10 +48,10 @@ public class ChooseImageTebakanActivity extends AppCompatActivity {
         btnBack = (ImageView) findViewById(R.id.btnBack);
 
         //set effect onclick and action
-        UserInterfaceManager.getInstance().setOnClickEffect(this, btnBack);
+        LogicInterfaceManager.getInstance().setOnClickEffect(this, btnBack);
         //get level value and set it to textView
-        lvl = UserInterfaceManager.getInstance().getLevel(this);
-        UserInterfaceManager.getInstance().setTextViewLevel(lvl,txtLevel);
+        lvl = LogicInterfaceManager.getInstance().getLevel(this);
+        LogicInterfaceManager.getInstance().setTextViewLevel(lvl,txtLevel);
     }
 
     private void initGambar() {

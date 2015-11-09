@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import santana.tebaktebakan.R;
-import santana.tebaktebakan.controller.UIManager.UserInterfaceManager;
+import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
 
 /**
  * Created by Gujarat Santana on 01/11/15.
@@ -26,7 +26,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
     }
 
     private void initAction() {
-        UserInterfaceManager.getInstance().backAction(this, btnBack);
+        LogicInterfaceManager.getInstance().backAction(this, btnBack);
     }
 
     private void initUI() {
@@ -36,9 +36,9 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
         btnShare = (ImageView) findViewById(R.id.btnShare);
 
         //set Effect on widget
-        UserInterfaceManager.getInstance().setOnClickEffect(this,btnBack);
-        UserInterfaceManager.getInstance().setOnClickEffect(this,btnCek);
-        UserInterfaceManager.getInstance().setOnClickEffect(this,btnHelp);
-        UserInterfaceManager.getInstance().setOnClickEffect(this,btnShare);
+        LogicInterfaceManager.getInstance().setOnClickEffect(this,btnBack);
+        LogicInterfaceManager.getInstance().setOnClickEffect(this,btnCek);
+        LogicInterfaceManager.getInstance().setOnClickEffect(this,btnHelp);
+        LogicInterfaceManager.getInstance().setOnClickEffect(this,btnShare);
     }
 }

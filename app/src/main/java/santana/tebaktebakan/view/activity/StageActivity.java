@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import santana.tebaktebakan.R;
-import santana.tebaktebakan.controller.UIManager.UserInterfaceManager;
+import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
 
 /**
  * Created by Gujarat Santana on 01/11/15.
@@ -30,7 +30,7 @@ public class StageActivity extends AppCompatActivity {
 
     private void initAction() {
 
-        UserInterfaceManager.getInstance().backAction(this, btnBack);
+        LogicInterfaceManager.getInstance().backAction(this, btnBack);
         tebakKata.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,10 +56,10 @@ public class StageActivity extends AppCompatActivity {
         btnBack = (ImageView) findViewById(R.id.btnBack);
 
         //set effect onclick and action
-        UserInterfaceManager.getInstance().setOnClickEffect(this, btnBack);
+        LogicInterfaceManager.getInstance().setOnClickEffect(this, btnBack);
 
         //get level value and set it to textView
-        lvl = UserInterfaceManager.getInstance().getLevel(this);
-        UserInterfaceManager.getInstance().setTextViewLevel(lvl,txtLevel);
+        lvl = LogicInterfaceManager.getInstance().getLevel(this);
+        LogicInterfaceManager.getInstance().setTextViewLevel(lvl,txtLevel);
     }
 }

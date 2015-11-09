@@ -1,6 +1,7 @@
 package santana.tebaktebakan.controller.UIManager;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.support.v7.widget.AppCompatTextView;
@@ -11,14 +12,14 @@ import android.widget.ImageView;
 /**
  * Created by Gujarat Santana on 09/11/15.
  */
-public class UserInterfaceManager {
+public class LogicInterfaceManager {
 
-    public static UserInterfaceManager instance;
+    public static LogicInterfaceManager instance;
 
-    private UserInterfaceManager() {}
+    private LogicInterfaceManager() {}
 
-    public static UserInterfaceManager getInstance() {
-        if (instance == null) instance = new UserInterfaceManager();
+    public static LogicInterfaceManager getInstance() {
+        if (instance == null) instance = new LogicInterfaceManager();
         return instance;
     }
 
@@ -79,6 +80,16 @@ public class UserInterfaceManager {
             @Override
             public void onClick(View v) {
                 activity.finish();
+            }
+        });
+    }
+
+    public void startActivityAction(ImageView button,final Context context, final Class<?> target){
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, target);
+                context.startActivity(intent);
             }
         });
     }

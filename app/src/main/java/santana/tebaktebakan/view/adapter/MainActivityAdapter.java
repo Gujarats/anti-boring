@@ -20,8 +20,6 @@ import santana.tebaktebakan.view.activity.StageActivity;
  * Created by AdrianEkaFikri on 11/1/2015.
  */
 public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapter.ViewHolder> {
-
-    public static int lvl;
     private Context context;
     private Activity activity;
     private int layout;
@@ -43,12 +41,7 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        int lvl = position+1;
-        if (position<9){
-            holder.txtLevel.setText("0"+lvl);
-        } else {
-            holder.txtLevel.setText(""+lvl);
-        }
+        initPosition(position,holder.txtLevel);
         holder.layoutLevel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +50,15 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
                 ActivityCompat.startActivity(activity, intent, Bundle.EMPTY);
             }
         });
+    }
+
+    private void initPosition(int position, AppCompatTextView txtLevel){
+        String lvl = String.valueOf(position+1);
+        if (position<9){
+            txtLevel.setText("0"+lvl);
+        } else {
+            txtLevel.setText(""+lvl);
+        }
     }
 
     @Override
