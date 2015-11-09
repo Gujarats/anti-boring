@@ -39,14 +39,14 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <view.CostumFont
+                <santana.tebaktebakan.view.font.CostumFont
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
                     android:text="Level"
                     android:textSize="40sp" />
-                <view.CostumFont
+                <santana.tebaktebakan.view.font.CostumFont
                     android:id="@+id/txtLvl"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <view.CostumFont
+                <santana.tebaktebakan.view.font.CostumFont
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

@@ -19,7 +19,7 @@
             android:background="#6eccec"
             android:padding="40dp">
 
-            <view.CostumFont
+            <santana.tebaktebakan.view.font.CostumFont
                 android:id="@+id/isiTebakKata"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
