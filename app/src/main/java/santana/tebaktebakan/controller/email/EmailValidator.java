@@ -1,4 +1,4 @@
-package santana.tebaktebakan.email;
+package santana.tebaktebakan.controller.email;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

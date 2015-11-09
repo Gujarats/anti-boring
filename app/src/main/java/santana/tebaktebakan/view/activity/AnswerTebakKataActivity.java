@@ -1,4 +1,4 @@
-package santana.tebaktebakan.activity;
+package santana.tebaktebakan.view.activity;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -12,14 +12,15 @@ import santana.tebaktebakan.R;
 /**
  * Created by Gujarat Santana on 01/11/15.
  */
-public class AnswerTebakGambarActivity extends AppCompatActivity {
+public class AnswerTebakKataActivity extends AppCompatActivity {
 
     protected ImageView btnBack, btnCek, btnHelp, btnShare;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_answer_tebak_gambar);
+        setContentView(R.layout.layout_answer_tebak_kata);
 
         initUI();
         buttonAction();

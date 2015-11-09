@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="santana.tebaktebakan" >
+<manifest package="santana.tebaktebakan"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -33,7 +33,7 @@
 
         //list activity
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".view.activity.MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
@@ -44,11 +44,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.AnswerTebakKataActivity"/>
-        <activity android:name=".activity.AnswerTebakGambarActivity"/>
-        <activity android:name=".activity.ChooseImageTebakanActivity"/>
-        <activity android:name=".activity.StageActivity"/>
-        <activity android:name=".activity.SettingActivity"/>
+        <activity android:name=".view.activity.AnswerTebakKataActivity"/>
+        <activity android:name=".view.activity.AnswerTebakGambarActivity"/>
+        <activity android:name=".view.activity.ChooseImageTebakanActivity"/>
+        <activity android:name=".view.activity.StageActivity"/>
+        <activity android:name=".view.activity.SettingActivity"/>
     </application>
 
 

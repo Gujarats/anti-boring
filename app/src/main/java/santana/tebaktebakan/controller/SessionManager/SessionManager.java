@@ -1,4 +1,4 @@
-package santana.tebaktebakan.session;
+package santana.tebaktebakan.controller.SessionManager;
 
 import android.content.Context;
 import android.content.SharedPreferences;

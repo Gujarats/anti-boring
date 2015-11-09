@@ -1,4 +1,4 @@
-package santana.tebaktebakan.socialMedia;
+package santana.tebaktebakan.controller.socialMedia;
 
 /**
  * Created by Gujarat Santana on 18/08/15.

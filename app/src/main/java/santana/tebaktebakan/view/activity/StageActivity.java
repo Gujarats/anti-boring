@@ -1,4 +1,4 @@
-package santana.tebaktebakan.activity;
+package santana.tebaktebakan.view.activity;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;

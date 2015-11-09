@@ -1,4 +1,4 @@
-package santana.tebaktebakan.object;
+package santana.tebaktebakan.model.object;
 
 /**
  * Created by Gujarat Santana on 12/06/15.

@@ -1,4 +1,4 @@
-package santana.tebaktebakan.storageMemory;
+package santana.tebaktebakan.controller.storage;
 
 import android.content.Context;
 import android.content.ContextWrapper;

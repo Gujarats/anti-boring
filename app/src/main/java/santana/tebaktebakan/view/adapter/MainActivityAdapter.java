@@ -1,4 +1,4 @@
-package santana.tebaktebakan.adapter;
+package santana.tebaktebakan.view.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,8 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import santana.tebaktebakan.R;
-import santana.tebaktebakan.activity.StageActivity;
-import santana.tebaktebakan.session.SessionLevel;
+import santana.tebaktebakan.view.activity.StageActivity;
 
 /**
  * Created by AdrianEkaFikri on 11/1/2015.
@@ -26,7 +25,6 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
     private Context context;
     private Activity activity;
     private int layout;
-    private SessionLevel sessionLevel;
 
     public MainActivityAdapter(Context context, Activity activity, int layout) {
         this.context = context;

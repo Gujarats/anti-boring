@@ -1,4 +1,4 @@
-package santana.tebaktebakan.activity;
+package santana.tebaktebakan.view.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,7 +20,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import santana.tebaktebakan.R;
-import santana.tebaktebakan.adapter.MainActivityAdapter;
+import santana.tebaktebakan.view.adapter.MainActivityAdapter;
 
 /**
  * Created by AdrianEkaFikri on 11/1/2015.

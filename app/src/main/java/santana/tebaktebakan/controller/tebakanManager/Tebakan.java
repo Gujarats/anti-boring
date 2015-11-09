@@ -1,4 +1,4 @@
-package santana.tebaktebakan.loadTebakan;
+package santana.tebaktebakan.controller.tebakanManager;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,7 +16,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import santana.tebaktebakan.object.TebakanGambarObject;
+import santana.tebaktebakan.model.object.TebakanGambarObject;
 
 /**
  * Created by Gujarat Santana on 08/11/15.
