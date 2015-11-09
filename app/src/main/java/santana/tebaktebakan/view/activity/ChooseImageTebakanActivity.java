@@ -1,18 +1,15 @@
 package santana.tebaktebakan.view.activity;
 
-import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.List;
 
 import santana.tebaktebakan.R;
+import santana.tebaktebakan.controller.UIManager.UserInterfaceManager;
 import santana.tebaktebakan.controller.tebakanManager.Tebakan;
 import santana.tebaktebakan.model.object.TebakanGambarObject;
 
@@ -29,69 +26,32 @@ public class ChooseImageTebakanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_tebak_semua_gambar);
+        //initial Interface
         initUI();
-        getValuefromBundle(txtLevel);
         initGambar();
-        buttonAction();
+        // initial for action button or widget
+        initAction();
     }
 
-    private void buttonAction() {
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        btnBack.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent motionEvent) {
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        ImageView view = (ImageView) v;
-                        //overlay is black with transparency of 0x77 (119)
-                        view.getDrawable().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
-                        view.invalidate();
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP: {
-                    }
-                    case MotionEvent.ACTION_CANCEL: {
-                        ImageView view = (ImageView) v;
-                        //clear the overlay
-                        view.getDrawable().clearColorFilter();
-                        view.invalidate();
-                        break;
-                    }
-                }
-                return false;
-            }
-        });
+    private void initAction() {
+        UserInterfaceManager.getInstance().backAction(this, btnBack);
     }
 
-    private void getValuefromBundle(AppCompatTextView txtLevel) {
-        Intent intent = getIntent();
-        try {
-            if (intent.getExtras() != null) {
-                lvl = intent.getExtras().getInt("LEVEL_STAGE");
-                if (lvl < 10) {
-                    txtLevel.setText("0" + lvl);
-                } else {
-                    txtLevel.setText("" + lvl);
-                }
-            }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
 
-
-    }
 
     private void initUI() {
+        //finding id from resources
         txtLevel = (AppCompatTextView) findViewById(R.id.txtLvl);
         m1 = (ImageView) findViewById(R.id.gambar1);
         m2 = (ImageView) findViewById(R.id.gambar2);
         m3 = (ImageView) findViewById(R.id.gambar3);
         btnBack = (ImageView) findViewById(R.id.btnBack);
+
+        //set effect onclick and action
+        UserInterfaceManager.getInstance().setOnClickEffect(this, btnBack);
+        //get level value and set it to textView
+        lvl = UserInterfaceManager.getInstance().getLevel(this);
+        UserInterfaceManager.getInstance().setTextViewLevel(lvl,txtLevel);
     }
 
     private void initGambar() {

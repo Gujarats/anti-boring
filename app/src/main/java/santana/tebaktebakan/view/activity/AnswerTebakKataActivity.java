@@ -1,13 +1,11 @@
 package santana.tebaktebakan.view.activity;
 
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ImageView;
 
 import santana.tebaktebakan.R;
+import santana.tebaktebakan.controller.UIManager.UserInterfaceManager;
 
 /**
  * Created by Gujarat Santana on 01/11/15.
@@ -22,113 +20,14 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_answer_tebak_kata);
 
+        //initial Interface
         initUI();
-        buttonAction();
+        // initial for action button or widget
+        initAction();
     }
 
-    private void buttonAction() {
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        btnBack.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent motionEvent) {
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        ImageView view = (ImageView) v;
-                        //overlay is black with transparency of 0x77 (119)
-                        view.getDrawable().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
-                        view.invalidate();
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP: {
-                    }
-                    case MotionEvent.ACTION_CANCEL: {
-                        ImageView view = (ImageView) v;
-                        //clear the overlay
-                        view.getDrawable().clearColorFilter();
-                        view.invalidate();
-                        break;
-                    }
-                }
-                return false;
-            }
-        });
-        btnShare.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent motionEvent) {
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        ImageView view = (ImageView) v;
-                        //overlay is black with transparency of 0x77 (119)
-                        view.getDrawable().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
-                        view.invalidate();
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP: {
-                    }
-                    case MotionEvent.ACTION_CANCEL: {
-                        ImageView view = (ImageView) v;
-                        //clear the overlay
-                        view.getDrawable().clearColorFilter();
-                        view.invalidate();
-                        break;
-                    }
-                }
-                return false;
-            }
-        });
-        btnHelp.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent motionEvent) {
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        ImageView view = (ImageView) v;
-                        //overlay is black with transparency of 0x77 (119)
-                        view.getDrawable().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
-                        view.invalidate();
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP: {
-                    }
-                    case MotionEvent.ACTION_CANCEL: {
-                        ImageView view = (ImageView) v;
-                        //clear the overlay
-                        view.getDrawable().clearColorFilter();
-                        view.invalidate();
-                        break;
-                    }
-                }
-                return false;
-            }
-        });
-        btnCek.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent motionEvent) {
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        ImageView view = (ImageView) v;
-                        //overlay is black with transparency of 0x77 (119)
-                        view.getDrawable().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
-                        view.invalidate();
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP: {
-                    }
-                    case MotionEvent.ACTION_CANCEL: {
-                        ImageView view = (ImageView) v;
-                        //clear the overlay
-                        view.getDrawable().clearColorFilter();
-                        view.invalidate();
-                        break;
-                    }
-                }
-                return false;
-            }
-        });
+    private void initAction() {
+        UserInterfaceManager.getInstance().backAction(this,btnBack);
     }
 
     private void initUI() {
@@ -136,5 +35,11 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
         btnCek = (ImageView) findViewById(R.id.btnCek);
         btnHelp = (ImageView) findViewById(R.id.btnHelp);
         btnShare = (ImageView) findViewById(R.id.btnShare);
+
+        //set Effect on widget
+        UserInterfaceManager.getInstance().setOnClickEffect(this,btnBack);
+        UserInterfaceManager.getInstance().setOnClickEffect(this,btnCek);
+        UserInterfaceManager.getInstance().setOnClickEffect(this,btnHelp);
+        UserInterfaceManager.getInstance().setOnClickEffect(this,btnShare);
     }
 }
