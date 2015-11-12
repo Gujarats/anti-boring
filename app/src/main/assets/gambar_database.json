@@ -7,7 +7,7 @@
 
     {
       "gambar_url": "gambar_medium1",
-      "jawaban": "bambu runcing"
+      "jawaban": "cubit cubitan"
     },
     {
       "gambar_url": "gambar_hard1",
@@ -18,7 +18,7 @@
   "2" : [
     {
       "gambar_url": "gambar_easy2",
-      "jawaban": "belah_ketupan"
+      "jawaban": "belah_ketupat"
     },
 
     {
@@ -29,6 +29,127 @@
       "gambar_url": "gambar_hard2",
       "jawaban": "botol kemenyan"
     }
-  ]
+  ],
 
+  "3" : [
+    {
+      "gambar_url": "gambar_easy3",
+      "jawaban": "kutu buku"
+    },
+    {
+      "gambar_url": "gambar_medium3",
+      "jawaban": "tukang cilok"
+    },
+    {
+      "gambar_url": "gambar_hard3",
+      "jawaban": "ganteng maksimal"
+    }
+  ],
+
+  "4" : [
+    {
+      "gambar_url": "gambar_easy4",
+      "jawaban": "naga bonar"
+    },
+    {
+      "gambar_url": "gambar_medium4",
+      "jawaban": "tukang gorengan"
+    },
+    {
+      "gambar_url": "gambar_hard4",
+      "jawaban": "pantang menyerah"
+    }
+  ],
+
+  "5" : [
+    {
+      "gambar_url": "gambar_easy5",
+      "jawaban": "pisau lipat"
+    },
+    {
+      "gambar_url": "gambar_medium5",
+      "jawaban": "lupa diri"
+    },
+    {
+      "gambar_url": "gambar_hard5",
+      "jawaban": "pokoknya begitu"
+    }
+  ],
+
+  "6" : [
+    {
+      "gambar_url": "gambar_easy6",
+      "jawaban": "tanah liat"
+    },
+    {
+      "gambar_url": "gambar_medium6",
+      "jawaban": "sahabat super"
+    },
+    {
+      "gambar_url": "gambar_hard6",
+      "jawaban": "raja gombal"
+    }
+  ],
+
+  "7" : [
+    {
+      "gambar_url": "gambar_easy7",
+      "jawaban": "cinta buta"
+    },
+    {
+      "gambar_url": "gambar_medium7",
+      "jawaban": "bolpoin pilot"
+    },
+    {
+      "gambar_url": "gambar_hard7",
+      "jawaban": "abang khilaf"
+    }
+  ],
+
+  "8" : [
+    {
+      "gambar_url": "gambar_easy8",
+      "jawaban": "mata air"
+    },
+    {
+      "gambar_url": "gambar_medium8",
+      "jawaban": "galau abis"
+    },
+    {
+      "gambar_url": "gambar_hard8",
+      "jawaban": "cinta ditolak"
+    }
+
+  ],
+
+  "9" : [
+    {
+      "gambar_url": "gambar_easy9",
+      "jawaban": "pohon apel"
+    },
+    {
+      "gambar_url": "gambar_medium9",
+      "jawaban": "kerajaan china"
+    },
+    {
+      "gambar_url": "gambar_hard9",
+      "jawaban": "daun muda"
+    }
+
+  ],
+
+  "10" : [
+    {
+      "gambar_url": "gambar_easy10",
+      "jawaban": "tulang rusuk"
+    },
+    {
+      "gambar_url": "gambar_medium10",
+      "jawaban": "lampu merah"
+    },
+    {
+      "gambar_url": "gambar_hard10",
+      "jawaban": "mertua kurang ajar"
+    }
+  ]
 }

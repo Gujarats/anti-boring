@@ -47,7 +47,7 @@
 
     <!-- Stage Activity-->
     <dimen name="level">30sp</dimen>
-    <dimen name="level01">140sp</dimen>
+    <dimen name="level01">130sp</dimen>
 
 
 </resources>
