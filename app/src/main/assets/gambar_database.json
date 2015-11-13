@@ -151,5 +151,80 @@
       "gambar_url": "gambar_hard10",
       "jawaban": "mertua kurang ajar"
     }
+  ],
+
+  "11" : [
+    {
+      "gambar_url": "gambar_easy11",
+      "jawaban": "pergi sekolah"
+    },
+    {
+      "gambar_url": "gambar_medium11",
+      "jawaban": "tikungan tajam"
+    },
+    {
+      "gambar_url": "gambar_hard11",
+      "jawaban": "kantong kering"
+    }
+  ],
+
+  "12" : [
+    {
+      "gambar_url": "gambar_easy12",
+      "jawaban": "minum air"
+    },
+    {
+      "gambar_url": "gambar_medium12",
+      "jawaban": "barang keramat"
+    },
+    {
+      "gambar_url": "gambar_hard12",
+      "jawaban": "kembang desa"
+    }
+  ],
+
+  "13" : [
+    {
+      "gambar_url": "gambar_easy13",
+      "jawaban": "lupa minum"
+    },
+    {
+      "gambar_url": "gambar_medium13",
+      "jawaban": "keong racun"
+    },
+    {
+      "gambar_url": "gambar_hard13",
+      "jawaban": "ulang tahun"
+    }
+  ],
+
+  "14" : [
+    {
+      "gambar_url": "gambar_easy14",
+      "jawaban": "tisu basah"
+    },
+    {
+      "gambar_url": "gambar_medium14",
+      "jawaban": "lebih jelek"
+    },
+    {
+      "gambar_url": "gambar_hard14",
+      "jawaban": "pita rambut"
+    }
+  ],
+
+  "15" : [
+    {
+      "gambar_url": "gambar_easy15",
+      "jawaban": "mie ayam"
+    },
+    {
+      "gambar_url": "gambar_medium15",
+      "jawaban": "palung hati"
+    },
+    {
+      "gambar_url": "gambar_hard15",
+      "jawaban": "jodohku ga ketemu"
+    }
   ]
 }
