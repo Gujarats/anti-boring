@@ -226,5 +226,80 @@
       "gambar_url": "gambar_hard15",
       "jawaban": "jodohku ga ketemu"
     }
+  ],
+
+  "16" : [
+    {
+      "gambar_url": "gambar_easy16",
+      "jawaban": "rumah tangga"
+    },
+    {
+      "gambar_url": "gambar_medium16",
+      "jawaban": "batal pulang"
+    },
+    {
+      "gambar_url": "gambar_hard16",
+      "jawaban": "pedang panjang"
+    }
+  ],
+
+  "17" : [
+    {
+      "gambar_url": "gambar_easy17",
+      "jawaban": "mata mata fbi"
+    },
+    {
+      "gambar_url": "gambar_medium17",
+      "jawaban": "mas boy"
+    },
+    {
+      "gambar_url": "gambar_hard17",
+      "jawaban": "tenis meja"
+    }
+  ],
+
+  "18" : [
+    {
+      "gambar_url": "gambar_easy18",
+      "jawaban": "menyerah"
+    },
+    {
+      "gambar_url": "gambar_medium18",
+      "jawaban": "tembak hatiku bang"
+    },
+    {
+      "gambar_url": "gambar_hard18",
+      "jawaban": "minyak wangi"
+    }
+  ],
+
+  "19" : [
+    {
+      "gambar_url": "gambar_easy19",
+      "jawaban": "pocong beranak"
+    },
+    {
+      "gambar_url": "gambar_medium19",
+      "jawaban": "tidur cantik"
+    },
+    {
+      "gambar_url": "gambar_hard19",
+      "jawaban": "perdamaian abadi"
+    }
+  ],
+
+  "20" : [
+    {
+      "gambar_url": "gambar_easy20",
+      "jawaban": "cinta"
+    },
+    {
+      "gambar_url": "gambar_medium20",
+      "jawaban": "lupa makan"
+    },
+    {
+      "gambar_url": "gambar_hard20",
+      "jawaban": "susah dikebumikan"
+    }
   ]
 }
