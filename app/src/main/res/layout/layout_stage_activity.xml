@@ -16,11 +16,17 @@
         app:layout_collapseMode="pin"
         app:popupTheme="@style/TemaKu.PopupOverlay" >
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/btnBack"
-            android:layout_width="20dp"
-            android:layout_height="25dp"
-            android:src="@drawable/panahback" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="25dp"
+                android:src="@drawable/panahback" />
+        </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
 

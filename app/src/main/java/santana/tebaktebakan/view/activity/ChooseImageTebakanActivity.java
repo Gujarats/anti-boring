@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
 import santana.tebaktebakan.controller.tebakanManager.Tebakan;
@@ -18,7 +21,9 @@ import santana.tebaktebakan.model.object.TebakanGambarObject;
  */
 public class ChooseImageTebakanActivity extends AppCompatActivity {
 
-    private ImageView m1, m2, m3, btnBack;
+    @Bind(R.id.btnBack)
+    LinearLayout btnBack;
+    private ImageView m1, m2, m3 ;
     private AppCompatTextView txtLevel;
     private int lvl;
 
@@ -41,11 +46,11 @@ public class ChooseImageTebakanActivity extends AppCompatActivity {
 
     private void initUI() {
         //finding id from resources
+        ButterKnife.bind(this);
         txtLevel = (AppCompatTextView) findViewById(R.id.txtLvl);
         m1 = (ImageView) findViewById(R.id.gambar1);
         m2 = (ImageView) findViewById(R.id.gambar2);
         m3 = (ImageView) findViewById(R.id.gambar3);
-        btnBack = (ImageView) findViewById(R.id.btnBack);
 
         //set effect onclick and action
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnBack);

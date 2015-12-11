@@ -3,11 +3,13 @@ package santana.tebaktebakan.controller.UIManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 /**
  * Created by Gujarat Santana on 09/11/15.
@@ -48,6 +50,36 @@ public class LogicInterfaceManager {
         }
     }
 
+    public void setOnClickEffect(final Activity activity, LinearLayout imageView) {
+        imageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        LinearLayout view = (LinearLayout) v;
+                        //overlay is black with transparency of 0x77 (119)
+
+                        view.setBackgroundColor(Color.parseColor("#ccccff"));
+                        view.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                    }
+                    case MotionEvent.ACTION_CANCEL: {
+//                        ImageView view = (ImageView) v;
+                        LinearLayout view = (LinearLayout) v;
+                        //clear the overlay
+                        view.setBackgroundColor(Color.parseColor("#80000000"));
+//                        view.getDrawable().clearColorFilter();
+                        view.invalidate();
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
     public void setOnClickEffect(final Activity activity, ImageView imageView) {
         imageView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -75,7 +107,7 @@ public class LogicInterfaceManager {
         });
     }
 
-    public void backAction(final Activity activity, ImageView imageView){
+    public void backAction(final Activity activity, LinearLayout imageView){
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +116,7 @@ public class LogicInterfaceManager {
         });
     }
 
-    public void startActivityAction(ImageView button,final Context context, final Class<?> target){
+    public void startActivityAction(LinearLayout button,final Context context, final Class<?> target){
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

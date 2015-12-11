@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
 
@@ -15,8 +17,10 @@ import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
  */
 public class StageActivity extends AppCompatActivity {
 
-    protected AppCompatTextView tebakKata, tebakGambar, txtLevel;
-    protected ImageView btnBack;
+    @Bind(R.id.TebakKata) AppCompatTextView tebakKata;
+    @Bind(R.id.txtLvl) AppCompatTextView txtLevel;
+    @Bind(R.id.TebakGambar) AppCompatTextView tebakGambar;
+    @Bind(R.id.btnBack) LinearLayout btnBack;
     private int lvl;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
@@ -50,10 +54,10 @@ public class StageActivity extends AppCompatActivity {
     }
 
     private void initUI() {
+        ButterKnife.bind(this);
         txtLevel = (AppCompatTextView) findViewById(R.id.txtLvl);
         tebakKata = (AppCompatTextView) findViewById(R.id.TebakKata);
         tebakGambar = (AppCompatTextView) findViewById(R.id.TebakGambar);
-        btnBack = (ImageView) findViewById(R.id.btnBack);
 
         //set effect onclick and action
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnBack);

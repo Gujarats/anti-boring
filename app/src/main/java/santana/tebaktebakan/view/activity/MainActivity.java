@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
 import santana.tebaktebakan.controller.UIManager.UIAnimationManager;
@@ -16,10 +19,10 @@ import santana.tebaktebakan.view.adapter.MainActivityAdapter;
  * Created by AdrianEkaFikri on 11/1/2015.
  */
 public class MainActivity extends AppCompatActivity{
-
-    protected RecyclerView list_level;
-    protected ImageView btnSetting;
-    private CollapsingToolbarLayout collapsingToolbarLayout;
+    @Bind(R.id.list_level) RecyclerView list_level;
+    @Bind(R.id.btnSetting)
+    LinearLayout btnSetting;
+    @Bind(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbarLayout;
     private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
@@ -38,8 +41,7 @@ public class MainActivity extends AppCompatActivity{
 
     private void initUI() {
         //finding id from resources
-        list_level = (RecyclerView)findViewById(R.id.list_level);
-        btnSetting = (ImageView) findViewById(R.id.btnSetting);
+        ButterKnife.bind(this);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         ImageView headerIcon = (ImageView) findViewById(R.id.headerIcon);
 

@@ -3,7 +3,10 @@ package santana.tebaktebakan.view.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
 
@@ -12,7 +15,9 @@ import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
  */
 public class AnswerTebakGambarActivity extends AppCompatActivity {
 
-    protected ImageView btnBack, btnCek, btnHelp, btnShare;
+    protected ImageView  btnCek, btnHelp, btnShare;
+    @Bind(R.id.btnBack)
+    LinearLayout btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +35,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
     }
 
     private void initUI() {
-        btnBack = (ImageView) findViewById(R.id.btnBack);
+        ButterKnife.bind(this);
         btnCek = (ImageView) findViewById(R.id.btnCek);
         btnHelp = (ImageView) findViewById(R.id.btnHelp);
         btnShare = (ImageView) findViewById(R.id.btnShare);
