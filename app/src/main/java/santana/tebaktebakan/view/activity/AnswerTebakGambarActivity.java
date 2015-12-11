@@ -1,5 +1,6 @@
 package santana.tebaktebakan.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
@@ -8,16 +9,22 @@ import android.widget.LinearLayout;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import santana.tebaktebakan.R;
+import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
+import santana.tebaktebakan.controller.tebakanManager.Tebakan;
 
 /**
  * Created by Gujarat Santana on 01/11/15.
  */
 public class AnswerTebakGambarActivity extends AppCompatActivity {
 
-    protected ImageView  btnCek, btnHelp, btnShare;
-    @Bind(R.id.btnBack)
-    LinearLayout btnBack;
+
+    @Bind(R.id.btnBack) LinearLayout btnBack;
+    @Bind(R.id.btnCek) ImageView btnCek;
+    @Bind(R.id.btnHelp) ImageView btnHelp;
+    @Bind(R.id.btnShare) ImageView btnShare;
+    @Bind(R.id.TebakGambar) ImageView TebakGambar;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,20 +37,26 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
         initAction();
     }
 
-    private void initAction() {
-        LogicInterfaceManager.getInstance().backAction(this, btnBack);
-    }
-
     private void initUI() {
         ButterKnife.bind(this);
-        btnCek = (ImageView) findViewById(R.id.btnCek);
-        btnHelp = (ImageView) findViewById(R.id.btnHelp);
-        btnShare = (ImageView) findViewById(R.id.btnShare);
+
+        // set size imageVIew for TebakGambar
+        Tebakan.getInstance().setSizeImageView(this,TebakGambar);
 
         //set Effect on widget
-        LogicInterfaceManager.getInstance().setOnClickEffect(this,btnBack);
-        LogicInterfaceManager.getInstance().setOnClickEffect(this,btnCek);
-        LogicInterfaceManager.getInstance().setOnClickEffect(this,btnHelp);
-        LogicInterfaceManager.getInstance().setOnClickEffect(this,btnShare);
+        LogicInterfaceManager.getInstance().setOnClickEffect(this, btnBack);
+        LogicInterfaceManager.getInstance().setOnClickEffect(this, btnCek);
+        LogicInterfaceManager.getInstance().setOnClickEffect(this, btnHelp);
+        LogicInterfaceManager.getInstance().setOnClickEffect(this, btnShare);
+
+        Intent intent= getIntent();
+        if(intent!=null){
+            Tebakan.getInstance().loadImageToImageView2(TebakGambar, intent.getExtras().getString(ApplicationConstants.imageUrl),getApplicationContext());
+        }
+
+    }
+
+    private void initAction() {
+        LogicInterfaceManager.getInstance().backAction(this, btnBack);
     }
 }

@@ -27,7 +27,7 @@ public class ApplicationConstants {
 
     //important data to answer activity
     public static final String imageUrl = "ImageUrl";
-    public static final String kunciTebakan = "KunciTebakan";
+    public static final String jawabanTebakan = "jawabanTebakan";
     public static final String textTebakan = "TextTebakan";
     public static final String gcmID = "gcmID";
     public static final String _idUserTebakan = "_idUserTebakan";

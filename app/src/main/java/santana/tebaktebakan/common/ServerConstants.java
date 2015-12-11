@@ -52,7 +52,7 @@ public class ServerConstants {
     public static final String mParamsGambarTebakan = "gambarTebakanFile";
     public static final String mParamsGambarTebakanUrl = "gambarTebakan";
     public static final String mParamsBinaryGambarTebakan = "gambarTebakanBinary";
-    public static final String mParamsKunciTebakan= "kunciTebakan";
+    public static final String mParamsKunciTebakan= "jawabanTebakan";
     public static final String mParamsQuestion = "question";
     public static final String mParamGender = "gender";
     public static final String mParamlastIdTebakan = "lastIdTebakan";

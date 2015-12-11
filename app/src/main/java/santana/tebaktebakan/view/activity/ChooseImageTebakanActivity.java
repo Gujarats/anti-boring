@@ -23,8 +23,10 @@ public class ChooseImageTebakanActivity extends AppCompatActivity {
 
     @Bind(R.id.btnBack)
     LinearLayout btnBack;
-    private ImageView m1, m2, m3 ;
-    private AppCompatTextView txtLevel;
+    @Bind(R.id.gambar1) ImageView m1;
+    @Bind(R.id.gambar2) ImageView m2;
+    @Bind(R.id.gambar3) ImageView m3;
+    @Bind(R.id.txtLvl) AppCompatTextView txtLevel;
     private int lvl;
 
     @Override
@@ -47,10 +49,6 @@ public class ChooseImageTebakanActivity extends AppCompatActivity {
     private void initUI() {
         //finding id from resources
         ButterKnife.bind(this);
-        txtLevel = (AppCompatTextView) findViewById(R.id.txtLvl);
-        m1 = (ImageView) findViewById(R.id.gambar1);
-        m2 = (ImageView) findViewById(R.id.gambar2);
-        m3 = (ImageView) findViewById(R.id.gambar3);
 
         //set effect onclick and action
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnBack);
@@ -66,12 +64,15 @@ public class ChooseImageTebakanActivity extends AppCompatActivity {
                 switch (i) {
                     case 0:
                         Tebakan.getInstance().loadImageToImageView(m1, tebakanGambarObjects.get(i).getGambarUrl(), getApplicationContext());
+                        Tebakan.getInstance().setOnClickTebakGambar(ChooseImageTebakanActivity.this, m1, tebakanGambarObjects.get(i));
                         break;
                     case 1:
                         Tebakan.getInstance().loadImageToImageView(m2, tebakanGambarObjects.get(i).getGambarUrl(), getApplicationContext());
+                        Tebakan.getInstance().setOnClickTebakGambar(ChooseImageTebakanActivity.this, m2, tebakanGambarObjects.get(i));
                         break;
                     case 2:
                         Tebakan.getInstance().loadImageToImageView(m3, tebakanGambarObjects.get(i).getGambarUrl(), getApplicationContext());
+                        Tebakan.getInstance().setOnClickTebakGambar(ChooseImageTebakanActivity.this, m3, tebakanGambarObjects.get(i));
                         break;
                     default:
                         break;

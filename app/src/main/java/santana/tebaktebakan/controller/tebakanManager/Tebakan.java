@@ -2,7 +2,11 @@ package santana.tebaktebakan.controller.tebakanManager;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Point;
+import android.view.Display;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
@@ -16,7 +20,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.model.object.TebakanGambarObject;
+import santana.tebaktebakan.view.activity.AnswerTebakGambarActivity;
 
 /**
  * Created by Gujarat Santana on 08/11/15.
@@ -87,10 +93,47 @@ public class Tebakan {
         return json;
     }
 
-    public void loadImageToImageView(ImageView imageView,String resName, Context context){
-        int resource = getID(resName,context);
-        Picasso.with(context).load(resource).into(imageView);
+    public void setSizeImageView(Activity activity,ImageView imageView){
+         /*get widht of the phone*/
+            Display display = activity.getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            int WidthPhone = size.x;
+            int HeightPhone = size.y;
+
+        imageView.getLayoutParams().height = WidthPhone;
+        imageView.requestLayout();
     }
+
+    public void loadImageToImageView(ImageView imageView,String res, Context context){
+        int resource = getID(res,context);
+        Picasso.with(context)
+                .load(resource)
+                .into(imageView);
+    }
+
+    public void loadImageToImageView2(ImageView imageView,String res, Context context){
+        int resource = getID(res,context);
+        Picasso.with(context)
+                .load(resource)
+                .fit()
+                .centerCrop()
+                .into(imageView);
+    }
+
+    public void setOnClickTebakGambar(final Activity activity,ImageView imageView, final TebakanGambarObject tebakanObject){
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, AnswerTebakGambarActivity.class);
+                intent.putExtra(ApplicationConstants.imageUrl,tebakanObject.getGambarUrl());
+                intent.putExtra(ApplicationConstants.jawabanTebakan,tebakanObject.getJawaban());
+
+                activity.startActivity(intent);
+            }
+        });
+    }
+
 
     public int getID(String resourceName,Context context){
         Resources resources = context.getResources();
