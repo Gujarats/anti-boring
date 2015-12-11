@@ -5,11 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import santana.tebaktebakan.R;
 
 /**
  * Created by Gujarat Santana on 09/11/15.
@@ -58,8 +61,10 @@ public class LogicInterfaceManager {
                     case MotionEvent.ACTION_DOWN: {
                         LinearLayout view = (LinearLayout) v;
                         //overlay is black with transparency of 0x77 (119)
-
-                        view.setBackgroundColor(Color.parseColor("#ccccff"));
+                        view.setBackgroundResource(R.drawable.circle_shape);
+                        GradientDrawable drawable = (GradientDrawable) v.getBackground();
+                        drawable.setColor(Color.parseColor("#ccccff"));
+//                        view.setBackgroundColor(Color.parseColor("#ccccff"));
                         view.invalidate();
                         break;
                     }
@@ -69,7 +74,7 @@ public class LogicInterfaceManager {
 //                        ImageView view = (ImageView) v;
                         LinearLayout view = (LinearLayout) v;
                         //clear the overlay
-                        view.setBackgroundColor(Color.parseColor("#80000000"));
+                        view.setBackgroundColor(0);
 //                        view.getDrawable().clearColorFilter();
                         view.invalidate();
                         break;

@@ -44,6 +44,7 @@
                     android:id="@+id/btnSetting"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:background="@drawable/circle_shape"
                     android:gravity="center">
                     <ImageView
                         android:layout_width="30dp"
