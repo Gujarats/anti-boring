@@ -7,6 +7,8 @@ import android.content.res.Resources;
 import android.graphics.Point;
 import android.view.Display;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
@@ -20,6 +22,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import santana.tebaktebakan.R;
 import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.model.object.TebakanGambarObject;
 import santana.tebaktebakan.view.activity.AnswerTebakGambarActivity;
@@ -140,5 +143,12 @@ public class Tebakan {
         final int resourceId = resources.getIdentifier(resourceName, "drawable",
                 context.getPackageName());
         return resourceId;
+    }
+
+    public void setRotateAnimation(Activity activity,ImageView imageView){
+        RotateAnimation rotate= (RotateAnimation) AnimationUtils.loadAnimation(activity, R.anim.rotate_30_degree);
+//        imageView.setAnimation(rotate);
+        imageView.startAnimation(rotate);
+
     }
 }
