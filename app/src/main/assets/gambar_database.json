@@ -301,5 +301,110 @@
       "gambar_url": "gambar_hard20",
       "jawaban": "susah dikebumikan"
     }
+  ],
+
+  "21" : [
+    {
+      "gambar_url": "gambar_easy21",
+      "jawaban": "cinta mati"
+    },
+    {
+      "gambar_url": "gambar_medium21",
+      "jawaban": "jomblo ngenes"
+    },
+    {
+      "gambar_url": "gambar_hard21",
+      "jawaban": "pemain bola"
+    }
+  ],
+
+  "22" : [
+    {
+      "gambar_url": "gambar_easy22",
+      "jawaban": "telur mata sapi"
+    },
+    {
+      "gambar_url": "gambar_medium22",
+      "jawaban": "super sekali"
+    },
+    {
+      "gambar_url": "gambar_hard22",
+      "jawaban": "kompor gas"
+    }
+  ],
+
+  "23" : [
+    {
+      "gambar_url": "gambar_easy23",
+      "jawaban": "cinta tulus"
+    },
+    {
+      "gambar_url": "gambar_medium23",
+      "jawaban": "bulu tangkis"
+    },
+    {
+      "gambar_url": "gambar_hard23",
+      "jawaban": "tendangan halilintar"
+    }
+  ],
+
+  "24" : [
+    {
+      "gambar_url": "gambar_easy24",
+      "jawaban": "suster ngesot"
+    },
+    {
+      "gambar_url": "gambar_medium24",
+      "jawaban": "pemain tenis"
+    },
+    {
+      "gambar_url": "gambar_hard24",
+      "jawaban": "sempak bolong"
+    }
+  ],
+
+  "25" : [
+    {
+      "gambar_url": "gambar_easy25",
+      "jawaban": "telur"
+    },
+    {
+      "gambar_url": "gambar_medium25",
+      "jawaban": "pintu"
+    },
+    {
+      "gambar_url": "gambar_hard25",
+      "jawaban": "padi"
+    }
+  ],
+
+  "26" : [
+    {
+      "gambar_url": "gambar_easy26",
+      "jawaban": "harimau"
+    },
+    {
+      "gambar_url": "gambar_medium26",
+      "jawaban": "gula"
+    },
+    {
+      "gambar_url": "gambar_hard26",
+      "jawaban": "bayangan"
+    }
+  ],
+
+  "27" : [
+    {
+      "gambar_url": "gambar_easy27",
+      "jawaban": "lubang kunci"
+    },
+    {
+      "gambar_url": "gambar_medium27",
+      "jawaban": ""
+    },
+    {
+      "gambar_url": "gambar_hard27",
+      "jawaban": ""
+    }
   ]
 }
