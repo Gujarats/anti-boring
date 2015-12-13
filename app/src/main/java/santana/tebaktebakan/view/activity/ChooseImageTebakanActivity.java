@@ -54,7 +54,7 @@ public class ChooseImageTebakanActivity extends AppCompatActivity {
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnBack);
         //get level value and set it to textView
         lvl = LogicInterfaceManager.getInstance().getLevel(this);
-        LogicInterfaceManager.getInstance().setTextViewLevel(lvl,txtLevel);
+        LogicInterfaceManager.getInstance().setTextViewLevel(lvl, txtLevel);
     }
 
     private void initGambar() {
@@ -83,6 +83,4 @@ public class ChooseImageTebakanActivity extends AppCompatActivity {
 
         }
     }
-
-
 }

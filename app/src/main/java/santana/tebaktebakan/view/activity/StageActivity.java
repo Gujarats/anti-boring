@@ -10,7 +10,10 @@ import android.widget.LinearLayout;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import santana.tebaktebakan.R;
+import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
+import santana.tebaktebakan.controller.tebakanManager.Tebakan;
+import santana.tebaktebakan.model.object.TebakanKataObject;
 
 /**
  * Created by Gujarat Santana on 01/11/15.
@@ -39,6 +42,9 @@ public class StageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AnswerTebakKataActivity.class);
+                TebakanKataObject tebakanKataObject = Tebakan.getInstance().getTebakKata(lvl,StageActivity.this);
+                intent.putExtra(ApplicationConstants.tebakanKata,tebakanKataObject.getTebakKata());
+                intent.putExtra(ApplicationConstants.jawabanTebakan,tebakanKataObject.getJawabanTebakKata());
                 startActivity(intent);
             }
         });
@@ -47,7 +53,7 @@ public class StageActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(getApplicationContext(), ChooseImageTebakanActivity.class);
-                intent.putExtra("LEVEL_STAGE",lvl);
+                intent.putExtra("LEVEL_STAGE", lvl);
                 startActivity(intent);
             }
         });
@@ -55,15 +61,17 @@ public class StageActivity extends AppCompatActivity {
 
     private void initUI() {
         ButterKnife.bind(this);
-        txtLevel = (AppCompatTextView) findViewById(R.id.txtLvl);
-        tebakKata = (AppCompatTextView) findViewById(R.id.TebakKata);
-        tebakGambar = (AppCompatTextView) findViewById(R.id.TebakGambar);
 
         //set effect onclick and action
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnBack);
 
         //get level value and set it to textView
         lvl = LogicInterfaceManager.getInstance().getLevel(this);
-        LogicInterfaceManager.getInstance().setTextViewLevel(lvl,txtLevel);
+        LogicInterfaceManager.getInstance().setTextViewLevel(lvl, txtLevel);
+    }
+
+    private void initTebakKata(){
+        TebakanKataObject tebakanKataObject = Tebakan.getInstance().getTebakKata(lvl,this);
+
     }
 }

@@ -9,6 +9,8 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.graphics.Palette;
 import android.transition.Slide;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Callback;
@@ -66,5 +68,19 @@ public class UIAnimationManager {
             activity.getWindow().setEnterTransition(transition);
             activity.getWindow().setReturnTransition(transition);
         }
+    }
+
+    public void setRotateAnimation(Context context,final ImageView imageView,int degree){
+        RotateAnimation rotate = new RotateAnimation(0f, degree,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+
+        imageView.setDrawingCacheEnabled(true);
+        rotate.setDuration(300);
+        rotate.setInterpolator(context, android.R.anim.linear_interpolator);
+        rotate.setFillBefore(true);
+        rotate.setFillAfter(true);
+        imageView.startAnimation(rotate);
+
+
     }
 }

@@ -35,6 +35,7 @@
                 android:orientation="horizontal">
 
                 <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/jawabanTebakan"
                     android:layout_width="160dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"

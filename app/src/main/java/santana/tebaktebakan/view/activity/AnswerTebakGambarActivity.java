@@ -1,17 +1,12 @@
 package santana.tebaktebakan.view.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,6 +28,10 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
     @Bind(R.id.btnShare) ImageView btnShare;
     @Bind(R.id.TebakGambar) ImageView TebakGambar;
     @Bind(R.id.layoutAnim) LinearLayout layoutAnim;
+    @Bind(R.id.jawabanTebakan) EditText jawabanTebakanEditText;
+
+
+    private String jawabanTebakan;
 
     
 
@@ -59,46 +58,21 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnHelp);
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnShare);
 
-        Intent intent= getIntent();
-        if(intent!=null){
-            Tebakan.getInstance().loadImageToImageView2(TebakGambar, intent.getExtras().getString(ApplicationConstants.imageUrl),getApplicationContext());
+        Map<String,String> dataIntent = LogicInterfaceManager.getInstance().getDataFromIntent(this);
+        if(dataIntent.size()>0){
+            Tebakan.getInstance().loadImageToImageView2(TebakGambar, dataIntent.get(ApplicationConstants.imageUrl),getApplicationContext());
+            jawabanTebakan = dataIntent.get(ApplicationConstants.jawabanTebakan);
         }
-
     }
 
 
     private void initAction() {
+
         LogicInterfaceManager.getInstance().backAction(this, btnBack);
 
-        btnCek.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                YoYo.with(Techniques.Shake).playOn(findViewById(R.id.layoutAnim));
-                setRotateAnimation(btnCek, 45);
-
-
-            }
-        });
+        Tebakan.getInstance().checkAnswer(AnswerTebakGambarActivity.this, this, jawabanTebakanEditText, jawabanTebakan, btnCek);
 
     }
 
-    public void setRotateAnimation(final ImageView imageView,int degree){
-        RotateAnimation rotate = new RotateAnimation(0f, degree,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
-        imageView.setDrawingCacheEnabled(true);
-        rotate.setDuration(300);
-        rotate.setInterpolator(getApplicationContext(), android.R.anim.linear_interpolator);
-        rotate.setFillBefore(true);
-        rotate.setFillAfter(true);
-        imageView.startAnimation(rotate);
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                setRotateAnimation(imageView, -45);
-            }
-        }, 1500);
-
-    }
 }

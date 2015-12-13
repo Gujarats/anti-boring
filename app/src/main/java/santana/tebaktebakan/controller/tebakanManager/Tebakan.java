@@ -7,10 +7,12 @@ import android.content.res.Resources;
 import android.graphics.Point;
 import android.view.Display;
 import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.view.animation.RotateAnimation;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -24,7 +26,9 @@ import java.util.List;
 
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.common.ApplicationConstants;
+import santana.tebaktebakan.controller.UIManager.UIAnimationManager;
 import santana.tebaktebakan.model.object.TebakanGambarObject;
+import santana.tebaktebakan.model.object.TebakanKataObject;
 import santana.tebaktebakan.view.activity.AnswerTebakGambarActivity;
 
 /**
@@ -78,10 +82,53 @@ public class Tebakan {
         return null;
     }
 
+    public TebakanKataObject getTebakKata(int level,Activity activity){
+        try {
+            TebakanKataObject tebakanKataObject = new TebakanKataObject();
+            String jsonTebakKata = loadJsonTebakKataFromAsset(activity);
+            if(!jsonTebakKata.isEmpty()){
+                JSONObject jsonObject = new JSONObject(jsonTebakKata);
+                JSONArray m_jArry = jsonObject.getJSONArray(String.valueOf(level));
+
+                JSONObject objectTebakKata= m_jArry.getJSONObject(0);
+                tebakanKataObject.setJawabanTebakKata(objectTebakKata.getString("jawaban"));
+                tebakanKataObject.setTebakKata(objectTebakKata.getString("tebak_kata"));
+                return tebakanKataObject;
+
+            }else{
+                tebakanKataObject.setJawabanTebakKata("");
+                tebakanKataObject.setTebakKata("");
+                return tebakanKataObject;
+            }
+        }catch (JSONException ex){
+            ex.printStackTrace();
+        }
+        return null;
+
+    }
+
     public String loadJSONFromAsset(Activity activity) {
         String json = "";
         try {
             InputStream is = activity.getAssets().open("gambar_database.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        return json;
+    }
+
+    private String loadJsonTebakKataFromAsset(Activity activity){
+        String json = "";
+        try {
+            InputStream is = activity.getAssets().open("tebak_kata_database.json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -129,8 +176,8 @@ public class Tebakan {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity, AnswerTebakGambarActivity.class);
-                intent.putExtra(ApplicationConstants.imageUrl,tebakanObject.getGambarUrl());
-                intent.putExtra(ApplicationConstants.jawabanTebakan,tebakanObject.getJawaban());
+                intent.putExtra(ApplicationConstants.imageUrl, tebakanObject.getGambarUrl());
+                intent.putExtra(ApplicationConstants.jawabanTebakan, tebakanObject.getJawaban());
 
                 activity.startActivity(intent);
             }
@@ -145,10 +192,126 @@ public class Tebakan {
         return resourceId;
     }
 
-    public void setRotateAnimation(Activity activity,ImageView imageView){
-        RotateAnimation rotate= (RotateAnimation) AnimationUtils.loadAnimation(activity, R.anim.rotate_30_degree);
-//        imageView.setAnimation(rotate);
-        imageView.startAnimation(rotate);
+    private boolean isEditTextEmpty(EditText editText){
+        String word = editText.getText().toString();
+        if(word.isEmpty()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
+    public void checkAnswer(final Context context,final Activity activity, final EditText jawaban, final String kunciJawaban,final ImageView btnCek){
+        btnCek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!isEditTextEmpty(jawaban)){
+                    String jawabanUser = jawaban.getText().toString();
+                    if(isRightAnswer(jawabanUser,kunciJawaban)){
+                        // jawaban benar sekali
+                        Toast.makeText(context, "Benar Sekali", Toast.LENGTH_SHORT).show();
+                    }else{
+                        String [] kunciJawabanSplit = kunciJawaban.split(" ");
+                        if(kunciJawabanSplit.length==3){
+                            if(isOneWordMore(jawabanUser,kunciJawaban)){
+                                // satu kata lagi
+                                Toast.makeText(context, "Satu Kata Lagi", Toast.LENGTH_SHORT).show();
+                            }else{
+                                //salah total
+                                YoYo.with(Techniques.Shake).playOn(activity.findViewById(R.id.layoutAnim));
+                                UIAnimationManager.getInstance().setRotateAnimation(context, btnCek, 45);
+                            }
+                        }else{
+                            if(isAlmostRight(jawabanUser,kunciJawaban)){
+                                // jawaban hampir benar
+                                Toast.makeText(context, "Sedikit Lagi", Toast.LENGTH_SHORT).show();
+
+                            }else{
+                                // jawaban salah total
+                                YoYo.with(Techniques.Shake).playOn(activity.findViewById(R.id.layoutAnim));
+                                UIAnimationManager.getInstance().setRotateAnimation(context, btnCek, 45);
+                            }
+                        }
+
+                    }
+                }else {
+                    YoYo.with(Techniques.Shake).playOn(activity.findViewById(R.id.layoutAnim));
+                    UIAnimationManager.getInstance().setRotateAnimation(context, btnCek, 45);
+                }
+            }
+        });
+    }
+
+    public void checkAnswerTebakKata(final Context context,final Activity activity, final EditText jawaban, final String kunciJawaban,final ImageView btnCek){
+        btnCek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!isEditTextEmpty(jawaban)){
+                    String jawabanUser = jawaban.getText().toString();
+                    if(isRightAnswer(jawabanUser,kunciJawaban)){
+                        // jawaban benar sekali
+                        Toast.makeText(context, "Benar Sekali", Toast.LENGTH_SHORT).show();
+                    }else{
+                        String [] kunciJawabanSplit = kunciJawaban.split(" ");
+                        if(kunciJawabanSplit.length==3){
+                            if(isOneWordMore(jawabanUser,kunciJawaban)){
+                                // satu kata lagi
+                                Toast.makeText(context, "Satu Kata Lagi", Toast.LENGTH_SHORT).show();
+                            }else{
+                                //salah total
+                                YoYo.with(Techniques.Shake).playOn(activity.findViewById(R.id.layoutAnim));
+                                UIAnimationManager.getInstance().setRotateAnimation(context, btnCek, 45);
+                            }
+                        }else{
+                            if(isAlmostRight(jawabanUser,kunciJawaban)){
+                                // jawaban hampir benar
+                                Toast.makeText(context, "Sedikit Lagi", Toast.LENGTH_SHORT).show();
+
+                            }else{
+                                // jawaban salah total
+                                YoYo.with(Techniques.Shake).playOn(activity.findViewById(R.id.layoutAnim));
+                                UIAnimationManager.getInstance().setRotateAnimation(context, btnCek, 45);
+                            }
+                        }
+
+                    }
+                }else{
+                    YoYo.with(Techniques.Shake).playOn(activity.findViewById(R.id.layoutAnim));
+                    UIAnimationManager.getInstance().setRotateAnimation(context, btnCek, 45);
+                }
+
+            }
+        });
+    }
+
+    public boolean isRightAnswer(String jawaban,String kunciJawaban){
+        if(jawaban.equalsIgnoreCase(kunciJawaban)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean isAlmostRight(String jawaban, String kunciJawaban){
+        String [] jawabanSplit = jawaban.split(" ");
+        String [] kunciJawabanSplit = kunciJawaban.split(" ");
+        if(jawabanSplit[0].equalsIgnoreCase(kunciJawabanSplit[0])){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private boolean isOneWordMore(String jawaban, String kunciJawaban){
+        String [] jawabanSplit = jawaban.split(" ");
+        String [] kunciJawabanSplit = kunciJawaban.split(" ");
+        if(jawabanSplit.length == 2 && kunciJawabanSplit.length==3){
+            if(jawabanSplit[0].equalsIgnoreCase(kunciJawabanSplit[0]) && jawabanSplit[1].equalsIgnoreCase(kunciJawabanSplit[1])){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return false;
     }
 }

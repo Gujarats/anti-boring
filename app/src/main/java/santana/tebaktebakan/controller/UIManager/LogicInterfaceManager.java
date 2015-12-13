@@ -12,7 +12,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import santana.tebaktebakan.R;
+import santana.tebaktebakan.common.ApplicationConstants;
 
 /**
  * Created by Gujarat Santana on 09/11/15.
@@ -130,4 +134,46 @@ public class LogicInterfaceManager {
             }
         });
     }
+
+
+    public Map<String,String> getDataFromIntent(Activity activity){
+        Intent  intent =activity.getIntent();
+        Map<String,String> value = new HashMap<>();
+        try{
+
+            if(intent.getExtras()!=null){
+                value.put(ApplicationConstants.imageUrl,intent.getExtras().getString(ApplicationConstants.imageUrl));
+                value.put(ApplicationConstants.jawabanTebakan,intent.getExtras().getString(ApplicationConstants.jawabanTebakan));
+
+
+                return value;
+            }else
+                return value;
+
+        }catch (NullPointerException x){
+            x.printStackTrace();
+        }
+        return value;
+    }
+
+    public Map<String,String> getDataFromIntentTebakKata(Activity activity){
+        Intent  intent =activity.getIntent();
+        Map<String,String> value = new HashMap<>();
+        try{
+
+            if(intent.getExtras()!=null){
+                value.put(ApplicationConstants.tebakanKata,intent.getExtras().getString(ApplicationConstants.tebakanKata));
+                value.put(ApplicationConstants.jawabanTebakan,intent.getExtras().getString(ApplicationConstants.jawabanTebakan));
+
+
+                return value;
+            }else
+                return value;
+
+        }catch (NullPointerException x){
+            x.printStackTrace();
+        }
+        return value;
+    }
+
 }

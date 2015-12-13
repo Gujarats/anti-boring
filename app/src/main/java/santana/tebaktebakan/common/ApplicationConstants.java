@@ -28,7 +28,7 @@ public class ApplicationConstants {
     //important data to answer activity
     public static final String imageUrl = "ImageUrl";
     public static final String jawabanTebakan = "jawabanTebakan";
-    public static final String textTebakan = "TextTebakan";
+    public static final String tebakanKata = "tebakanKata";
     public static final String gcmID = "gcmID";
     public static final String _idUserTebakan = "_idUserTebakan";
     public static final String _idTebakan = "_idTebakan";
@@ -36,15 +36,6 @@ public class ApplicationConstants {
     //id tebakan
     public static final String _listChatBrow = "_listChatBrow.txt";
     public static final String _listChatBrow2 = "_listChatBrow2.txt";
-
-    /*
-    * first time lauch
-    * */
-    public static final String FirtTime="FirtTime";
-
-
-    //from activity
-    public static final String TebakanListActivity= "TebakanListActivity";
 
 
 
