@@ -13,6 +13,11 @@
     <dimen name="marginBottom_like">5dp</dimen>
     <dimen name="marginBottom">15dp</dimen>
 
+    <!--dimen for keyboard layout-->
+    <dimen name="widthKeyboard">30dp</dimen>
+    <dimen name="heightKeyboard">40dp</dimen>
+    <dimen name="heightKeyboardDelete">80dp</dimen>
+
     <!--dimen main menu-->
     <dimen name="mainMenuMargin">8dp</dimen>
     <dimen name="mainMenuWidthButton">120dp</dimen>

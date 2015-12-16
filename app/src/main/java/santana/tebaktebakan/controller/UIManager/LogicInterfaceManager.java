@@ -17,6 +17,7 @@ import java.util.Map;
 
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.common.ApplicationConstants;
+import santana.tebaktebakan.view.activity.HintsTebakGambarActivity;
 
 /**
  * Created by Gujarat Santana on 09/11/15.
@@ -131,6 +132,18 @@ public class LogicInterfaceManager {
             public void onClick(View view) {
                 Intent intent = new Intent(context, target);
                 context.startActivity(intent);
+            }
+        });
+    }
+
+    public void startActivityHintsTebakanGambar(final Activity activity,ImageView btnHelp,final String jawabanTebakan,final String imageUrl){
+        btnHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, HintsTebakGambarActivity.class);
+                intent.putExtra(ApplicationConstants.jawabanTebakan, jawabanTebakan);
+                intent.putExtra(ApplicationConstants.imageUrl, imageUrl);
+                activity.startActivity(intent);
             }
         });
     }

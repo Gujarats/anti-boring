@@ -32,6 +32,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
 
 
     private String jawabanTebakan;
+    private String imageUrl;
 
     
 
@@ -60,8 +61,10 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
 
         Map<String,String> dataIntent = LogicInterfaceManager.getInstance().getDataFromIntent(this);
         if(dataIntent.size()>0){
-            Tebakan.getInstance().loadImageToImageView2(TebakGambar, dataIntent.get(ApplicationConstants.imageUrl),getApplicationContext());
+            imageUrl = dataIntent.get(ApplicationConstants.imageUrl);
             jawabanTebakan = dataIntent.get(ApplicationConstants.jawabanTebakan);
+            Tebakan.getInstance().loadImageToImageView2(TebakGambar, imageUrl,getApplicationContext());
+
         }
     }
 
@@ -69,8 +72,11 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
     private void initAction() {
 
         LogicInterfaceManager.getInstance().backAction(this, btnBack);
+        LogicInterfaceManager.getInstance().startActivityHintsTebakanGambar(this, btnHelp, jawabanTebakan, imageUrl);
 
         Tebakan.getInstance().checkAnswer(AnswerTebakGambarActivity.this, this, jawabanTebakanEditText, jawabanTebakan, btnCek);
+
+
 
     }
 
