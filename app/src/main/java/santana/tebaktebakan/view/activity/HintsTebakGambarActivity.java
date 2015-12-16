@@ -3,10 +3,12 @@ package santana.tebaktebakan.view.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
-import android.view.ViewGroup;
+import android.support.v7.widget.AppCompatTextView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -25,6 +27,8 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
     LinearLayout layoutKeyBoard;
     @Bind(R.id.TebakGambar)
     ImageView TebakGambar;
+    @Bind(R.id.hint)
+    AppCompatTextView hint;
 
     private String jawabanTebakan,imageUrl;
 
@@ -44,6 +48,7 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
         imageUrl = getDataIntent.get(ApplicationConstants.imageUrl);
         jawabanTebakan = getDataIntent.get(ApplicationConstants.jawabanTebakan);
         Tebakan.getInstance().loadImageToImageView2(TebakGambar, imageUrl, getApplicationContext());
+        hint.setText(getUniqueChar(jawabanTebakan));
 
     }
 
@@ -51,19 +56,31 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
         int width =  (int) getResources().getDimension(R.dimen.widthKeyboard);
         int height = (int) getResources().getDimension(R.dimen.heightKeyboard);
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(height,height);
         linearLayout.setLayoutParams(layoutParams);
 
-        for(int i=0;i<2;i++){
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width,height);
-            AppCompatButton button  = new AppCompatButton(getApplicationContext());
-            button.setLayoutParams(params);
-            button.setId(i);
-            linearLayout.addView(button);
-        }
+        AppCompatButton button  = new AppCompatButton(getApplicationContext());
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width,height);
 
+        button.setLayoutParams(params);
+//        button.setId(i);
+        linearLayout.addView(button);
+        ArrayList<View> list =new ArrayList<View>();
+        list.add(linearLayout);
+        layoutKeyBoard.addChildrenForAccessibility(list);
 
-        layoutKeyBoard.addView(linearLayout);
+//        for(int i=0;i<16;i++){
+//            for(int o=0;o<2;o++){
+//                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width,height);
+//
+//                button.setLayoutParams(params);
+//                button.setId(i);
+//                linearLayout.addView(button);
+//            }
+//            if(layoutKeyBoard.getParent()!=null)
+//                ((ViewGroup)layoutKeyBoard.getParent()).removeView(layoutKeyBoard);
+//            layoutKeyBoard.addView(button);
+//        }
     }
 
     private String getUniqueChar(String str){

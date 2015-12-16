@@ -46,6 +46,7 @@
 
         <activity android:name=".view.activity.AnswerTebakKataActivity"/>
         <activity android:name=".view.activity.AnswerTebakGambarActivity"/>
+        <activity android:name=".view.activity.HintsTebakGambarActivity"/>
         <activity android:name=".view.activity.ChooseImageTebakanActivity"/>
         <activity android:name=".view.activity.StageActivity"/>
         <activity android:name=".view.activity.SettingActivity"/>
