@@ -8,8 +8,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,13 +25,23 @@ import santana.tebaktebakan.controller.tebakanManager.Tebakan;
  */
 public class HintsTebakGambarActivity extends AppCompatActivity {
 
+    static final ButterKnife.Setter<View, Boolean> ENABLED = new ButterKnife.Setter<View, Boolean>() {
+        @Override public void set(View view, Boolean value, int index) {
+            view.setEnabled(value);
+        }
+    };
     @Bind(R.id.layoutKeyBoard)
     LinearLayout layoutKeyBoard;
     @Bind(R.id.TebakGambar)
     ImageView TebakGambar;
     @Bind(R.id.hint)
     AppCompatTextView hint;
-
+    /*
+    * List keyboard button
+    * */
+    @Bind({ R.id.key1, R.id.key2, R.id.key3,R.id.key4,R.id.key5,R.id.key6,R.id.key7,R.id.key8,R.id.key9,
+            R.id.key10,R.id.key11,R.id.key12,R.id.key13,R.id.key14,R.id.key15,R.id.key16})
+    List<AppCompatButton> keyboardKeys;
     private String jawabanTebakan,imageUrl;
 
     @Override
@@ -42,7 +54,7 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
 
     private void initUi(){
         ButterKnife.bind(this);
-        setLayoutKeyBoard();
+        ButterKnife.apply(keyboardKeys, ENABLED, false);
 
         Map<String,String> getDataIntent = LogicInterfaceManager.getInstance().getDataFromIntent(this);
         imageUrl = getDataIntent.get(ApplicationConstants.imageUrl);
@@ -50,37 +62,22 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
         Tebakan.getInstance().loadImageToImageView2(TebakGambar, imageUrl, getApplicationContext());
         hint.setText(getUniqueChar(jawabanTebakan));
 
-    }
+        String keyboardKey = getNewChar(getUniqueChar(jawabanTebakan));
+        String [] array = keyboardKey.split("");
+        List<String> keyboardKeyList = Arrays.asList(array);
 
-    private void setLayoutKeyBoard(){
-        int width =  (int) getResources().getDimension(R.dimen.widthKeyboard);
-        int height = (int) getResources().getDimension(R.dimen.heightKeyboard);
-        LinearLayout linearLayout = new LinearLayout(getApplicationContext());
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(height,height);
-        linearLayout.setLayoutParams(layoutParams);
 
-        AppCompatButton button  = new AppCompatButton(getApplicationContext());
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width,height);
+        for(int i=0;i<keyboardKeys.size();i++){
+            Random rand = new Random();
+            int randomNumber = rand.nextInt(((keyboardKeyList.size()-1)) + 1);
+            keyboardKeys.get(i).setText(keyboardKeyList.get(randomNumber));
+//            keyboardKeyList.remove(randomNumber);
+        }
 
-        button.setLayoutParams(params);
-//        button.setId(i);
-        linearLayout.addView(button);
-        ArrayList<View> list =new ArrayList<View>();
-        list.add(linearLayout);
-        layoutKeyBoard.addChildrenForAccessibility(list);
 
-//        for(int i=0;i<16;i++){
-//            for(int o=0;o<2;o++){
-//                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width,height);
-//
-//                button.setLayoutParams(params);
-//                button.setId(i);
-//                linearLayout.addView(button);
-//            }
-//            if(layoutKeyBoard.getParent()!=null)
-//                ((ViewGroup)layoutKeyBoard.getParent()).removeView(layoutKeyBoard);
-//            layoutKeyBoard.addView(button);
-//        }
+
+
+
     }
 
     private String getUniqueChar(String str){
@@ -98,6 +95,23 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
                 }
             }
         }
+        return result;
+    }
+
+    private String getNewChar(String source){
+        int limitKeyboardKeys = 16;
+        String result=source.toUpperCase();
+        String [] sourceNewChar = new String []{"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P",
+                "Q","R","S","T","U","V","W","X","Y","Z"};
+        for(int o=0;o<sourceNewChar.length;o++){
+            if(!isCharExistInString(sourceNewChar[o],result)){
+                if(result.length()<16){
+                    result += sourceNewChar[o];
+
+                }
+            }
+        }
+
         return result;
     }
 
