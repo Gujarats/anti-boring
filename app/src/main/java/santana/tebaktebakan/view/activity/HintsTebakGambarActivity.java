@@ -8,10 +8,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,11 +24,7 @@ import santana.tebaktebakan.controller.tebakanManager.Tebakan;
  */
 public class HintsTebakGambarActivity extends AppCompatActivity {
 
-    static final ButterKnife.Setter<View, Boolean> ENABLED = new ButterKnife.Setter<View, Boolean>() {
-        @Override public void set(View view, Boolean value, int index) {
-            view.setEnabled(value);
-        }
-    };
+
     @Bind(R.id.layoutKeyBoard)
     LinearLayout layoutKeyBoard;
     @Bind(R.id.btnBack) LinearLayout btnBack;
@@ -48,6 +42,7 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
 
     private String jawabanTebakan,imageUrl;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,11 +54,22 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
 
     private void initAction(){
         LogicInterfaceManager.getInstance().backAction(this, btnBack);
+
+        for(int i=0;i<keyboardKeys.size();i++){
+
+            keyboardKeys.get(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+        }
+
     }
 
     private void initUi(){
         ButterKnife.bind(this);
-        ButterKnife.apply(keyboardKeys, ENABLED, false);
 
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnBack);
 
@@ -76,79 +82,15 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
         imageUrl = getDataIntent.get(ApplicationConstants.imageUrl);
         jawabanTebakan = getDataIntent.get(ApplicationConstants.jawabanTebakan);
         Tebakan.getInstance().loadImageToImageView2(TebakGambar, imageUrl, getApplicationContext());
-        hint.setText(getUniqueChar(jawabanTebakan));
 
-        /*2. get Unique Char from jawabanTebakan and insert into list*/
-        String keyboardKey = getNewChar(getUniqueChar(jawabanTebakan));
-        String [] array = keyboardKey.split("");
-        List<String> keyboardKeyList = new ArrayList<String>();
-        for(int o=0;o<array.length;o++){
-            keyboardKeyList.add(array[o]);
-        }
+        /*2. init keyboardView*/
+        HintsManager.getInstance().setKeyboard(keyboardKeys,jawabanTebakan);
 
-        /*3. insert list into keyboard button*/
-        for(int i=0;i<keyboardKeys.size();i++){
-            Random rand = new Random();
-            int randomNumber = rand.nextInt(((keyboardKeyList.size()-1)) + 1);
-            if(keyboardKeyList.get(randomNumber).isEmpty()){
-                keyboardKeyList.remove(randomNumber);
-                randomNumber = rand.nextInt(((0+keyboardKeyList.size()-1)) + 1);
-                keyboardKeys.get(i).setText(keyboardKeyList.get(randomNumber));
-            }
-            keyboardKeys.get(i).setText(keyboardKeyList.get(randomNumber));
-            keyboardKeyList.remove(randomNumber);
-            HintsManager.getInstance().setOnClickEvent(keyboardKeys.get(i), new HintsManager.onKeyboardListener() {
-                @Override
-                public void onPressKey(String key) {
-                    System.out.println("this ke : " + key);
-                    hint.setText(key);
-                }
-            });
-        }
+        /*3. set hint for the first time*/
+        HintsManager.getInstance().setHintFirstTime(hint,jawabanTebakan);
 
     }
 
-    private String getUniqueChar(String str){
-        String result="";
-        String[] wordsSource = str.toLowerCase().split(" ");
-        for(int i=0;i< wordsSource.length;i++){
-            String[] charsWord = wordsSource[i].split("");
-            for(int o=0;o<charsWord.length;o++){
-                if(!result.isEmpty()){
-                    if(!isCharExistInString(charsWord[o],result)){
-                        result+=charsWord[o];
-                    }
-                }else{
-                    result=charsWord[o];
-                }
-            }
-        }
-        return result;
-    }
 
-    private String getNewChar(String source){
-        int limitKeyboardKeys = 16;
-        String result=source.toUpperCase();
-        String [] sourceNewChar = new String []{"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P",
-                "Q","R","S","T","U","V","W","X","Y","Z"};
-        for(int o=0;o<sourceNewChar.length;o++){
-            if(!isCharExistInString(sourceNewChar[o],result)){
-                if(result.length()<limitKeyboardKeys){
-                    result += sourceNewChar[o];
-
-                }
-            }
-        }
-
-        return result;
-    }
-
-    private boolean isCharExistInString(String charsWord,String source){
-        if(source.indexOf(charsWord)>-1){
-            return true;
-        }else{
-            return false;
-        }
-    }
 
 }
