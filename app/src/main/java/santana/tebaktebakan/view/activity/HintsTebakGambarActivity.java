@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
+import santana.tebaktebakan.controller.tebakanManager.HintsManager;
 import santana.tebaktebakan.controller.tebakanManager.Tebakan;
 
 /**
@@ -32,6 +33,7 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
     };
     @Bind(R.id.layoutKeyBoard)
     LinearLayout layoutKeyBoard;
+    @Bind(R.id.btnBack) LinearLayout btnBack;
     @Bind(R.id.TebakGambar)
     ImageView TebakGambar;
     @Bind(R.id.hint)
@@ -42,6 +44,8 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
     @Bind({ R.id.key1, R.id.key2, R.id.key3,R.id.key4,R.id.key5,R.id.key6,R.id.key7,R.id.key8,R.id.key9,
             R.id.key10,R.id.key11,R.id.key12,R.id.key13,R.id.key14,R.id.key15,R.id.key16})
     List<AppCompatButton> keyboardKeys;
+
+
     private String jawabanTebakan,imageUrl;
 
     @Override
@@ -50,18 +54,31 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
         setContentView(R.layout.layout_hint_activity);
 
         initUi();
+        initAction();
+    }
+
+    private void initAction(){
+        LogicInterfaceManager.getInstance().backAction(this, btnBack);
     }
 
     private void initUi(){
         ButterKnife.bind(this);
         ButterKnife.apply(keyboardKeys, ENABLED, false);
 
+        LogicInterfaceManager.getInstance().setOnClickEffect(this, btnBack);
+
+        // set size imageVIew for TebakGambar
+        Tebakan.getInstance().setSizeImageView(this, TebakGambar);
+
+
+        /*1. get data from previous intent*/
         Map<String,String> getDataIntent = LogicInterfaceManager.getInstance().getDataFromIntent(this);
         imageUrl = getDataIntent.get(ApplicationConstants.imageUrl);
         jawabanTebakan = getDataIntent.get(ApplicationConstants.jawabanTebakan);
         Tebakan.getInstance().loadImageToImageView2(TebakGambar, imageUrl, getApplicationContext());
         hint.setText(getUniqueChar(jawabanTebakan));
 
+        /*2. get Unique Char from jawabanTebakan and insert into list*/
         String keyboardKey = getNewChar(getUniqueChar(jawabanTebakan));
         String [] array = keyboardKey.split("");
         List<String> keyboardKeyList = new ArrayList<String>();
@@ -69,8 +86,7 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
             keyboardKeyList.add(array[o]);
         }
 
-
-
+        /*3. insert list into keyboard button*/
         for(int i=0;i<keyboardKeys.size();i++){
             Random rand = new Random();
             int randomNumber = rand.nextInt(((keyboardKeyList.size()-1)) + 1);
@@ -81,21 +97,15 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
             }
             keyboardKeys.get(i).setText(keyboardKeyList.get(randomNumber));
             keyboardKeyList.remove(randomNumber);
+            HintsManager.getInstance().setOnClickEvent(keyboardKeys.get(i), new HintsManager.onKeyboardListener() {
+                @Override
+                public void onPressKey(String key) {
+                    System.out.println("this ke : " + key);
+                    hint.setText(key);
+                }
+            });
         }
 
-
-
-
-
-    }
-
-    private void setLayoutKeyBoard(List<String> keyboardKeyList){
-        for(int i=0;i<16;i++){
-            Random rand = new Random();
-            int randomNumber = rand.nextInt(((keyboardKeyList.size()-1)) + 1);
-            keyboardKeys.get(i).setText(keyboardKeyList.get(randomNumber));
-            keyboardKeyList.remove(randomNumber);
-        }
     }
 
     private String getUniqueChar(String str){
@@ -123,7 +133,7 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
                 "Q","R","S","T","U","V","W","X","Y","Z"};
         for(int o=0;o<sourceNewChar.length;o++){
             if(!isCharExistInString(sourceNewChar[o],result)){
-                if(result.length()<16){
+                if(result.length()<limitKeyboardKeys){
                     result += sourceNewChar[o];
 
                 }
