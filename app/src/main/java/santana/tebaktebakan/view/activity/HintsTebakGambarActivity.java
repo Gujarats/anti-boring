@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -64,20 +64,38 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
 
         String keyboardKey = getNewChar(getUniqueChar(jawabanTebakan));
         String [] array = keyboardKey.split("");
-        List<String> keyboardKeyList = Arrays.asList(array);
+        List<String> keyboardKeyList = new ArrayList<String>();
+        for(int o=0;o<array.length;o++){
+            keyboardKeyList.add(array[o]);
+        }
+
 
 
         for(int i=0;i<keyboardKeys.size();i++){
             Random rand = new Random();
             int randomNumber = rand.nextInt(((keyboardKeyList.size()-1)) + 1);
+            if(keyboardKeyList.get(randomNumber).isEmpty()){
+                keyboardKeyList.remove(randomNumber);
+                randomNumber = rand.nextInt(((0+keyboardKeyList.size()-1)) + 1);
+                keyboardKeys.get(i).setText(keyboardKeyList.get(randomNumber));
+            }
             keyboardKeys.get(i).setText(keyboardKeyList.get(randomNumber));
-//            keyboardKeyList.remove(randomNumber);
+            keyboardKeyList.remove(randomNumber);
         }
 
 
 
 
 
+    }
+
+    private void setLayoutKeyBoard(List<String> keyboardKeyList){
+        for(int i=0;i<16;i++){
+            Random rand = new Random();
+            int randomNumber = rand.nextInt(((keyboardKeyList.size()-1)) + 1);
+            keyboardKeys.get(i).setText(keyboardKeyList.get(randomNumber));
+            keyboardKeyList.remove(randomNumber);
+        }
     }
 
     private String getUniqueChar(String str){
