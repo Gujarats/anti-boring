@@ -2,7 +2,6 @@ package santana.tebaktebakan.controller.tebakanManager;
 
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +10,7 @@ import java.util.Random;
 /**
  * Created by Gujarat Santana on 19/12/15.
  */
+
 public class HintsManager {
     private static final String TAG = "HintManager ";
     public static HintsManager instance;
@@ -36,14 +36,22 @@ public class HintsManager {
             }else{
                 result += "  ";// add two white space
             }
-
-
-
         }
 
-        Log.i(TAG, "setHintFirstTime: "+result);
-
         hint.setText(result);
+    }
+
+    public  String setKeyboardValue(String keyboard,String source){
+        StringBuilder stringBuilder = new StringBuilder(source);
+        char charKeyboard = keyboard.charAt(0);
+        if(stringBuilder.indexOf("_")>0){
+            stringBuilder.setCharAt(stringBuilder.indexOf("_"), charKeyboard);
+            return stringBuilder.toString();
+        }else{
+            return stringBuilder.toString();
+        }
+
+
     }
 
 

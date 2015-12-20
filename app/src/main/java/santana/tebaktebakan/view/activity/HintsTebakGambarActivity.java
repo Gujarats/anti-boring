@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +26,7 @@ import santana.tebaktebakan.controller.tebakanManager.Tebakan;
 public class HintsTebakGambarActivity extends AppCompatActivity {
 
 
+    private static final String TAG = "Hints";
     @Bind(R.id.layoutKeyBoard)
     LinearLayout layoutKeyBoard;
     @Bind(R.id.btnBack) LinearLayout btnBack;
@@ -57,9 +59,14 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
 
         for(int i=0;i<keyboardKeys.size();i++){
 
+            final String keyboard = keyboardKeys.get(i).getText().toString();
             keyboardKeys.get(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    String source = hint.getText().toString();
+                    String result = HintsManager.getInstance().setKeyboardValue(keyboard,source);
+                    Log.i(TAG, "onClick: "+result);
+                    hint.setText(result);
 
                 }
             });
