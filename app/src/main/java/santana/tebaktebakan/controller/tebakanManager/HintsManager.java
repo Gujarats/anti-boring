@@ -1,13 +1,20 @@
 package santana.tebaktebakan.controller.tebakanManager;
 
+import android.app.Activity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import santana.tebaktebakan.R;
 
 /**
  * Created by Gujarat Santana on 19/12/15.
@@ -52,7 +59,7 @@ public class HintsManager {
             }
         }
 
-        hint.setText(result);
+        hint.setText(result.toUpperCase());
     }
 
     private String deleteKeyboardValue(String source){
@@ -92,6 +99,7 @@ public class HintsManager {
             stringBuilder.setCharAt(stringBuilder.indexOf("_"), charKeyboard);
             return stringBuilder.toString();
         }else{
+            // no underscore anymore
             return stringBuilder.toString();
         }
 
@@ -168,5 +176,48 @@ public class HintsManager {
         }
     }
 
+
+    public void checkAnswer (Activity activity,String userAnswer,String sourceAnswer){
+
+        if(!isUnderScoreExist(userAnswer)){
+            String userAnswerConverted = getUserAnswerToSentence(userAnswer);
+            String sourceAnswerConverted = getUserAnswerToSentence(sourceAnswer);
+
+            if(isRightAnswer(userAnswerConverted,sourceAnswerConverted)){
+                activity.finish();
+                Toast.makeText(activity, "Benar Sekali", Toast.LENGTH_SHORT).show();
+            }else{
+                if(userAnswerConverted.length()==sourceAnswerConverted.length()){
+                    YoYo.with(Techniques.Shake).playOn(activity.findViewById(R.id.hint));
+                }
+            }
+        }
+
+    }
+
+    public boolean isRightAnswer(String resultAnswer, String sourceAnswer){
+        if(resultAnswer.equalsIgnoreCase(sourceAnswer)){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    private String getUserAnswerToSentence(String userAnswer){
+        String result;
+        result = userAnswer.replaceAll("\\s+","");
+        Log.i(TAG, "getUserAnswerToSentence: "+result);
+        return result;
+    }
+
+    private boolean isUnderScoreExist(String userAnswer){
+        StringBuilder stringBuilder = new StringBuilder(userAnswer);
+
+        if(stringBuilder.indexOf("_")==-1){
+            return false;
+        }else{
+            return true;
+        }
+    }
 
 }

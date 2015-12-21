@@ -66,8 +66,10 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     String source = hint.getText().toString();
                     String result = HintsManager.getInstance().setKeyboardValue(keyboard,source);
-                    Log.i(TAG, "onClick: "+result);
+                    Log.i(TAG, "onClick: " + result);
                     hint.setText(result);
+
+                    HintsManager.getInstance().checkAnswer(HintsTebakGambarActivity.this, result, jawabanTebakan);
 
                 }
             });
