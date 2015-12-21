@@ -70,8 +70,4 @@ public class StageActivity extends AppCompatActivity {
         LogicInterfaceManager.getInstance().setTextViewLevel(lvl, txtLevel);
     }
 
-    private void initTebakKata(){
-        TebakanKataObject tebakanKataObject = Tebakan.getInstance().getTebakKata(lvl,this);
-
-    }
 }

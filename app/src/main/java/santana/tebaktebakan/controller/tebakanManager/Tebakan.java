@@ -31,6 +31,7 @@ import santana.tebaktebakan.controller.UIManager.UIAnimationManager;
 import santana.tebaktebakan.model.object.TebakanGambarObject;
 import santana.tebaktebakan.model.object.TebakanKataObject;
 import santana.tebaktebakan.view.activity.AnswerTebakGambarActivity;
+import santana.tebaktebakan.view.activity.HintsTebakKataActivity;
 
 /**
  * Created by Gujarat Santana on 08/11/15.
@@ -44,6 +45,24 @@ public class Tebakan {
     public static Tebakan getInstance() {
         if (instance == null) instance = new Tebakan();
         return instance;
+    }
+
+    public void setOnClickHintTebakKata(final Activity activity, final ImageView imageView,final TebakanKataObject tebakanKataObject ){
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(activity, HintsTebakKataActivity.class);
+                        intent.putExtra(ApplicationConstants.tebakanKata, tebakanKataObject.getTebakKata());
+                        intent.putExtra(ApplicationConstants.jawabanTebakan, tebakanKataObject.getJawabanTebakKata());
+
+                        activity.startActivity(intent);
+                    }
+                });
+            }
+        });
     }
 
     public List<TebakanGambarObject> getImageLevel(int level, Activity activity){
