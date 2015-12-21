@@ -40,6 +40,7 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
     @Bind({ R.id.key1, R.id.key2, R.id.key3,R.id.key4,R.id.key5,R.id.key6,R.id.key7,R.id.key8,R.id.key9,
             R.id.key10,R.id.key11,R.id.key12,R.id.key13,R.id.key14,R.id.key15,R.id.key16})
     List<AppCompatButton> keyboardKeys;
+        @Bind(R.id.keyDelete) AppCompatButton keyDelete;
 
 
     private String jawabanTebakan,imageUrl;
@@ -72,6 +73,8 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
             });
 
         }
+
+        HintsManager.getInstance().setDeleteAction(hint,keyDelete);
 
     }
 

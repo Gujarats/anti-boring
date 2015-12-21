@@ -2,6 +2,8 @@ package santana.tebaktebakan.controller.tebakanManager;
 
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,18 @@ public class HintsManager {
     }
 
 
+    public void setDeleteAction(final AppCompatTextView hint, AppCompatButton delelte){
+        delelte.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String hintSource = hint.getText().toString();
+                String replaceHint = deleteKeyboardValue(hintSource);
+                Log.i(TAG, "onClick: delete " + replaceHint);
+                hint.setText(replaceHint);
+            }
+        });
+    }
+
     public void setHintFirstTime(AppCompatTextView hint,String source){
         String[] sourceArray = source.split("");
         String pattern = " _ ";
@@ -41,6 +55,36 @@ public class HintsManager {
         hint.setText(result);
     }
 
+    private String deleteKeyboardValue(String source){
+        String[] splitSource = source.split("");
+        StringBuilder stringBuilder = new StringBuilder(source);
+        char replaceChar = '_';
+        int indexUnderScore = stringBuilder.indexOf("_")-3;
+        int indexUnderscoreForArray = stringBuilder.indexOf("_")-2;
+
+        if(indexUnderScore>0){
+            try{
+                Log.i(TAG, "index : "+indexUnderscoreForArray +" "+splitSource[indexUnderscoreForArray] + " then "+ indexUnderscoreForArray+" "+ splitSource[indexUnderscoreForArray-1]);
+                if(splitSource[indexUnderscoreForArray].equalsIgnoreCase(" ")){
+
+                    indexUnderScore = indexUnderScore-2;
+                }
+            }catch (IndexOutOfBoundsException ex){
+
+            }
+
+            Log.i(TAG, "deleteKeyboardValue: "+indexUnderScore);
+            stringBuilder.setCharAt(indexUnderScore, replaceChar);
+            return stringBuilder.toString();
+        }else{
+            // got -1
+            indexUnderScore = source.length()-2;
+            stringBuilder.setCharAt(indexUnderScore, replaceChar);
+            return stringBuilder.toString();
+        }
+
+    }
+
     public  String setKeyboardValue(String keyboard,String source){
         StringBuilder stringBuilder = new StringBuilder(source);
         char charKeyboard = keyboard.charAt(0);
@@ -50,7 +94,6 @@ public class HintsManager {
         }else{
             return stringBuilder.toString();
         }
-
 
     }
 
