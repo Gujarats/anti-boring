@@ -20,19 +20,15 @@ import santana.tebaktebakan.controller.tebakanManager.Tebakan;
  * Created by Gujarat Santana on 01/11/15.
  */
 public class AnswerTebakKataActivity extends AppCompatActivity {
-
+    @Bind(R.id.btnBack) LinearLayout btnBack;
+    @Bind(R.id.layoutTebakKata) LinearLayout layoutTebakKata;
     @Bind(R.id.btnCek) ImageView btnCek;
     @Bind(R.id.btnHelp) ImageView btnHelp;
     @Bind(R.id.btnShare) ImageView btnShare;
     @Bind(R.id.TebakKata) TextView TebakKata;
     @Bind(R.id.jawabanTebakanEditText) EditText jawabanTebakanEditText;
 
-    @Bind(R.id.btnBack)
-    LinearLayout btnBack;
-
     private String jawabanTebakan;
-
-
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
@@ -54,10 +50,13 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         //set Effect on widget
-        LogicInterfaceManager.getInstance().setOnClickEffect(this,btnBack);
         LogicInterfaceManager.getInstance().setOnClickEffect(this,btnCek);
         LogicInterfaceManager.getInstance().setOnClickEffect(this,btnHelp);
         LogicInterfaceManager.getInstance().setOnClickEffect(this,btnShare);
+        LogicInterfaceManager.getInstance().setOnClickEffect(this,btnBack);
+
+        //set size layout
+        Tebakan.getInstance().setSizeLinearLayout(this,layoutTebakKata);
 
         Map<String,String> dataIntent = LogicInterfaceManager.getInstance().getDataFromIntentTebakKata(this);
         if(dataIntent.size()>0){

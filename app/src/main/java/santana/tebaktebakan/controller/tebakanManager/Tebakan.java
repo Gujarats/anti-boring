@@ -9,6 +9,7 @@ import android.view.Display;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -153,6 +154,18 @@ public class Tebakan {
 
         imageView.getLayoutParams().height = WidthPhone;
         imageView.requestLayout();
+    }
+
+    public void setSizeLinearLayout(Activity activity,LinearLayout linearLayout){
+         /*get widht of the phone*/
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int WidthPhone = size.x;
+        int HeightPhone = size.y;
+
+        linearLayout.getLayoutParams().height = WidthPhone;
+        linearLayout.requestLayout();
     }
 
     public void loadImageToImageView(ImageView imageView,String res, Context context){
