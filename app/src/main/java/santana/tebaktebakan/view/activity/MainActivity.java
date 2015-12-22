@@ -33,6 +33,13 @@ public class MainActivity extends AppCompatActivity{
         initUI();
         // initial for action button or widget
         initAction();
+
+        //initial gameplay firsTime
+        initGamePlay();
+    }
+
+    private void initGamePlay(){
+
     }
 
     private void initAction() {

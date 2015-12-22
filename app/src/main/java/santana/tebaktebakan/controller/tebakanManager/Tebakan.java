@@ -27,6 +27,7 @@ import java.util.List;
 
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.common.ApplicationConstants;
+import santana.tebaktebakan.controller.SessionManager.SessionStars;
 import santana.tebaktebakan.controller.UIManager.UIAnimationManager;
 import santana.tebaktebakan.model.object.TebakanGambarObject;
 import santana.tebaktebakan.model.object.TebakanKataObject;
@@ -45,6 +46,35 @@ public class Tebakan {
     public static Tebakan getInstance() {
         if (instance == null) instance = new Tebakan();
         return instance;
+    }
+
+
+    public void getLevel(){
+
+    }
+
+
+    public void setNextLevel(Activity activity){
+        SessionStars sessionStars = new SessionStars(activity);
+        int currentLevel = sessionStars.getKeyLevel();
+        // set level
+        currentLevel = currentLevel+1;
+        sessionStars.setKeyLevel(currentLevel);
+
+    }
+
+
+    public void setStars(Activity activity){
+        SessionStars sessionStars = new SessionStars(activity);
+        int currentStars = sessionStars.getKeyStars();
+        // set stars
+        if(currentStars==0){
+            currentStars = 1;
+            sessionStars.setKeyStars(currentStars);
+        }else if(currentStars==1){
+            currentStars = 2;
+            sessionStars.setKeyStars(currentStars);
+        }
     }
 
     public void setOnClickHintTebakKata(final Activity activity, final ImageView imageView,final TebakanKataObject tebakanKataObject ){

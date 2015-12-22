@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import santana.tebaktebakan.R;
+import santana.tebaktebakan.controller.SessionManager.SessionStars;
 import santana.tebaktebakan.view.activity.StageActivity;
 
 /**
@@ -24,11 +25,13 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
     private Context context;
     private Activity activity;
     private int layout;
+    private SessionStars sessionStars;
 
     public MainActivityAdapter(Context context, Activity activity, int layout) {
         this.context = context;
         this.activity = activity;
         this.layout = layout;
+        this.sessionStars  = new SessionStars(context);
     }
 
     @Override
@@ -59,15 +62,15 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
     }
 
     private void setBintangLvl(int position,ImageView bintang1,ImageView bintang2){
-        int positionLvlUser = 3;
-        int stageComplete =1;
+        int positionLvlUser = sessionStars.getKeyLevel();
+        int starsComplete = sessionStars.getKeyStars();
 
         if(position == positionLvlUser-1){
-            if(stageComplete==1){
+            if(starsComplete==1){
                 // bintang 1
                 bintang1.setVisibility(View.VISIBLE);
                 bintang2.setVisibility(View.INVISIBLE);
-            }else if(stageComplete==2){
+            }else if(starsComplete==2){
                 // bintang 2
                 bintang1.setVisibility(View.VISIBLE);
                 bintang2.setVisibility(View.VISIBLE);
@@ -80,7 +83,7 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
     }
 
     private void setLevel(int position,LinearLayout layoutCompat){
-        int positionLvlUser = 3;
+        int positionLvlUser = sessionStars.getKeyLevel();
         if(position < positionLvlUser){
             final int pos = position+1;
             layoutCompat.setOnClickListener(new View.OnClickListener() {
