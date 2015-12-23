@@ -20,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import santana.tebaktebakan.R;
+import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.common.JsonConstantKey;
 import santana.tebaktebakan.controller.SessionManager.SessionStars;
 import santana.tebaktebakan.view.activity.StageActivity;
@@ -66,11 +67,18 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
                 if(level <= lengthUserLevelProgress){
 
                     // user has passed the level
-                    JSONArray levelJson = jsonObject.getJSONArray(String.valueOf(level));
-                    int starsAtLevel = levelJson.getJSONObject(0).getInt(JsonConstantKey.key_stars);
+                    if(jsonObject.has(String.valueOf(level))){
+                        JSONArray levelJson = jsonObject.getJSONArray(String.valueOf(level));
+                        int starsAtLevel = levelJson.getJSONObject(0).getInt(JsonConstantKey.key_stars);
 
-                    enableLevel(position, holder.layoutLevel);
-                    setStarsAtLevel(holder.bintang1, holder.bintang2, starsAtLevel);
+                        enableLevel(level, holder.layoutLevel);
+                        setStarsAtLevel(holder.bintang1, holder.bintang2, starsAtLevel);
+                    }else{
+                    // the level doesn't exist on json
+                        disableLevel(position,holder.layoutLevel);
+                        setStarsAtLevel(holder.bintang1, holder.bintang2, 0);
+                    }
+
 
                 }else{
                     // the level that still locked
@@ -97,13 +105,13 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
     }
 
     private void enableLevel(int levelPosition,LinearLayout layoutCompat){
-        final int pos = levelPosition+1;
+        final int pos = levelPosition;
         layoutCompat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, StageActivity.class);
-                intent.putExtra("LEVEL_STAGE" , pos);
-                ActivityCompat.startActivity(activity, intent, Bundle.EMPTY);
+                intent.putExtra(ApplicationConstants.level, pos);
+                activity.startActivity(intent);
             }
         });
         layoutCompat.setBackgroundColor(Color.parseColor("#303F9F"));

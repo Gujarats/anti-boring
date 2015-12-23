@@ -30,6 +30,7 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
     @Bind(R.id.jawabanTebakanEditText) EditText jawabanTebakanEditText;
 
     private String jawabanTebakan;
+    private int level;
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
 
     private void initAction() {
         LogicInterfaceManager.getInstance().backAction(this, btnBack);
-        Tebakan.getInstance().checkAnswerTebakKata(AnswerTebakKataActivity.this, this, jawabanTebakanEditText, jawabanTebakan, btnCek);
+        Tebakan.getInstance().checkAnswerTebakKata(AnswerTebakKataActivity.this, this, jawabanTebakanEditText, jawabanTebakan, level,btnCek);
 
         TebakanKataObject tebakanKataObject = new TebakanKataObject();
         tebakanKataObject.setJawabanTebakKata(jawabanTebakan);
@@ -69,6 +70,7 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
         if(dataIntent.size()>0){
             TebakKata.setText(dataIntent.get(ApplicationConstants.tebakanKata));
             jawabanTebakan = dataIntent.get(ApplicationConstants.jawabanTebakan);
+            level = Integer.parseInt(dataIntent.get(ApplicationConstants.level));
         }
     }
 }

@@ -78,7 +78,7 @@ public class ChooseImageTebakanActivity extends AppCompatActivity {
                         break;
                 }
             } else {
-                Toast.makeText(ChooseImageTebakanActivity.this, "Sorry couldnt load image", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChooseImageTebakanActivity.this, "Sorry couldn't load image", Toast.LENGTH_SHORT).show();
             }
 
         }

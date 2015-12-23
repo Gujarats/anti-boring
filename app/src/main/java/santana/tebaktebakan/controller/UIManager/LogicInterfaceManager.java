@@ -38,7 +38,7 @@ public class LogicInterfaceManager {
         int lvl;
         try {
             if (intent.getExtras() != null) {
-                lvl = intent.getExtras().getInt("LEVEL_STAGE");
+                lvl = intent.getExtras().getInt(ApplicationConstants.level);
 
                 return lvl;
             }else{
@@ -157,6 +157,7 @@ public class LogicInterfaceManager {
             if(intent.getExtras()!=null){
                 value.put(ApplicationConstants.imageUrl,intent.getExtras().getString(ApplicationConstants.imageUrl));
                 value.put(ApplicationConstants.jawabanTebakan,intent.getExtras().getString(ApplicationConstants.jawabanTebakan));
+                value.put(ApplicationConstants.level, String.valueOf(intent.getExtras().getInt(ApplicationConstants.level)));
 
 
                 return value;
@@ -177,6 +178,7 @@ public class LogicInterfaceManager {
             if(intent.getExtras()!=null){
                 value.put(ApplicationConstants.tebakanKata,intent.getExtras().getString(ApplicationConstants.tebakanKata));
                 value.put(ApplicationConstants.jawabanTebakan,intent.getExtras().getString(ApplicationConstants.jawabanTebakan));
+                value.put(ApplicationConstants.level, String.valueOf(intent.getExtras().getInt(ApplicationConstants.level)));
 
 
                 return value;

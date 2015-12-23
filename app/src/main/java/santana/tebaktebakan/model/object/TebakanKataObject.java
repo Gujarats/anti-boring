@@ -6,13 +6,24 @@ package santana.tebaktebakan.model.object;
 public class TebakanKataObject {
     private String tebakKata;
     private String jawabanTebakKata;
+    private int level;
 
-    public TebakanKataObject(String tebakKata, String jawabanTebakKata) {
+    public TebakanKataObject(String tebakKata, String jawabanTebakKata, int level) {
         this.tebakKata = tebakKata;
         this.jawabanTebakKata = jawabanTebakKata;
+        this.level= level;
     }
 
     public TebakanKataObject(){}
+
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
 
     public String getTebakKata() {
         return tebakKata;

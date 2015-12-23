@@ -6,11 +6,11 @@ package santana.tebaktebakan.model.object;
 public class TebakanGambarObject {
     private String gambarUrl;
     private String jawaban;
-    private String level;
+    private int level;
 
     public TebakanGambarObject(){}
 
-    public TebakanGambarObject(String gambarUrl, String jawaban, String level) {
+    public TebakanGambarObject(String gambarUrl, String jawaban, int level) {
         this.gambarUrl = gambarUrl;
         this.jawaban = jawaban;
         this.level = level;
@@ -32,11 +32,11 @@ public class TebakanGambarObject {
         this.jawaban = jawaban;
     }
 
-    public String getLevel() {
+    public int getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(int level) {
         this.level = level;
     }
 }

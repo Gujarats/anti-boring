@@ -33,6 +33,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
 
     private String jawabanTebakan;
     private String imageUrl;
+    private int level;
 
     
 
@@ -63,6 +64,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
         if(dataIntent.size()>0){
             imageUrl = dataIntent.get(ApplicationConstants.imageUrl);
             jawabanTebakan = dataIntent.get(ApplicationConstants.jawabanTebakan);
+            level = Integer.parseInt(dataIntent.get(ApplicationConstants.level));
             Tebakan.getInstance().loadImageToImageView2(TebakGambar, imageUrl,getApplicationContext());
 
         }
@@ -74,7 +76,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
         LogicInterfaceManager.getInstance().backAction(this, btnBack);
         LogicInterfaceManager.getInstance().startActivityHintsTebakanGambar(this, btnHelp, jawabanTebakan, imageUrl);
 
-        Tebakan.getInstance().checkAnswer(AnswerTebakGambarActivity.this, this, jawabanTebakanEditText, jawabanTebakan, btnCek);
+        Tebakan.getInstance().checkAnswer(AnswerTebakGambarActivity.this, this, jawabanTebakanEditText, jawabanTebakan,level, btnCek);
 
 
 

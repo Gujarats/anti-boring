@@ -45,6 +45,8 @@ public class StageActivity extends AppCompatActivity {
                 TebakanKataObject tebakanKataObject = Tebakan.getInstance().getTebakKata(lvl,StageActivity.this);
                 intent.putExtra(ApplicationConstants.tebakanKata,tebakanKataObject.getTebakKata());
                 intent.putExtra(ApplicationConstants.jawabanTebakan,tebakanKataObject.getJawabanTebakKata());
+                intent.putExtra(ApplicationConstants.level,lvl);
+
                 startActivity(intent);
             }
         });
@@ -53,7 +55,7 @@ public class StageActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(getApplicationContext(), ChooseImageTebakanActivity.class);
-                intent.putExtra("LEVEL_STAGE", lvl);
+                intent.putExtra(ApplicationConstants.level, lvl);
                 startActivity(intent);
             }
         });
