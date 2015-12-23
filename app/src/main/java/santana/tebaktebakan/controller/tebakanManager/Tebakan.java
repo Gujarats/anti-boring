@@ -27,6 +27,7 @@ import java.util.List;
 
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.common.ApplicationConstants;
+import santana.tebaktebakan.common.JsonConstantKey;
 import santana.tebaktebakan.controller.SessionManager.SessionStars;
 import santana.tebaktebakan.controller.UIManager.UIAnimationManager;
 import santana.tebaktebakan.model.object.TebakanGambarObject;
@@ -48,23 +49,90 @@ public class Tebakan {
         return instance;
     }
 
+    /**
+     * we put Json to save progress user in setKeyLevelJson
+     * @param activity
+     */
 
-    public void getLevel(){
+    public void saveProgressLevel(Activity activity){
+        try {
+            SessionStars sessionStars = new SessionStars(activity);
+            setStarsSession(activity);
+            int currentLevel = sessionStars.getKeyLevel();
+            int currentStarsAtLevel = sessionStars.getKeyStars();
+            String KeyLevelJson = sessionStars.getKeyLevelJson();
 
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put(JsonConstantKey.key_level,currentLevel);
+            jsonObject.put(JsonConstantKey.key_stars,currentStarsAtLevel);
+
+            if(!KeyLevelJson.isEmpty()){
+
+                JSONArray jsonArray = new JSONArray();
+                jsonArray.put(jsonObject);
+
+                JSONObject KeyLevelJsonObject = new JSONObject(KeyLevelJson);
+
+                KeyLevelJsonObject.put(String.valueOf(currentLevel),jsonArray);
+
+                // saved it into SharedPreference
+                sessionStars.setKeyLevelJson(KeyLevelJsonObject.toString());
+            }else{
+
+                JSONArray jsonArray = new JSONArray();
+                jsonArray.put(jsonObject);
+
+                JSONObject KeyLevelJsonObject = new JSONObject();
+                KeyLevelJsonObject.put(String.valueOf(currentLevel),jsonArray);
+
+                // saved it into SharedPreference
+                sessionStars.setKeyLevelJson(KeyLevelJsonObject.toString());
+
+
+            }
+
+
+            /*
+            * this is KeyLevelJson looks like
+            * {
+            *   "1" : {[
+            *       "key_level" : 1,
+            *       "key_stars" : 2
+            *   ]},
+            *
+            *   "2" : {[
+            *       "key_level" : 2,
+            *       "key_stars" : 1
+            *   ]},
+            *
+            *   "3" : {[
+            *       "key_level" : 3,
+            *       "key_stars" : 2
+            *   ]}
+            *
+            * }
+            * */
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        setNextLevelSession(activity);
     }
 
 
-    public void setNextLevel(Activity activity){
+    public void setNextLevelSession(Activity activity){
         SessionStars sessionStars = new SessionStars(activity);
         int currentLevel = sessionStars.getKeyLevel();
-        // set level
-        currentLevel = currentLevel+1;
-        sessionStars.setKeyLevel(currentLevel);
+        // set Next level session
+        sessionStars.setKeyLevel(currentLevel+1);
+
 
     }
 
 
-    public void setStars(Activity activity){
+    public void setStarsSession(Activity activity){
         SessionStars sessionStars = new SessionStars(activity);
         int currentStars = sessionStars.getKeyStars();
         // set stars
@@ -73,6 +141,9 @@ public class Tebakan {
             sessionStars.setKeyStars(currentStars);
         }else if(currentStars==1){
             currentStars = 2;
+            sessionStars.setKeyStars(currentStars);
+        }else if(currentStars==2){
+            currentStars = 0;
             sessionStars.setKeyStars(currentStars);
         }
     }
@@ -272,6 +343,8 @@ public class Tebakan {
                     if(isRightAnswer(jawabanUser,kunciJawaban)){
                         // jawaban benar sekali
                         Toast.makeText(context, "Benar Sekali", Toast.LENGTH_SHORT).show();
+                        saveProgressLevel(activity);
+
                     }else{
                         String [] kunciJawabanSplit = kunciJawaban.split(" ");
                         if(kunciJawabanSplit.length==3){
@@ -313,6 +386,7 @@ public class Tebakan {
                     if(isRightAnswer(jawabanUser,kunciJawaban)){
                         // jawaban benar sekali
                         Toast.makeText(context, "Benar Sekali", Toast.LENGTH_SHORT).show();
+                        saveProgressLevel(activity);
                     }else{
                         String [] kunciJawabanSplit = kunciJawaban.split(" ");
                         if(kunciJawabanSplit.length==3){

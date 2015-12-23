@@ -32,6 +32,16 @@ public class SessionStars {
         editor = pref.edit();
     }
 
+    public String getKeyLevelJson(){
+        return pref.getString(KEY_LEVEL_JSON, "");
+    }
+
+    public void setKeyLevelJson(String keyLevelJson){
+        editor.putString(KEY_LEVEL_JSON, keyLevelJson);
+        editor.commit();
+    }
+
+
     public int getKeyStars(){
         return pref.getInt(KEY_STARS,0);
     }
