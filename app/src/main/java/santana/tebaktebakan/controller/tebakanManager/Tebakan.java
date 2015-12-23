@@ -72,7 +72,17 @@ public class Tebakan {
 
                 JSONObject KeyLevelJsonObject = new JSONObject(KeyLevelJson);
 
+                // set progress current level
                 KeyLevelJsonObject.put(String.valueOf(currentLevel),jsonArray);
+
+                // open/unlocked next level
+                jsonObject = new JSONObject();
+                jsonObject.put(JsonConstantKey.key_level,currentLevel+1);
+                jsonObject.put(JsonConstantKey.key_stars,0);
+
+                jsonArray = new JSONArray();
+                jsonArray.put(jsonObject);
+                KeyLevelJsonObject.put(String.valueOf(currentLevel+1),jsonArray);
 
                 // saved it into SharedPreference
                 sessionStars.setKeyLevelJson(KeyLevelJsonObject.toString());
@@ -106,7 +116,7 @@ public class Tebakan {
             *
             *   "3" : {[
             *       "key_level" : 3,
-            *       "key_stars" : 2
+            *       "key_stars" : 0
             *   ]}
             *
             * }
@@ -117,7 +127,6 @@ public class Tebakan {
             e.printStackTrace();
         }
 
-        setNextLevelSession(activity);
     }
 
 
