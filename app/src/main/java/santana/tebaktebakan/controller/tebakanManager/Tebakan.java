@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.EditText;
@@ -40,6 +41,7 @@ import santana.tebaktebakan.view.activity.HintsTebakKataActivity;
  */
 public class Tebakan {
 
+    private static final String TAG = "Tebakan";
     public static Tebakan instance;
 
     private Tebakan() {}
@@ -58,8 +60,16 @@ public class Tebakan {
         try {
             SessionStars sessionStars = new SessionStars(activity);
             setStarsSession(activity);
-            int currentStarsAtLevel = sessionStars.getKeyStars();
+
             String KeyLevelJson = sessionStars.getKeyLevelJson();
+
+            int currentStarsAtLevel = getStarsAtLevel(KeyLevelJson,currentLevel);
+            Log.i(TAG, "saveProgressLevel: "+currentStarsAtLevel);
+            currentStarsAtLevel = calculateStars(currentStarsAtLevel);
+            Log.i(TAG, "saveProgressLevel after: "+currentStarsAtLevel);
+
+
+
 
             JSONObject jsonObject = new JSONObject();
             jsonObject.put(JsonConstantKey.key_level,currentLevel);
@@ -127,6 +137,36 @@ public class Tebakan {
             e.printStackTrace();
         }
 
+    }
+
+    private int calculateStars(int currentStarsAtLevel){
+        if(currentStarsAtLevel<2){
+            currentStarsAtLevel = currentStarsAtLevel+1;
+            Log.i(TAG, "calculateStars: "+currentStarsAtLevel);
+            return currentStarsAtLevel;
+        }else{
+            return currentStarsAtLevel;
+        }
+    }
+
+    private int getStarsAtLevel(String keyLevelJson,int currentLevel){
+        Log.d(TAG, "getStarsAtLevel() called with: " + "keyLevelJson = [" + keyLevelJson + "], currentLevel = [" + currentLevel + "]");
+
+        int currentStarsAtLevel=0;
+        try {
+            JSONObject jsonObject = new JSONObject(keyLevelJson);
+            if(jsonObject.has(String.valueOf(currentLevel))){
+                JSONArray jsonArray = jsonObject.getJSONArray(String.valueOf(currentLevel));
+                currentStarsAtLevel = jsonArray.getJSONObject(0).getInt(JsonConstantKey.key_stars);
+                return currentStarsAtLevel;
+            }else
+                return currentStarsAtLevel;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return currentStarsAtLevel;
     }
 
 
@@ -286,7 +326,9 @@ public class Tebakan {
     }
 
     public void setSizeLinearLayout(Activity activity,LinearLayout linearLayout){
-         /*get widht of the phone*/
+         /*get width of the phone
+         * and make square layout that depends on the width of the phone
+         * */
         Display display = activity.getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
