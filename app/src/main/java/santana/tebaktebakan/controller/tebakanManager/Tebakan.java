@@ -217,7 +217,7 @@ public class Tebakan {
     public List<TebakanGambarObject> getImageLevel(int level, Activity activity){
         try {
             List<TebakanGambarObject> tebakanGambarObjects = new ArrayList<TebakanGambarObject>();
-            String json = loadJSONFromAsset(activity);
+            String json = loadTebakGambarJSONFromAsset(activity);
             if(!json.isEmpty()){
                 //get json from asset
                 JSONObject obj = new JSONObject(json);
@@ -277,7 +277,7 @@ public class Tebakan {
 
     }
 
-    public String loadJSONFromAsset(Activity activity) {
+    public String loadTebakGambarJSONFromAsset(Activity activity) {
         String json = "";
         try {
             InputStream is = activity.getAssets().open("gambar_database.json");

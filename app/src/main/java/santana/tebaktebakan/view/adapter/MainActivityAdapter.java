@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,10 +17,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.common.JsonConstantKey;
 import santana.tebaktebakan.controller.SessionManager.SessionStars;
+import santana.tebaktebakan.controller.tebakanManager.Tebakan;
+import santana.tebaktebakan.model.object.LevelTebakanObject;
 import santana.tebaktebakan.view.activity.StageActivity;
 
 /**
@@ -35,6 +38,7 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
     private int layout;
     private SessionStars sessionStars;
     private String keyLevelJson="";
+    private List<LevelTebakanObject> levelTebakanObjects = new ArrayList<LevelTebakanObject>();
 
     public MainActivityAdapter(Context context, Activity activity, int layout) {
         this.context = context;
@@ -43,7 +47,7 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
         this.sessionStars  = new SessionStars(context);
         keyLevelJson =sessionStars.getKeyLevelJson();
         Log.i(TAG, "MainActivityAdapter: "+keyLevelJson);
-
+        loadLevelGambarFromJson();
     }
 
     @Override
@@ -59,48 +63,56 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
     public void onBindViewHolder( ViewHolder holder, int position) {
         initLevelNumber(position, holder.txtLevel);
         int level = position+1;
-        if(!keyLevelJson.isEmpty()){
-            try {
-                JSONObject jsonObject = new JSONObject(keyLevelJson);
-                int lengthUserLevelProgress = jsonObject.length();
-                Log.i(TAG, "onBindViewHolder panjang KeyLevel: "+lengthUserLevelProgress);
-                if(level <= lengthUserLevelProgress){
+        int starsAtLevel = levelTebakanObjects.get(position).getStars();
+        if(!levelTebakanObjects.get(position).isLocked()){
+            enableLevel(level, holder.layoutLevel);
 
-                    // user has passed the level
-                    if(jsonObject.has(String.valueOf(level))){
-                        JSONArray levelJson = jsonObject.getJSONArray(String.valueOf(level));
-                        int starsAtLevel = levelJson.getJSONObject(0).getInt(JsonConstantKey.key_stars);
-
-                        enableLevel(level, holder.layoutLevel);
-                        setStarsAtLevel(holder.bintang1, holder.bintang2, starsAtLevel);
-                    }else{
-                    // the level doesn't exist on json
-                        disableLevel(position,holder.layoutLevel);
-                        setStarsAtLevel(holder.bintang1, holder.bintang2, 0);
-                    }
-
-
-                }else{
-                    // the level that still locked
-                    disableLevel(position,holder.layoutLevel);
-                    setStarsAtLevel(holder.bintang1, holder.bintang2, 0);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
         }else{
-
-            // this is level 1 and no stars starts very beginning
-            if(level==1){
-                enableLevel(level, holder.layoutLevel);
-                setStarsAtLevel(holder.bintang1, holder.bintang2, 0);
-            }else{
-                // the level that still locked
-                disableLevel(position,holder.layoutLevel);
-                setStarsAtLevel(holder.bintang1, holder.bintang2, 0);
-            }
-
+            disableLevel(holder.layoutLevel);
         }
+        setStarsAtLevel(holder.bintang1,holder.bintang2,starsAtLevel);
+//        if(!keyLevelJson.isEmpty()){
+//            try {
+//                JSONObject jsonObject = new JSONObject(keyLevelJson);
+//                int lengthUserLevelProgress = jsonObject.length();
+//                Log.i(TAG, "onBindViewHolder panjang KeyLevel: "+lengthUserLevelProgress);
+//                if(level <= lengthUserLevelProgress){
+//
+//                    // user has passed the level
+//                    if(jsonObject.has(String.valueOf(level))){
+//                        JSONArray levelJson = jsonObject.getJSONArray(String.valueOf(level));
+//                        int starsAtLevel = levelJson.getJSONObject(0).getInt(JsonConstantKey.key_stars);
+//
+//                        enableLevel(level, holder.layoutLevel);
+//                        setStarsAtLevel(holder.bintang1, holder.bintang2, starsAtLevel);
+//                    }else{
+//                    // the level doesn't exist on json
+//                        disableLevel(holder.layoutLevel);
+//                        setStarsAtLevel(holder.bintang1, holder.bintang2, 0);
+//                    }
+//
+//
+//                }else{
+//                    // the level that still locked
+//                    disableLevel(holder.layoutLevel);
+//                    setStarsAtLevel(holder.bintang1, holder.bintang2, 0);
+//                }
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }else{
+//
+//            // this is level 1 and no stars starts very beginning
+//            if(level==1){
+//                enableLevel(level, holder.layoutLevel);
+//                setStarsAtLevel(holder.bintang1, holder.bintang2, 0);
+//            }else{
+//                // the level that still locked
+//                disableLevel(holder.layoutLevel);
+//                setStarsAtLevel(holder.bintang1, holder.bintang2, 0);
+//            }
+//
+//        }
 
     }
 
@@ -117,7 +129,7 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
         layoutCompat.setBackgroundColor(Color.parseColor("#303F9F"));
     }
 
-    private void disableLevel(int levelPosition,LinearLayout layoutCompat){
+    private void disableLevel(LinearLayout layoutCompat){
         layoutCompat.setBackgroundColor(Color.parseColor("#999999"));
         layoutCompat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,11 +140,11 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
     }
 
     private void initLevelNumber(int position, AppCompatTextView txtLevel){
-        String lvl = String.valueOf(position+1);
+        String lvl = String.valueOf(position + 1);
         if (position<9){
             txtLevel.setText("0"+lvl);
         } else {
-            txtLevel.setText(""+lvl);
+            txtLevel.setText("" + lvl);
         }
     }
 
@@ -151,54 +163,85 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
         }
     }
 
-    private void setBintangLvl(int position,ImageView bintang1,ImageView bintang2){
-        int positionLvlUser = sessionStars.getKeyLevel();
-        int starsComplete = sessionStars.getKeyStars();
-
-        if(position == positionLvlUser-1){
-            if(starsComplete==1){
-                // bintang 1
-                bintang1.setVisibility(View.VISIBLE);
-                bintang2.setVisibility(View.INVISIBLE);
-            }else if(starsComplete==2){
-                // bintang 2
-                bintang1.setVisibility(View.VISIBLE);
-                bintang2.setVisibility(View.VISIBLE);
+    private void loadLevelGambarFromJson(){
+        try {
+            String jsonTebakGambar = Tebakan.getInstance().loadTebakGambarJSONFromAsset(activity);
+            JSONObject jsonObject = new JSONObject(jsonTebakGambar);
+            for (int i = 0; i <jsonObject.length() ; i++) {
+                LevelTebakanObject levelTebakanObject = new LevelTebakanObject();
+                levelTebakanObject.setLevel(i+1);
+                levelTebakanObjects.add(levelTebakanObject);
             }
-        }else{
-            bintang1.setVisibility(View.VISIBLE);
-            bintang2.setVisibility(View.VISIBLE);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-
     }
 
-    private void setLevel(int position,LinearLayout layoutCompat){
-        int positionLvlUser = sessionStars.getKeyLevel();
-        if(position < positionLvlUser){
-            final int pos = position+1;
-            layoutCompat.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, StageActivity.class);
-                    intent.putExtra("LEVEL_STAGE" , pos);
-                    ActivityCompat.startActivity(activity, intent, Bundle.EMPTY);
-                }
-            });
-            layoutCompat.setBackgroundColor(Color.parseColor("#303F9F"));
-        }else{
-            layoutCompat.setBackgroundColor(Color.parseColor("#999999"));
-            layoutCompat.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+    public void updateLevelJson(){
+        keyLevelJson = sessionStars.getKeyLevelJson();
+        for (int i = 0; i < levelTebakanObjects.size(); i++) {
+            int level = i+1;
+            if(!keyLevelJson.isEmpty()){
 
+                try {
+                    JSONObject jsonObject = new JSONObject(keyLevelJson);
+                    int lengthUserLevelProgress = jsonObject.length();
+                    Log.i(TAG, "onBindViewHolder panjang KeyLevel: "+lengthUserLevelProgress);
+                    if(level <= lengthUserLevelProgress){
+
+                        // user has passed the level
+                        if(jsonObject.has(String.valueOf(level))){
+                            JSONArray levelJson = jsonObject.getJSONArray(String.valueOf(level));
+                            int starsAtLevel = levelJson.getJSONObject(0).getInt(JsonConstantKey.key_stars);
+
+                            levelTebakanObjects.get(i).setStars(starsAtLevel);
+                            levelTebakanObjects.get(i).setIsLocked(false);
+                            levelTebakanObjects.get(i).setLevel(level);
+
+                        }else{
+                            // the level doesn't exist on json
+                            levelTebakanObjects.get(i).setStars(0);
+                            levelTebakanObjects.get(i).setIsLocked(true);
+                            levelTebakanObjects.get(i).setLevel(level);
+
+                        }
+
+
+                    }else{
+                        // the level that still locked
+                        levelTebakanObjects.get(i).setStars(0);
+                        levelTebakanObjects.get(i).setIsLocked(true);
+                        levelTebakanObjects.get(i).setLevel(level);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            });
+            }else{
+
+                // this is level 1 and no stars starts very beginning
+                if(i==0){
+                    levelTebakanObjects.get(0).setStars(0);
+                    levelTebakanObjects.get(0).setIsLocked(false);
+                    levelTebakanObjects.get(0).setLevel(1);
+                }else{
+                    // the level that still locked
+                    levelTebakanObjects.get(i).setStars(0);
+                    levelTebakanObjects.get(i).setIsLocked(true);
+                    levelTebakanObjects.get(i).setLevel(level);
+                }
+
+            }
         }
+        notifyDataSetChanged();
+    }
+
+    public void loadProgressUser(){
+
     }
 
     @Override
     public int getItemCount() {
-        return 40;
+        return levelTebakanObjects.size();
     }
 
 
