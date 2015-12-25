@@ -62,6 +62,8 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
         LogicInterfaceManager.getInstance().setOnClickEffect(this,btnHelp);
         LogicInterfaceManager.getInstance().setOnClickEffect(this,btnShare);
         LogicInterfaceManager.getInstance().setOnClickEffect(this,btnBack);
+        // set animation hint
+        LogicInterfaceManager.getInstance().setAnimtaionEffectonHint(btnHelp);
 
         //set size layout
         Tebakan.getInstance().setSizeLinearLayout(this,layoutTebakKata);
