@@ -1,6 +1,7 @@
 package santana.tebaktebakan.controller.tebakanManager;
 
 import android.app.Activity;
+import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
@@ -17,6 +18,7 @@ import java.util.Random;
 
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.controller.SessionManager.SessionHintDisplay;
+import santana.tebaktebakan.controller.UIManager.DialogDisplayCharManager;
 
 /**
  * Created by Gujarat Santana on 19/12/15.
@@ -34,16 +36,28 @@ public class HintsManager {
     }
 
 
-    public void setOnClickDisplayHint(final Activity activity,LinearLayout linearLayout, final AppCompatTextView hint,final String jawabanTebakan){
+    public void setOnDisplayDialogChar(final Activity activity, final LinearLayout linearLayout, final AppCompatTextView hint, final String jawabanTebakan){
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String hintDisplayText = hint.getText().toString();
-                String result = displayHintChar(activity,jawabanTebakan,hintDisplayText);
-                HintsManager.getInstance().checkAnswer(activity, result, jawabanTebakan);
-                hint.setText(result);
+                DialogDisplayCharManager.getInstance().setDialogHint(activity, R.layout.dialog_display_char, new DialogDisplayCharManager.CallBackDialog() {
+                    @Override
+                    public void yes(AppCompatDialog dialog) {
+                        dialog.dismiss();
+                        CoinsManager.getInstance().setCoinsOnDisplayChar(activity);
+                        setOnClickDisplayHint(activity, linearLayout, hint, jawabanTebakan);
+                    }
+                });
+
             }
         });
+    }
+
+    public void setOnClickDisplayHint(final Activity activity,LinearLayout linearLayout, final AppCompatTextView hint,final String jawabanTebakan){
+        String hintDisplayText = hint.getText().toString();
+        String result = displayHintChar(activity, jawabanTebakan, hintDisplayText);
+        HintsManager.getInstance().checkAnswer(activity, result, jawabanTebakan);
+        hint.setText(result);
     }
 
     public void setDeleteAction(final AppCompatTextView hint, AppCompatButton delelte){

@@ -109,7 +109,7 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
         HintsManager.getInstance().setDeleteAction(hint,keyDelete);
 
 
-        HintsManager.getInstance().setOnClickDisplayHint(this,hintDisplay,hint,jawabanTebakan);
+        HintsManager.getInstance().setOnDisplayDialogChar(this, hintDisplay, hint, jawabanTebakan);
 
 
 
