@@ -10,9 +10,9 @@ import santana.tebaktebakan.controller.SessionManager.SessionCoin;
  */
 public class CoinsManager {
     public static CoinsManager instance;
-    private int onHintActivity = 5;
-    private int onDisplayChar = 30;
-    private int onRighAnswer = 7;
+    private int onHintActivity = 10;
+    private int onDisplayChar = 60;
+    private int onRighAnswer = 15;
 
 
     private CoinsManager() {}

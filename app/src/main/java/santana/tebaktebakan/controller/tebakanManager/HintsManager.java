@@ -5,6 +5,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -15,13 +16,14 @@ import java.util.List;
 import java.util.Random;
 
 import santana.tebaktebakan.R;
+import santana.tebaktebakan.controller.SessionManager.SessionHintDisplay;
 
 /**
  * Created by Gujarat Santana on 19/12/15.
  */
 
 public class HintsManager {
-    private static final String TAG = "HintManager ";
+    private static final String TAG = "HintManager";
     public static HintsManager instance;
 
     private HintsManager() {}
@@ -31,6 +33,18 @@ public class HintsManager {
         return instance;
     }
 
+
+    public void setOnClickDisplayHint(final Activity activity,LinearLayout linearLayout, final AppCompatTextView hint,final String jawabanTebakan){
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String hintDisplayText = hint.getText().toString();
+                String result = displayHintChar(activity,jawabanTebakan,hintDisplayText);
+                HintsManager.getInstance().checkAnswer(activity, result, jawabanTebakan);
+                hint.setText(result);
+            }
+        });
+    }
 
     public void setDeleteAction(final AppCompatTextView hint, AppCompatButton delelte){
         delelte.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +119,30 @@ public class HintsManager {
 
     }
 
+    public String displayHintChar(Activity activity,String sourceAnswer, String hintDisplay){
+
+        int indexHint = getIndexHint(activity);
+        sourceAnswer = sourceAnswer.replaceAll("\\s+", "");
+        String[] splitSourceAnswer = sourceAnswer.split("");
+        String hintAnswer = splitSourceAnswer[indexHint];
+        String result = setKeyboardValue(hintAnswer,hintDisplay);
+        // set next indext hint for display next hint char
+        setIndexHint(activity,indexHint+1);
+
+        return result;
+    }
+
+
+    public void setIndexHint(Activity activity,int indexHint){
+        SessionHintDisplay sessionHintDisplay =new SessionHintDisplay(activity);
+        sessionHintDisplay.setKeyDisplayHint(indexHint);
+    }
+
+    public int getIndexHint(Activity activity){
+        SessionHintDisplay sessionHintDisplay =new SessionHintDisplay(activity);
+        return sessionHintDisplay.getsetKeyDisplayHint();
+    }
+
 
     public void setKeyboard(List<AppCompatButton> keyboardKeys, String SourceString){
         /*1. get Unique Char from jawabanTebakan and insert into list*/
@@ -133,7 +171,7 @@ public class HintsManager {
         }
     }
 
-    public String getUniqueChar(String str){
+    private String getUniqueChar(String str){
         String result="";
         String[] wordsSource = str.toLowerCase().split(" ");
         for(int i=0;i< wordsSource.length;i++){
@@ -151,7 +189,7 @@ public class HintsManager {
         return result;
     }
 
-    public String getNewChar(String source){
+    private String getNewChar(String source){
         int limitKeyboardKeys = 16;
         String result=source.toUpperCase();
         String [] sourceNewChar = new String []{"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P",

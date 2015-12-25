@@ -30,6 +30,7 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
     @Bind(R.id.layoutKeyBoard)
     LinearLayout layoutKeyBoard;
     @Bind(R.id.btnBack) LinearLayout btnBack;
+    @Bind(R.id.hintDisplay) LinearLayout hintDisplay;
     @Bind(R.id.TebakGambar)
     ImageView TebakGambar;
     @Bind(R.id.hint)
@@ -55,35 +56,11 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
         initAction();
     }
 
-    private void initAction(){
-        LogicInterfaceManager.getInstance().backAction(this, btnBack);
-
-        for(int i=0;i<keyboardKeys.size();i++){
-
-            final String keyboard = keyboardKeys.get(i).getText().toString();
-            keyboardKeys.get(i).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String source = hint.getText().toString();
-                    String result = HintsManager.getInstance().setKeyboardValue(keyboard,source);
-                    Log.i(TAG, "onClick: " + result);
-                    hint.setText(result);
-
-                    HintsManager.getInstance().checkAnswer(HintsTebakGambarActivity.this, result, jawabanTebakan);
-
-                }
-            });
-
-        }
-
-        HintsManager.getInstance().setDeleteAction(hint,keyDelete);
-
-    }
-
     private void initUi(){
         ButterKnife.bind(this);
-
+        // setOnClick effect
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnBack);
+        LogicInterfaceManager.getInstance().setOnClickEffect(this, hintDisplay);
 
         // set size imageVIew for TebakGambar
         Tebakan.getInstance().setSizeImageView(this, TebakGambar);
@@ -101,7 +78,44 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
         /*3. set hint for the first time*/
         HintsManager.getInstance().setHintFirstTime(hint,jawabanTebakan);
 
+        /*4. set session for index hint to second char in sour answer*/
+        HintsManager.getInstance().setIndexHint(this,2);
+
+
+
     }
+
+    private void initAction(){
+        LogicInterfaceManager.getInstance().backAction(this, btnBack);
+
+        for(int i=0;i<keyboardKeys.size();i++){
+
+            final String keyboard = keyboardKeys.get(i).getText().toString();
+            keyboardKeys.get(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String hintDisplayText = hint.getText().toString();
+                    String result = HintsManager.getInstance().setKeyboardValue(keyboard,hintDisplayText);
+                    Log.i(TAG, "onClick: " + result);
+                    hint.setText(result);
+
+                    HintsManager.getInstance().checkAnswer(HintsTebakGambarActivity.this, result, jawabanTebakan);
+
+                }
+            });
+
+        }
+
+        HintsManager.getInstance().setDeleteAction(hint,keyDelete);
+
+
+        HintsManager.getInstance().setOnClickDisplayHint(this,hintDisplay,hint,jawabanTebakan);
+
+
+
+    }
+
+
 
 
 

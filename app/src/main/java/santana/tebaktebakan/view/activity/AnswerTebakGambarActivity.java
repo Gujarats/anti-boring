@@ -92,8 +92,6 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
 
         Tebakan.getInstance().checkAnswer(AnswerTebakGambarActivity.this, this, jawabanTebakanEditText, jawabanTebakan,level, btnCek);
 
-
-
     }
 
 
