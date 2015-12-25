@@ -12,6 +12,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,6 +59,22 @@ public class LogicInterfaceManager {
         } else {
             txtLevel.setText("" + lvl);
         }
+    }
+
+    public void setAnimtaionEffectonHint(final ImageView btnHelp){
+
+
+        UiUpdater mUIUpdater = new UiUpdater(new Runnable() {
+            @Override
+            public void run() {
+                // do stuff ...
+                YoYo.with(Techniques.Swing).playOn(btnHelp);
+            }
+        },5000);
+
+// Start updates
+        mUIUpdater.startUpdates();
+
     }
 
     public void setOnClickEffect(final Activity activity, LinearLayout imageView) {
