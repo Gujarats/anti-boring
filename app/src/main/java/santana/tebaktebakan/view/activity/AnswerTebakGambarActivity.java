@@ -2,6 +2,7 @@ package santana.tebaktebakan.view.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,6 +14,7 @@ import butterknife.ButterKnife;
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
+import santana.tebaktebakan.controller.tebakanManager.CoinsManager;
 import santana.tebaktebakan.controller.tebakanManager.Tebakan;
 
 
@@ -29,6 +31,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
     @Bind(R.id.TebakGambar) ImageView TebakGambar;
     @Bind(R.id.layoutAnim) LinearLayout layoutAnim;
     @Bind(R.id.jawabanTebakan) EditText jawabanTebakanEditText;
+    @Bind(R.id.coins) AppCompatTextView coins;
 
 
     private String jawabanTebakan;
@@ -63,6 +66,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
         // set animation hint
         LogicInterfaceManager.getInstance().setAnimtaionEffectonHint(btnHelp);
 
+        //get Data from intent for UI
         Map<String,String> dataIntent = LogicInterfaceManager.getInstance().getDataFromIntent(this);
         if(dataIntent.size()>0){
             imageUrl = dataIntent.get(ApplicationConstants.imageUrl);
@@ -71,6 +75,8 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
             Tebakan.getInstance().loadImageToImageView2(TebakGambar, imageUrl,getApplicationContext());
 
         }
+
+        CoinsManager.getInstance().setCoinForUI(AnswerTebakGambarActivity.this, coins);
     }
 
 

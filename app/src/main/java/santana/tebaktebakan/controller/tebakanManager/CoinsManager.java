@@ -22,7 +22,9 @@ public class CoinsManager {
         return instance;
     }
 
-    public void setCoins(Activity activity, AppCompatTextView coins){
+
+
+    public void setCoinForUI(Activity activity, AppCompatTextView coins){
         SessionCoin sessionCoin = new SessionCoin(activity);
         coins.setText(String.valueOf(sessionCoin.getCoins()));
     }

@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity{
         mainActivityAdapter = new MainActivityAdapter(getApplicationContext(),this,R.layout.layout_grid_level);
 
         //set Coins to UI
-        CoinsManager.getInstance().setCoins(MainActivity.this,coins);
+        CoinsManager.getInstance().setCoinForUI(MainActivity.this, coins);
 
 
         // set onClick Effect

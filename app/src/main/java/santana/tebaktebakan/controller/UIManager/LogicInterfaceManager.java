@@ -21,6 +21,7 @@ import java.util.Map;
 
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.common.ApplicationConstants;
+import santana.tebaktebakan.controller.tebakanManager.CoinsManager;
 import santana.tebaktebakan.view.activity.HintsTebakGambarActivity;
 
 /**
@@ -164,8 +165,8 @@ public class LogicInterfaceManager {
                 DialogHintManager.getInstance().setDialogHint(activity, R.layout.dialog_hint, new DialogHintManager.CallBackDialog() {
                     @Override
                     public void yes(AppCompatDialog dialog) {
-
-                        startActivityHintsTebakanGambar(activity,btnHelp,jawabanTebakan,imageUrl);
+                        CoinsManager.getInstance().setCoinsOnHintActivity(activity);
+                        startActivityHintsTebakanGambar(activity, btnHelp, jawabanTebakan, imageUrl);
                         dialog.dismiss();
                     }
                 });

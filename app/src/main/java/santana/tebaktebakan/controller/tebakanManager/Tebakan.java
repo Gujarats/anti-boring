@@ -395,7 +395,8 @@ public class Tebakan {
                     if(isRightAnswer(jawabanUser,kunciJawaban)){
                         // jawaban benar sekali
                         Toast.makeText(context, "Benar Sekali", Toast.LENGTH_SHORT).show();
-                        saveProgressLevel(activity,level);
+                        saveProgressLevel(activity, level);
+                        CoinsManager.getInstance().setCoinOnRightAnswer(activity);
 
                     }else{
                         String [] kunciJawabanSplit = kunciJawaban.split(" ");
