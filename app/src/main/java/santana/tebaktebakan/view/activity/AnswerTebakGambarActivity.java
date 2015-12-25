@@ -34,6 +34,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
     @Bind(R.id.coins) AppCompatTextView coins;
 
 
+
     private String jawabanTebakan;
     private String imageUrl;
     private int level;
@@ -50,6 +51,8 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
         // initial for action button or widget
         initAction();
     }
+
+
 
     private void initUI() {
         ButterKnife.bind(this);
@@ -78,6 +81,8 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
 
         CoinsManager.getInstance().setCoinForUI(AnswerTebakGambarActivity.this, coins);
     }
+
+
 
 
     private void initAction() {

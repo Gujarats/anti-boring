@@ -6,8 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -15,19 +20,24 @@ import santana.tebaktebakan.R;
 import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
 import santana.tebaktebakan.controller.UIManager.UIAnimationManager;
 import santana.tebaktebakan.controller.tebakanManager.CoinsManager;
+import santana.tebaktebakan.controller.tebakanManager.UserPlayManager;
 import santana.tebaktebakan.view.adapter.MainActivityAdapter;
 
 /**
  * Created by AdrianEkaFikri on 11/1/2015.
  */
 public class MainActivity extends AppCompatActivity{
+    private static final String TAG = "MainActivity";
+    /**
+     * UI variable
+     */
     @Bind(R.id.list_level) RecyclerView list_level;
     @Bind(R.id.coins) AppCompatTextView coins;
     @Bind(R.id.btnSetting)
     LinearLayout btnSetting;
     @Bind(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbarLayout;
+    InterstitialAd mInterstitialAd;
     private RecyclerView.LayoutManager mLayoutManager;
-
     /**
      * Adapater
      */
@@ -37,6 +47,20 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_main);
+
+        // initial ads
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+            }
+        });
+
+        requestNewInterstitial();
+
         //initial Interface
         initUI();
         // initial for action button or widget
@@ -48,6 +72,21 @@ public class MainActivity extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
         onLoadProgressUser();
+        if(mInterstitialAd.isLoaded()) {
+            Log.i(TAG, "onLoadAds: "+UserPlayManager.getInstance().isUserPlayed(MainActivity.this));
+            if(UserPlayManager.getInstance().isUserPlayed(MainActivity.this)){
+                mInterstitialAd.show();
+            }
+
+        }
+    }
+
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
     }
 
 
@@ -58,6 +97,9 @@ public class MainActivity extends AppCompatActivity{
 
 
     private void initAction() {
+        // set User Played to false
+        UserPlayManager.getInstance().setUserPlayed(MainActivity.this,false);
+
         LogicInterfaceManager.getInstance().startActivityAction(btnSetting,MainActivity.this,SettingActivity.class);
     }
 

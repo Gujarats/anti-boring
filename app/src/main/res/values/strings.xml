@@ -9,5 +9,6 @@
 
     <string name="dialog_hint_text">Use Hint for 5 coins</string>
     <string name="dialog_hint_premium">Free Access for Premium User</string>
+    <string name="admob_key">ca-app-pub-7786975749587909/7517791075</string>
 
 </resources>

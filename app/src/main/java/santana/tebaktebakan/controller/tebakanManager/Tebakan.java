@@ -390,6 +390,10 @@ public class Tebakan {
         btnCek.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // set User Played to true for showing ads
+                UserPlayManager.getInstance().setUserPlayed(activity,true);
+
+
                 if(!isEditTextEmpty(jawaban)){
                     String jawabanUser = jawaban.getText().toString();
                     if(isRightAnswer(jawabanUser,kunciJawaban)){
@@ -434,6 +438,10 @@ public class Tebakan {
         btnCek.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // set User Played to true for showing ads
+                UserPlayManager.getInstance().setUserPlayed(activity,true);
+
+
                 if(!isEditTextEmpty(jawaban)){
                     String jawabanUser = jawaban.getText().toString();
                     if(isRightAnswer(jawabanUser,kunciJawaban)){

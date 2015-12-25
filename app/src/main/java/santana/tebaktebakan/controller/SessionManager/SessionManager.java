@@ -14,7 +14,7 @@ public class SessionManager {
      * key for preference
      */
     //api token
-    private static final String KEY_FIRST_PLAY = "KEY_FIRST_PLAY";
+    private static final String KEY_USER_PLAYED = "KEY_USER_PLAYED";
 
 
 
@@ -34,13 +34,13 @@ public class SessionManager {
         editor = pref.edit();
     }
 
-    public void setKeyFirstPlay(boolean isFirsPlay){
-        editor.putBoolean(KEY_FIRST_PLAY,isFirsPlay);
+    public void setKeyUserPlayed(boolean isFirsPlay){
+        editor.putBoolean(KEY_USER_PLAYED,isFirsPlay);
         editor.commit();
     }
 
-    public boolean getKeyStars(){
-        return pref.getBoolean(KEY_FIRST_PLAY,false);
+    public boolean isUserPlayed(){
+        return pref.getBoolean(KEY_USER_PLAYED,false);
     }
 
 
