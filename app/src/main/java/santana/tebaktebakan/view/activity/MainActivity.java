@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity{
             Log.i(TAG, "onLoadAds: "+UserPlayManager.getInstance().isUserPlayed(MainActivity.this));
             if(UserPlayManager.getInstance().isUserPlayed(MainActivity.this)){
                 mInterstitialAd.show();
+                UserPlayManager.getInstance().setUserPlayed(MainActivity.this, false);
             }
 
         }
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity{
 
 
     private void initAction() {
-        // set User Played to false
+        // set User Played to false for showing ads
         UserPlayManager.getInstance().setUserPlayed(MainActivity.this,false);
 
         LogicInterfaceManager.getInstance().startActivityAction(btnSetting,MainActivity.this,SettingActivity.class);

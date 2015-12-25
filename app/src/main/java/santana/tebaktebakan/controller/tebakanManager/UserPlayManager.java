@@ -18,7 +18,7 @@ public class UserPlayManager {
 
     public void setUserPlayed(Activity activity,boolean isPlayed){
         SessionManager sessionManager = new SessionManager(activity);
-        sessionManager.setKeyUserPlayed(true);
+        sessionManager.setKeyUserPlayed(isPlayed);
     }
 
     public boolean isUserPlayed(Activity activity){
