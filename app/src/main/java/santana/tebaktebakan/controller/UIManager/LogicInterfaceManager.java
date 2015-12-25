@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.MotionEvent;
 import android.view.View;
@@ -155,23 +156,30 @@ public class LogicInterfaceManager {
         });
     }
 
-    public void startActivityHintsTebakanGambar(final Activity activity,ImageView btnHelp,final String jawabanTebakan,final String imageUrl){
+    public void showDialogForHint(final Activity activity, final ImageView btnHelp, final String jawabanTebakan, final String imageUrl){
 
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DialogHintManager.getInstance().setDialogHint(activity, R.layout.dialog_hint, new DialogHintManager.CallBackDialog() {
                     @Override
-                    public void yes() {
-                        Intent intent = new Intent(activity, HintsTebakGambarActivity.class);
-                        intent.putExtra(ApplicationConstants.jawabanTebakan, jawabanTebakan);
-                        intent.putExtra(ApplicationConstants.imageUrl, imageUrl);
-                        activity.startActivity(intent);
+                    public void yes(AppCompatDialog dialog) {
+
+                        startActivityHintsTebakanGambar(activity,btnHelp,jawabanTebakan,imageUrl);
+                        dialog.dismiss();
                     }
                 });
 
             }
         });
+    }
+
+    private void startActivityHintsTebakanGambar(final Activity activity,ImageView btnHelp,final String jawabanTebakan,final String imageUrl){
+        Intent intent = new Intent(activity, HintsTebakGambarActivity.class);
+        intent.putExtra(ApplicationConstants.jawabanTebakan, jawabanTebakan);
+        intent.putExtra(ApplicationConstants.imageUrl, imageUrl);
+        activity.startActivity(intent);
+
     }
 
 

@@ -60,6 +60,9 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnHelp);
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnShare);
 
+        // set animation hint
+        LogicInterfaceManager.getInstance().setAnimtaionEffectonHint(btnHelp);
+
         Map<String,String> dataIntent = LogicInterfaceManager.getInstance().getDataFromIntent(this);
         if(dataIntent.size()>0){
             imageUrl = dataIntent.get(ApplicationConstants.imageUrl);
@@ -74,7 +77,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
     private void initAction() {
 
         LogicInterfaceManager.getInstance().backAction(this, btnBack);
-        LogicInterfaceManager.getInstance().startActivityHintsTebakanGambar(this, btnHelp, jawabanTebakan, imageUrl);
+        LogicInterfaceManager.getInstance().showDialogForHint(this, btnHelp, jawabanTebakan, imageUrl);
 
         Tebakan.getInstance().checkAnswer(AnswerTebakGambarActivity.this, this, jawabanTebakanEditText, jawabanTebakan,level, btnCek);
 

@@ -57,7 +57,7 @@ public class DialogHintManager {
             public void onClick(View view) {
                 // minus coins
                 // go to hint activity
-                callBackDialog.yes();
+                callBackDialog.yes(dialog);
 
             }
         });
@@ -66,6 +66,6 @@ public class DialogHintManager {
     }
 
     public interface CallBackDialog{
-        void yes();
+        void yes(AppCompatDialog dialod);
     }
 }
