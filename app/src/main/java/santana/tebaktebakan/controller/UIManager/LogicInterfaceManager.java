@@ -156,13 +156,20 @@ public class LogicInterfaceManager {
     }
 
     public void startActivityHintsTebakanGambar(final Activity activity,ImageView btnHelp,final String jawabanTebakan,final String imageUrl){
+
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, HintsTebakGambarActivity.class);
-                intent.putExtra(ApplicationConstants.jawabanTebakan, jawabanTebakan);
-                intent.putExtra(ApplicationConstants.imageUrl, imageUrl);
-                activity.startActivity(intent);
+                DialogHintManager.getInstance().setDialogHint(activity, R.layout.dialog_hint, new DialogHintManager.CallBackDialog() {
+                    @Override
+                    public void yes() {
+                        Intent intent = new Intent(activity, HintsTebakGambarActivity.class);
+                        intent.putExtra(ApplicationConstants.jawabanTebakan, jawabanTebakan);
+                        intent.putExtra(ApplicationConstants.imageUrl, imageUrl);
+                        activity.startActivity(intent);
+                    }
+                });
+
             }
         });
     }

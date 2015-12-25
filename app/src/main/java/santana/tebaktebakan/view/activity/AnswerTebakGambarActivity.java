@@ -60,8 +60,6 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnHelp);
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnShare);
 
-        LogicInterfaceManager.getInstance().setAnimtaionEffectonHint(btnHelp);
-
         Map<String,String> dataIntent = LogicInterfaceManager.getInstance().getDataFromIntent(this);
         if(dataIntent.size()>0){
             imageUrl = dataIntent.get(ApplicationConstants.imageUrl);

@@ -7,4 +7,7 @@
     <string name="tebakkata">Tebak\nKata</string>
     <string name="tebakgambar">Tebak\nGambar</string>
 
+    <string name="dialog_hint_text">Use Hint for 5 coins</string>
+    <string name="dialog_hint_premium">Free Access for Premium User</string>
+
 </resources>
