@@ -15,6 +15,7 @@ import butterknife.ButterKnife;
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
 import santana.tebaktebakan.controller.tebakanManager.GambarCompleteManager;
+import santana.tebaktebakan.controller.tebakanManager.StageManger;
 import santana.tebaktebakan.controller.tebakanManager.Tebakan;
 import santana.tebaktebakan.model.object.TebakanGambarObject;
 
@@ -50,6 +51,11 @@ public class ChooseImageTebakanActivity extends AppCompatActivity {
         super.onResume();
         //load progress tebak gambar in this level
         GambarCompleteManager.getInstance().setGambarAnswerVisibility(this,level,answered1,answered2,answered3);
+
+        //check progress and save it to StageManger giving stars
+        if(GambarCompleteManager.getInstance().isAllTebakGambarComplete(this,level)){
+            StageManger.getInstance().setTebakGambarStageComplete(this,level);
+        }
     }
 
     private void initAction() {

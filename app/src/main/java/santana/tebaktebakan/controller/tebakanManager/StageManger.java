@@ -47,6 +47,8 @@ public class StageManger {
 
     }
 
+    
+
     public void setTebakGambarStageComplete(Activity activity,int level){
         try {
             SessionStage sessionStage = new SessionStage(activity);

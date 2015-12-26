@@ -6,8 +6,10 @@ import santana.tebaktebakan.controller.SessionManager.SessionManager;
 
 /**
  * Created by Gujarat Santana on 25/12/15.
+ * UserPlayManager is used for showing ads interstial admob
  */
 public class UserPlayManager {
+
     private static UserPlayManager instance;
     private UserPlayManager() {}
 
