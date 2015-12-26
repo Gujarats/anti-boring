@@ -71,49 +71,6 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
             disableLevel(holder.layoutLevel);
         }
         setStarsAtLevel(holder.bintang1,holder.bintang2,starsAtLevel);
-//        if(!keyLevelJson.isEmpty()){
-//            try {
-//                JSONObject jsonObject = new JSONObject(keyLevelJson);
-//                int lengthUserLevelProgress = jsonObject.length();
-//                Log.i(TAG, "onBindViewHolder panjang KeyLevel: "+lengthUserLevelProgress);
-//                if(level <= lengthUserLevelProgress){
-//
-//                    // user has passed the level
-//                    if(jsonObject.has(String.valueOf(level))){
-//                        JSONArray levelJson = jsonObject.getJSONArray(String.valueOf(level));
-//                        int starsAtLevel = levelJson.getJSONObject(0).getInt(JsonConstantKey.key_stars);
-//
-//                        enableLevel(level, holder.layoutLevel);
-//                        setStarsAtLevel(holder.bintang1, holder.bintang2, starsAtLevel);
-//                    }else{
-//                    // the level doesn't exist on json
-//                        disableLevel(holder.layoutLevel);
-//                        setStarsAtLevel(holder.bintang1, holder.bintang2, 0);
-//                    }
-//
-//
-//                }else{
-//                    // the level that still locked
-//                    disableLevel(holder.layoutLevel);
-//                    setStarsAtLevel(holder.bintang1, holder.bintang2, 0);
-//                }
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }else{
-//
-//            // this is level 1 and no stars starts very beginning
-//            if(level==1){
-//                enableLevel(level, holder.layoutLevel);
-//                setStarsAtLevel(holder.bintang1, holder.bintang2, 0);
-//            }else{
-//                // the level that still locked
-//                disableLevel(holder.layoutLevel);
-//                setStarsAtLevel(holder.bintang1, holder.bintang2, 0);
-//            }
-//
-//        }
-
     }
 
     private void enableLevel(int levelPosition,LinearLayout layoutCompat){

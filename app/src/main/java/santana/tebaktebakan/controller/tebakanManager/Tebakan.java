@@ -434,7 +434,7 @@ public class Tebakan {
         });
     }
 
-    public void checkAnswerTebakKata(final Context context,final Activity activity, final EditText jawaban, final String kunciJawaban,final int currentLevel,final ImageView btnCek){
+    public void checkAnswerTebakKata(final Context context,final Activity activity, final int level,final EditText jawaban, final String kunciJawaban,final int currentLevel,final ImageView btnCek){
         btnCek.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -448,6 +448,9 @@ public class Tebakan {
                         // jawaban benar sekali
                         Toast.makeText(context, "Benar Sekali", Toast.LENGTH_SHORT).show();
                         saveProgressLevel(activity,currentLevel);
+
+                        //save stage complete at tebakKata
+                        StageManger.getInstance().setTebakKataStageComplete(activity, level);
                     }else{
                         String [] kunciJawabanSplit = kunciJawaban.split(" ");
                         if(kunciJawabanSplit.length==3){

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -13,6 +14,7 @@ import butterknife.ButterKnife;
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
+import santana.tebaktebakan.controller.tebakanManager.StageManger;
 import santana.tebaktebakan.controller.tebakanManager.Tebakan;
 import santana.tebaktebakan.model.object.TebakanKataObject;
 
@@ -25,7 +27,9 @@ public class StageActivity extends AppCompatActivity {
     @Bind(R.id.txtLvl) AppCompatTextView txtLevel;
     @Bind(R.id.TebakGambar) RelativeLayout tebakGambar;
     @Bind(R.id.btnBack) LinearLayout btnBack;
-    private int lvl;
+    @Bind(R.id.starKata) ImageView starKata;
+    @Bind(R.id.starGambar) ImageView starGambar;
+    private int level;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +40,13 @@ public class StageActivity extends AppCompatActivity {
         initAction();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StageManger.getInstance().setStarsStageVisibility(this, level, starKata, starGambar);
+
+    }
+
     private void initAction() {
 
         LogicInterfaceManager.getInstance().backAction(this, btnBack);
@@ -43,10 +54,10 @@ public class StageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AnswerTebakKataActivity.class);
-                TebakanKataObject tebakanKataObject = Tebakan.getInstance().getTebakKata(lvl,StageActivity.this);
+                TebakanKataObject tebakanKataObject = Tebakan.getInstance().getTebakKata(level,StageActivity.this);
                 intent.putExtra(ApplicationConstants.tebakanKata,tebakanKataObject.getTebakKata());
                 intent.putExtra(ApplicationConstants.jawabanTebakan,tebakanKataObject.getJawabanTebakKata());
-                intent.putExtra(ApplicationConstants.level,lvl);
+                intent.putExtra(ApplicationConstants.level, level);
 
                 startActivity(intent);
             }
@@ -56,7 +67,7 @@ public class StageActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(getApplicationContext(), ChooseImageTebakanActivity.class);
-                intent.putExtra(ApplicationConstants.level, lvl);
+                intent.putExtra(ApplicationConstants.level, level);
                 startActivity(intent);
             }
         });
@@ -69,8 +80,10 @@ public class StageActivity extends AppCompatActivity {
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnBack);
 
         //get level value and set it to textView
-        lvl = LogicInterfaceManager.getInstance().getLevel(this);
-        LogicInterfaceManager.getInstance().setTextViewLevel(lvl, txtLevel);
+        level = LogicInterfaceManager.getInstance().getLevel(this);
+        LogicInterfaceManager.getInstance().setTextViewLevel(level, txtLevel);
+
+        StageManger.getInstance().setStarsStageVisibility(this,level,starKata,starGambar);
     }
 
 }

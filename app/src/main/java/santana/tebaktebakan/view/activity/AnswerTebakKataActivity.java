@@ -45,7 +45,7 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
 
     private void initAction() {
         LogicInterfaceManager.getInstance().backAction(this, btnBack);
-        Tebakan.getInstance().checkAnswerTebakKata(AnswerTebakKataActivity.this, this, jawabanTebakanEditText, jawabanTebakan, level,btnCek);
+        Tebakan.getInstance().checkAnswerTebakKata(AnswerTebakKataActivity.this, this, level,jawabanTebakanEditText, jawabanTebakan, level,btnCek);
 
         TebakanKataObject tebakanKataObject = new TebakanKataObject();
         tebakanKataObject.setJawabanTebakKata(jawabanTebakan);
