@@ -65,4 +65,10 @@ public class CoinsManager {
         sessionCoin.setCoins(result);
     }
 
+    public void setCoinsOnAdsResult(Activity activity,int amountCoins){
+        SessionCoin sessionCoin =new SessionCoin(activity);
+        int resultCoins = sessionCoin.getCoins() + amountCoins;
+        sessionCoin.setCoins(resultCoins);
+    }
+
 }

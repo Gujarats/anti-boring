@@ -60,7 +60,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
     }
 
     private void initAdColony(){
-        AdColonyManager.getInstance().setUpAdColony(AnswerTebakGambarActivity.this,gift);
+        AdColonyManager.getInstance().setUpAdColony(AnswerTebakGambarActivity.this,gift,coins);
         AdColonyManager.getInstance().setOnClickGfit(AnswerTebakGambarActivity.this,gift);
     }
 
@@ -99,8 +99,6 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
 
 
     private void initAction() {
-        //set gift action
-
 
         // set setaction back and showing dialong
         LogicInterfaceManager.getInstance().backAction(this, btnBack);

@@ -1,6 +1,7 @@
 package santana.tebaktebakan.controller.adsManager;
 
 import android.app.Activity;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -12,6 +13,8 @@ import com.jirbo.adcolony.AdColonyAdListener;
 import com.jirbo.adcolony.AdColonyV4VCAd;
 import com.jirbo.adcolony.AdColonyV4VCListener;
 import com.jirbo.adcolony.AdColonyV4VCReward;
+
+import santana.tebaktebakan.controller.tebakanManager.CoinsManager;
 
 /**
  * Created by Gujarat Santana on 26/12/15.
@@ -27,7 +30,7 @@ public class AdColonyManager {
         return instance;
     }
 
-    public void setUpAdColony(final Activity activity, final ImageView gift){
+    public void setUpAdColony(final Activity activity, final ImageView gift,final AppCompatTextView coins){
         AdColony.configure(activity, "version:1.0,store:google", APP_ID, ZONE_ID);
 
         //Register an AdColonyAdAvailabilityListener to be notified of changes in a zone's
@@ -57,6 +60,8 @@ public class AdColonyManager {
                 {
                     //Reward was successful, reward your user here
                     int amount  = reward.amount();
+                    CoinsManager.getInstance().setCoinsOnAdsResult(activity,amount);
+                    CoinsManager.getInstance().setCoinForUI(activity,coins);
                     String name = reward.name();
                     Toast.makeText(activity, amount + " " + name + " awarded!", Toast.LENGTH_LONG).show();
                 }
