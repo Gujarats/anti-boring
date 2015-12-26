@@ -7,6 +7,7 @@
     <color name="primary_red">#D32F2F</color>
     <color name="white">#FFFFFF</color>
     <color name="blue_smooth">#6eccec</color>
+    <color name="blue_smooth_dark">#1b9ecb</color>
 
 
     <!--menu settings-->

@@ -188,6 +188,24 @@
                 android:background="@drawable/keyboard_selector"/>
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/hintDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/abc_action_bar_content_inset_material"
+            android:background="@drawable/dialog_selector"
+            android:gravity="center">
+
+            <santana.tebaktebakan.view.font.CostumFont
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Display"
+                android:textColor="@color/white"
+                android:textSize="25sp"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 
