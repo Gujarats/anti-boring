@@ -23,6 +23,7 @@ import santana.tebaktebakan.R;
 import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.controller.tebakanManager.CoinsManager;
 import santana.tebaktebakan.view.activity.HintsTebakGambarActivity;
+import santana.tebaktebakan.view.activity.HintsTebakKataActivity;
 
 /**
  * Created by Gujarat Santana on 09/11/15.
@@ -166,7 +167,25 @@ public class LogicInterfaceManager {
                     @Override
                     public void yes(AppCompatDialog dialog) {
                         CoinsManager.getInstance().setCoinsOnHintActivity(activity);
-                        startActivityHintsTebakanGambar(activity, jawabanTebakan, imageUrl,level,idGambar);
+                        startActivityHintsTebakanGambar(activity, jawabanTebakan, imageUrl, level, idGambar);
+                        dialog.dismiss();
+                    }
+                });
+
+            }
+        });
+    }
+
+    public void showDialogForHintTebakKata(final Activity activity, final ImageView btnHelp, final String jawabanTebakan, final String tebakanKata, final int level){
+
+        btnHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogHintManager.getInstance().setDialogHint(activity, R.layout.dialog_hint, new DialogHintManager.CallBackDialog() {
+                    @Override
+                    public void yes(AppCompatDialog dialog) {
+                        CoinsManager.getInstance().setCoinsOnHintActivity(activity);
+                        startActivityHintsTebakKata(activity,jawabanTebakan,tebakanKata,level);
                         dialog.dismiss();
                     }
                 });
@@ -180,6 +199,15 @@ public class LogicInterfaceManager {
         intent.putExtra(ApplicationConstants.jawabanTebakan, jawabanTebakan);
         intent.putExtra(ApplicationConstants.imageUrl, imageUrl);
         intent.putExtra(ApplicationConstants.idGambar,idGambar);
+        intent.putExtra(ApplicationConstants.level,level);
+        activity.startActivity(intent);
+
+    }
+
+    private void startActivityHintsTebakKata(final Activity activity,final String jawabanTebakan,String tebakanKata,int level){
+        Intent intent = new Intent(activity, HintsTebakKataActivity.class);
+        intent.putExtra(ApplicationConstants.jawabanTebakan, jawabanTebakan);
+        intent.putExtra(ApplicationConstants.tebakanKata, tebakanKata);
         intent.putExtra(ApplicationConstants.level,level);
         activity.startActivity(intent);
 

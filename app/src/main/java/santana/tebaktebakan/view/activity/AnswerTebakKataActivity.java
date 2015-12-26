@@ -15,7 +15,6 @@ import santana.tebaktebakan.R;
 import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
 import santana.tebaktebakan.controller.tebakanManager.Tebakan;
-import santana.tebaktebakan.model.object.TebakanKataObject;
 
 /**
  * Created by Gujarat Santana on 01/11/15.
@@ -47,11 +46,7 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
         LogicInterfaceManager.getInstance().backAction(this, btnBack);
         Tebakan.getInstance().checkAnswerTebakKata(AnswerTebakKataActivity.this, this, level, jawabanTebakanEditText, jawabanTebakan, level, btnCek);
 
-        TebakanKataObject tebakanKataObject = new TebakanKataObject();
-        tebakanKataObject.setJawabanTebakKata(jawabanTebakan);
-        tebakanKataObject.setTebakKata(TebakKata.getText().toString());
-        tebakanKataObject.setLevel(level);
-        Tebakan.getInstance().setOnClickHintTebakKata(this, btnHelp, tebakanKataObject);
+        LogicInterfaceManager.getInstance().showDialogForHintTebakKata(this,btnHelp,jawabanTebakan,TebakKata.getText().toString(),level);
 
     }
 
