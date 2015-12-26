@@ -355,7 +355,7 @@ public class Tebakan {
                 .into(imageView);
     }
 
-    public void setOnClickTebakGambar(final Activity activity,ImageView imageView, final TebakanGambarObject tebakanObject){
+    public void setOnClickTebakGambar(final Activity activity,ImageView imageView, final TebakanGambarObject tebakanObject, final String idGambar){
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -363,6 +363,7 @@ public class Tebakan {
                 intent.putExtra(ApplicationConstants.imageUrl, tebakanObject.getGambarUrl());
                 intent.putExtra(ApplicationConstants.jawabanTebakan, tebakanObject.getJawaban());
                 intent.putExtra(ApplicationConstants.level,tebakanObject.getLevel());
+                intent.putExtra(ApplicationConstants.idGambar,idGambar);
 
                 activity.startActivity(intent);
             }
@@ -386,7 +387,7 @@ public class Tebakan {
         }
     }
 
-    public void checkAnswer(final Context context,final Activity activity, final EditText jawaban, final String kunciJawaban,final int level,final ImageView btnCek){
+    public void checkAnswer(final Context context,final Activity activity, final EditText jawaban, final String kunciJawaban,final int level,final ImageView btnCek,final String idGambar){
         btnCek.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -401,6 +402,9 @@ public class Tebakan {
                         Toast.makeText(context, "Benar Sekali", Toast.LENGTH_SHORT).show();
                         saveProgressLevel(activity, level);
                         CoinsManager.getInstance().setCoinOnRightAnswer(activity);
+                        //save progress gambar
+                        GambarCompleteManager.getInstance().setTebakGambarComplete(activity,level,idGambar);
+
 
                     }else{
                         String [] kunciJawabanSplit = kunciJawaban.split(" ");

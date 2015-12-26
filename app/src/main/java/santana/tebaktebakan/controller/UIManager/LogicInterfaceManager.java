@@ -193,6 +193,7 @@ public class LogicInterfaceManager {
                 value.put(ApplicationConstants.imageUrl,intent.getExtras().getString(ApplicationConstants.imageUrl));
                 value.put(ApplicationConstants.jawabanTebakan,intent.getExtras().getString(ApplicationConstants.jawabanTebakan));
                 value.put(ApplicationConstants.level, String.valueOf(intent.getExtras().getInt(ApplicationConstants.level)));
+                value.put(ApplicationConstants.idGambar, String.valueOf(intent.getExtras().getString(ApplicationConstants.idGambar)));
 
 
                 return value;

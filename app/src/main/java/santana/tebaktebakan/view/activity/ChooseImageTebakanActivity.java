@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
+import santana.tebaktebakan.controller.tebakanManager.GambarCompleteManager;
 import santana.tebaktebakan.controller.tebakanManager.Tebakan;
 import santana.tebaktebakan.model.object.TebakanGambarObject;
 
@@ -23,11 +25,14 @@ public class ChooseImageTebakanActivity extends AppCompatActivity {
 
     @Bind(R.id.btnBack)
     LinearLayout btnBack;
-    @Bind(R.id.gambar1) ImageView m1;
-    @Bind(R.id.gambar2) ImageView m2;
-    @Bind(R.id.gambar3) ImageView m3;
+    @Bind(R.id.gambar1) ImageView gambar1;
+    @Bind(R.id.gambar2) ImageView gambar2;
+    @Bind(R.id.gambar3) ImageView gambar3;
+    @Bind(R.id.answered1) RelativeLayout answered1;
+    @Bind(R.id.answered2) RelativeLayout answered2;
+    @Bind(R.id.answered3) RelativeLayout answered3;
     @Bind(R.id.txtLvl) AppCompatTextView txtLevel;
-    private int lvl;
+    private int level;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,13 @@ public class ChooseImageTebakanActivity extends AppCompatActivity {
         initGambar();
         // initial for action button or widget
         initAction();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //load progress tebak gambar in this level
+        GambarCompleteManager.getInstance().setGambarAnswerVisibility(this,level,answered1,answered2,answered3);
     }
 
     private void initAction() {
@@ -53,26 +65,26 @@ public class ChooseImageTebakanActivity extends AppCompatActivity {
         //set effect onclick and action
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnBack);
         //get level value and set it to textView
-        lvl = LogicInterfaceManager.getInstance().getLevel(this);
-        LogicInterfaceManager.getInstance().setTextViewLevel(lvl, txtLevel);
+        level = LogicInterfaceManager.getInstance().getLevel(this);
+        LogicInterfaceManager.getInstance().setTextViewLevel(level, txtLevel);
     }
 
     private void initGambar() {
-        List<TebakanGambarObject> tebakanGambarObjects = Tebakan.getInstance().getImageLevel(lvl, this);
+        List<TebakanGambarObject> tebakanGambarObjects = Tebakan.getInstance().getImageLevel(level, this);
         for (int i = 0; i < tebakanGambarObjects.size(); i++) {
             if (!tebakanGambarObjects.get(i).getGambarUrl().isEmpty()) {
                 switch (i) {
                     case 0:
-                        Tebakan.getInstance().loadImageToImageView(m1, tebakanGambarObjects.get(i).getGambarUrl(), getApplicationContext());
-                        Tebakan.getInstance().setOnClickTebakGambar(ChooseImageTebakanActivity.this, m1, tebakanGambarObjects.get(i));
+                        Tebakan.getInstance().loadImageToImageView(gambar1, tebakanGambarObjects.get(i).getGambarUrl(), getApplicationContext());
+                        Tebakan.getInstance().setOnClickTebakGambar(ChooseImageTebakanActivity.this, gambar1, tebakanGambarObjects.get(i), GambarCompleteManager.keyGambar1);
                         break;
                     case 1:
-                        Tebakan.getInstance().loadImageToImageView(m2, tebakanGambarObjects.get(i).getGambarUrl(), getApplicationContext());
-                        Tebakan.getInstance().setOnClickTebakGambar(ChooseImageTebakanActivity.this, m2, tebakanGambarObjects.get(i));
+                        Tebakan.getInstance().loadImageToImageView(gambar2, tebakanGambarObjects.get(i).getGambarUrl(), getApplicationContext());
+                        Tebakan.getInstance().setOnClickTebakGambar(ChooseImageTebakanActivity.this, gambar2, tebakanGambarObjects.get(i),GambarCompleteManager.keyGambar2);
                         break;
                     case 2:
-                        Tebakan.getInstance().loadImageToImageView(m3, tebakanGambarObjects.get(i).getGambarUrl(), getApplicationContext());
-                        Tebakan.getInstance().setOnClickTebakGambar(ChooseImageTebakanActivity.this, m3, tebakanGambarObjects.get(i));
+                        Tebakan.getInstance().loadImageToImageView(gambar3, tebakanGambarObjects.get(i).getGambarUrl(), getApplicationContext());
+                        Tebakan.getInstance().setOnClickTebakGambar(ChooseImageTebakanActivity.this, gambar3, tebakanGambarObjects.get(i),GambarCompleteManager.keyGambar3);
                         break;
                     default:
                         break;
@@ -80,7 +92,6 @@ public class ChooseImageTebakanActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(ChooseImageTebakanActivity.this, "Sorry couldn't load image", Toast.LENGTH_SHORT).show();
             }
-
         }
     }
 }

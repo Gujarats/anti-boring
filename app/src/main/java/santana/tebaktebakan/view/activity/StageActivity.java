@@ -83,7 +83,6 @@ public class StageActivity extends AppCompatActivity {
         level = LogicInterfaceManager.getInstance().getLevel(this);
         LogicInterfaceManager.getInstance().setTextViewLevel(level, txtLevel);
 
-        StageManger.getInstance().setStarsStageVisibility(this,level,starKata,starGambar);
     }
 
 }

@@ -6,11 +6,9 @@ import android.content.SharedPreferences;
 /**
  * Created by Gujarat Santana on 26/12/15.
  */
-public class SessionStage {
+public class SessionTebakGambar {
     //Preference name
-    private static final String PREF_NAME = "TebakanSessionStage";
-
-
+    private static final String PREF_NAME = "TebakanSessionGambar";
 
     // Shared Preferences
     SharedPreferences pref;
@@ -22,18 +20,18 @@ public class SessionStage {
     int PRIVATE_MODE = 0;
 
     // Constructor
-    public SessionStage(Context context) {
+    public SessionTebakGambar(Context context) {
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
     }
 
-    public void setKeyStageComplete(int level,String jsonStage){
+    public void setGambarComplete(int level,String jsonStage){
         editor.putString(String.valueOf(level), jsonStage);
         editor.commit();
     }
 
-    public String getKeyStageComplete(int level){
+    public String getGambarComplete(int level){
         return pref.getString(String.valueOf(level), "");
     }
 }
