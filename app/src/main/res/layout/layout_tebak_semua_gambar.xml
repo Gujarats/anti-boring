@@ -94,12 +94,12 @@
                         android:layout_width="240dp"
                         android:layout_height="240dp"
                         android:layout_marginBottom="10dp"
-                        android:background="#b9b9b9" />
+                        android:src="#b9b9b9" />
 
                     <RelativeLayout
                         android:id="@+id/answered1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="240dp"
+                        android:layout_height="240dp"
                         android:layout_alignBottom="@id/gambar1"
                         android:layout_alignLeft="@id/gambar1"
                         android:layout_alignRight="@id/gambar1"
@@ -133,7 +133,7 @@
                             android:id="@+id/gambar2"
                             android:layout_width="120dp"
                             android:layout_height="120dp"
-                            android:background="#b9b9b9" />
+                            android:src="#b9b9b9" />
 
                         <RelativeLayout
                             android:id="@+id/answered2"
@@ -165,7 +165,7 @@
                             android:id="@+id/gambar3"
                             android:layout_width="120dp"
                             android:layout_height="120dp"
-                            android:background="#b9b9b9" />
+                            android:src="#b9b9b9" />
 
                         <RelativeLayout
                             android:id="@+id/answered3"
