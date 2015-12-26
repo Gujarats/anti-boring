@@ -7,6 +7,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.jirbo.adcolony.AdColony;
+
 import java.util.Map;
 
 import butterknife.Bind;
@@ -14,6 +16,7 @@ import butterknife.ButterKnife;
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
+import santana.tebaktebakan.controller.adsManager.AdColonyManager;
 import santana.tebaktebakan.controller.tebakanManager.CoinsManager;
 import santana.tebaktebakan.controller.tebakanManager.Tebakan;
 
@@ -28,6 +31,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
     @Bind(R.id.btnCek) ImageView btnCek;
     @Bind(R.id.btnHelp) ImageView btnHelp;
     @Bind(R.id.btnShare) ImageView btnShare;
+    @Bind(R.id.gift) ImageView gift;
     @Bind(R.id.TebakGambar) ImageView TebakGambar;
     @Bind(R.id.layoutAnim) LinearLayout layoutAnim;
     @Bind(R.id.jawabanTebakan) EditText jawabanTebakanEditText;
@@ -46,10 +50,18 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_answer_tebak_gambar);
 
+
         //initial Interface
         initUI();
         // initial for action button or widget
         initAction();
+        // init ads
+        initAdColony();
+    }
+
+    private void initAdColony(){
+        AdColonyManager.getInstance().setUpAdColony(AnswerTebakGambarActivity.this,gift);
+        AdColonyManager.getInstance().setOnClickGfit(AnswerTebakGambarActivity.this,gift);
     }
 
 
@@ -65,6 +77,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnCek);
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnHelp);
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnShare);
+        LogicInterfaceManager.getInstance().setOnClickEffect(this, gift);
 
         // set animation hint
         LogicInterfaceManager.getInstance().setAnimtaionEffectonHint(btnHelp);
@@ -86,13 +99,27 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
 
 
     private void initAction() {
+        //set gift action
 
+
+        // set setaction back and showing dialong
         LogicInterfaceManager.getInstance().backAction(this, btnBack);
         LogicInterfaceManager.getInstance().showDialogForHint(this, btnHelp, jawabanTebakan, imageUrl);
 
+        //set action for check answer
         Tebakan.getInstance().checkAnswer(AnswerTebakGambarActivity.this, this, jawabanTebakanEditText, jawabanTebakan,level, btnCek);
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        AdColony.resume(this);
+    }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        AdColony.pause();
+    }
 }

@@ -19,9 +19,6 @@
             android:layout_height="250dp"/>
 
 
-
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -100,6 +97,15 @@
             android:layout_alignParentTop="true"
             android:gravity="center_vertical"
             android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/gift"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/coins_icon"
+                android:src="@drawable/gift2"/>
+
             <ImageView
                 android:id="@+id/coins_icon"
                 android:layout_width="30dp"

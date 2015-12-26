@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="santana.tebaktebakan"
     xmlns:android="http://schemas.android.com/apk/res/android" >
-
-
+    //internet
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     //gcm
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
@@ -48,6 +49,19 @@
         <activity android:name=".view.activity.ChooseImageTebakanActivity"/>
         <activity android:name=".view.activity.StageActivity"/>
         <activity android:name=".view.activity.SettingActivity"/>
+
+        //adcolony
+        <activity android:name="com.jirbo.adcolony.AdColonyOverlay"
+                  android:configChanges="keyboardHidden|orientation|screenSize"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+
+        <activity android:name="com.jirbo.adcolony.AdColonyFullscreen"
+                  android:configChanges="keyboardHidden|orientation|screenSize"
+                  android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
+
+        <activity android:name="com.jirbo.adcolony.AdColonyBrowser"
+                  android:configChanges="keyboardHidden|orientation|screenSize"
+                  android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
     </application>
 
 
