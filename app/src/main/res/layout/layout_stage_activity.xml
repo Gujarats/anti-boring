@@ -40,7 +40,9 @@
             android:id="@+id/level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:text="@string/level"
+            android:textColor="@color/white"
             android:textSize="@dimen/level"/>
 
         <LinearLayout
@@ -62,29 +64,71 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:gravity="center"
+                    android:text="01"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/level01"/>
 
-                <santana.tebaktebakan.view.font.CostumFont
+                <RelativeLayout
                     android:id="@+id/TebakKata"
                     android:layout_width="140dp"
                     android:layout_height="150dp"
                     android:background="@drawable/backgorund_selector"
-                    android:gravity="center"
-                    android:text="@string/tebakkata"
-                    android:textSize="30sp"/>
+                    android:gravity="center">
+
+                    <santana.tebaktebakan.view.font.CostumFont
+                        android:id="@+id/TebakKataText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/backgorund_selector"
+                        android:gravity="center"
+                        android:text="@string/tebakkata"
+                        android:textColor="#0069b9"
+                        android:textSize="30sp"/>
+                    <ImageView
+                        android:id="@+id/starsKata"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_below="@+id/TebakKataText"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/bintang"/>
+
+                </RelativeLayout>
+
+
 
 
             </LinearLayout>
 
-            <santana.tebaktebakan.view.font.CostumFont
+            <RelativeLayout
                 android:id="@+id/TebakGambar"
                 android:layout_width="130dp"
                 android:layout_height="300dp"
-                android:layout_marginLeft="5dp"
                 android:background="@drawable/backgorund_selector"
-                android:gravity="center"
-                android:text="@string/tebakgambar"
-                android:textSize="30sp"/>
+                android:gravity="center">
+
+
+                <santana.tebaktebakan.view.font.CostumFont
+                    android:id="@+id/TebakGambarText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text="@string/tebakgambar"
+                    android:textColor="#0069b9"
+                    android:textSize="30sp"/>
+                <ImageView
+                    android:id="@+id/starsGambar"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/TebakGambarText"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/bintang"/>
+
+            </RelativeLayout>
+
+
 
 
 
