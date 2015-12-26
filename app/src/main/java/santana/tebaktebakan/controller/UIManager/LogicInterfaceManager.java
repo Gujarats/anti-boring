@@ -157,7 +157,7 @@ public class LogicInterfaceManager {
         });
     }
 
-    public void showDialogForHint(final Activity activity, final ImageView btnHelp, final String jawabanTebakan, final String imageUrl){
+    public void showDialogForHint(final Activity activity, final ImageView btnHelp, final String jawabanTebakan, final String imageUrl, final int level,final String idGambar){
 
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,7 +166,7 @@ public class LogicInterfaceManager {
                     @Override
                     public void yes(AppCompatDialog dialog) {
                         CoinsManager.getInstance().setCoinsOnHintActivity(activity);
-                        startActivityHintsTebakanGambar(activity, btnHelp, jawabanTebakan, imageUrl);
+                        startActivityHintsTebakanGambar(activity, jawabanTebakan, imageUrl,level,idGambar);
                         dialog.dismiss();
                     }
                 });
@@ -175,10 +175,12 @@ public class LogicInterfaceManager {
         });
     }
 
-    private void startActivityHintsTebakanGambar(final Activity activity,ImageView btnHelp,final String jawabanTebakan,final String imageUrl){
+    private void startActivityHintsTebakanGambar(final Activity activity,final String jawabanTebakan,final String imageUrl,int level,String idGambar){
         Intent intent = new Intent(activity, HintsTebakGambarActivity.class);
         intent.putExtra(ApplicationConstants.jawabanTebakan, jawabanTebakan);
         intent.putExtra(ApplicationConstants.imageUrl, imageUrl);
+        intent.putExtra(ApplicationConstants.idGambar,idGambar);
+        intent.putExtra(ApplicationConstants.level,level);
         activity.startActivity(intent);
 
     }

@@ -19,6 +19,7 @@ import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
 import santana.tebaktebakan.controller.tebakanManager.HintsManager;
 import santana.tebaktebakan.controller.tebakanManager.Tebakan;
+import santana.tebaktebakan.controller.tebakanManager.UserPlayManager;
 
 /**
  * Created by Gujarat Santana on 16/12/15.
@@ -44,7 +45,8 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
         @Bind(R.id.keyDelete) AppCompatButton keyDelete;
 
 
-    private String jawabanTebakan,imageUrl;
+    private String jawabanTebakan,imageUrl,idGambar;
+    private int level;
 
 
     @Override
@@ -70,6 +72,8 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
         Map<String,String> getDataIntent = LogicInterfaceManager.getInstance().getDataFromIntent(this);
         imageUrl = getDataIntent.get(ApplicationConstants.imageUrl);
         jawabanTebakan = getDataIntent.get(ApplicationConstants.jawabanTebakan);
+        level = Integer.parseInt(getDataIntent.get(ApplicationConstants.level));
+        idGambar = getDataIntent.get(ApplicationConstants.idGambar);
         Tebakan.getInstance().loadImageToImageView2(TebakGambar, imageUrl, getApplicationContext());
 
         /*2. init keyboardView*/
@@ -99,7 +103,10 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
                     Log.i(TAG, "onClick: " + result);
                     hint.setText(result);
 
-                    HintsManager.getInstance().checkAnswer(HintsTebakGambarActivity.this, result, jawabanTebakan);
+                    HintsManager.getInstance().checkAnswerHintTebakGambar(HintsTebakGambarActivity.this, result, jawabanTebakan, level, idGambar);
+
+                    // set User Played to true for showing ads
+                    UserPlayManager.getInstance().setUserPlayed(HintsTebakGambarActivity.this, true);
 
                 }
             });
@@ -109,7 +116,7 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
         HintsManager.getInstance().setDeleteAction(hint,keyDelete);
 
 
-        HintsManager.getInstance().setOnDisplayDialogChar(this, hintDisplay, hint, jawabanTebakan);
+        HintsManager.getInstance().setOnDisplayDialogCharHintTebakGambar(this, hintDisplay, hint, jawabanTebakan,level,idGambar);
 
 
 

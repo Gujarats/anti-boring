@@ -36,7 +36,7 @@ public class HintsManager {
     }
 
 
-    public void setOnDisplayDialogChar(final Activity activity, final LinearLayout linearLayout, final AppCompatTextView hint, final String jawabanTebakan){
+    public void setOnDisplayDialogCharHintTebakGambar(final Activity activity, final LinearLayout linearLayout, final AppCompatTextView hint, final String jawabanTebakan,final int level, final String idGambar){
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,7 +45,7 @@ public class HintsManager {
                     public void yes(AppCompatDialog dialog) {
                         dialog.dismiss();
                         CoinsManager.getInstance().setCoinsOnDisplayChar(activity);
-                        setOnClickDisplayHint(activity, linearLayout, hint, jawabanTebakan);
+                        setOnClickDisplayHintTebakGambar(activity, linearLayout, hint, jawabanTebakan,level,idGambar);
                     }
                 });
 
@@ -53,10 +53,34 @@ public class HintsManager {
         });
     }
 
-    public void setOnClickDisplayHint(final Activity activity,LinearLayout linearLayout, final AppCompatTextView hint,final String jawabanTebakan){
+    public void setOnDisplayDialogCharHintTebakKata(final Activity activity, final LinearLayout linearLayout, final AppCompatTextView hint, final String jawabanTebakan,final int level){
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogDisplayCharManager.getInstance().setDialogHint(activity, R.layout.dialog_display_char, new DialogDisplayCharManager.CallBackDialog() {
+                    @Override
+                    public void yes(AppCompatDialog dialog) {
+                        dialog.dismiss();
+                        CoinsManager.getInstance().setCoinsOnDisplayChar(activity);
+                        setOnClickDisplayHintTebakKata(activity, linearLayout, hint, jawabanTebakan, level);
+                    }
+                });
+
+            }
+        });
+    }
+
+    public void setOnClickDisplayHintTebakKata(final Activity activity,LinearLayout linearLayout, final AppCompatTextView hint,final String jawabanTebakan,int level){
         String hintDisplayText = hint.getText().toString();
         String result = displayHintChar(activity, jawabanTebakan, hintDisplayText);
-        HintsManager.getInstance().checkAnswer(activity, result, jawabanTebakan);
+        HintsManager.getInstance().checkAnswerHintTebakKata(activity, result, jawabanTebakan,level);
+        hint.setText(result);
+    }
+
+    public void setOnClickDisplayHintTebakGambar(final Activity activity,LinearLayout linearLayout, final AppCompatTextView hint,final String jawabanTebakan,int level, String idGambar){
+        String hintDisplayText = hint.getText().toString();
+        String result = displayHintChar(activity, jawabanTebakan, hintDisplayText);
+        HintsManager.getInstance().checkAnswerHintTebakGambar(activity, result, jawabanTebakan,level,idGambar);
         hint.setText(result);
     }
 
@@ -229,7 +253,7 @@ public class HintsManager {
     }
 
 
-    public void checkAnswer (Activity activity,String userAnswer,String sourceAnswer){
+    public void checkAnswerHintTebakGambar(Activity activity, String userAnswer, String sourceAnswer, int level, String idGambar){
 
         if(!isUnderScoreExist(userAnswer)){
             String userAnswerConverted = getUserAnswerToSentence(userAnswer);
@@ -238,6 +262,32 @@ public class HintsManager {
             if(isRightAnswer(userAnswerConverted,sourceAnswerConverted)){
                 activity.finish();
                 Toast.makeText(activity, "Benar Sekali", Toast.LENGTH_SHORT).show();
+
+                //save progress gambar
+                GambarCompleteManager.getInstance().setTebakGambarComplete(activity, level, idGambar);
+
+            }else{
+                if(userAnswerConverted.length()==sourceAnswerConverted.length()){
+                    YoYo.with(Techniques.Shake).playOn(activity.findViewById(R.id.hint));
+                }
+            }
+        }
+
+    }
+
+    public void checkAnswerHintTebakKata (Activity activity,String userAnswer,String sourceAnswer,int level){
+
+        if(!isUnderScoreExist(userAnswer)){
+            String userAnswerConverted = getUserAnswerToSentence(userAnswer);
+            String sourceAnswerConverted = getUserAnswerToSentence(sourceAnswer);
+
+            if(isRightAnswer(userAnswerConverted,sourceAnswerConverted)){
+                activity.finish();
+                Toast.makeText(activity, "Benar Sekali", Toast.LENGTH_SHORT).show();
+
+                //save progress gambar
+                StageManger.getInstance().setTebakKataStageComplete(activity,level);
+
             }else{
                 if(userAnswerConverted.length()==sourceAnswerConverted.length()){
                     YoYo.with(Techniques.Shake).playOn(activity.findViewById(R.id.hint));

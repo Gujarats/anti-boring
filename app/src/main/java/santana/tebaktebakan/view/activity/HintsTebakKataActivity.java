@@ -38,7 +38,7 @@ public class HintsTebakKataActivity extends AppCompatActivity {
     /*varible global*/
     private String tebakKata;
     private String jawabanTebakan;
-
+    private int level;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +61,7 @@ public class HintsTebakKataActivity extends AppCompatActivity {
                     String result = HintsManager.getInstance().setKeyboardValue(keyboard,source);
                     hint.setText(result);
 
-                    HintsManager.getInstance().checkAnswer(HintsTebakKataActivity.this, result, jawabanTebakan);
+                    HintsManager.getInstance().checkAnswerHintTebakKata(HintsTebakKataActivity.this, result, jawabanTebakan, level);
 
                 }
             });
@@ -85,6 +85,7 @@ public class HintsTebakKataActivity extends AppCompatActivity {
         Map<String,String> getDataIntent = LogicInterfaceManager.getInstance().getDataFromIntentTebakKata(this);
         tebakKata = getDataIntent.get(ApplicationConstants.tebakanKata);
         jawabanTebakan = getDataIntent.get(ApplicationConstants.jawabanTebakan);
+        level = Integer.parseInt(getDataIntent.get(ApplicationConstants.level));
         tebakKataText.setText(tebakKata);
 
 

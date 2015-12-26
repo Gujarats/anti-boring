@@ -206,6 +206,7 @@ public class Tebakan {
                         Intent intent = new Intent(activity, HintsTebakKataActivity.class);
                         intent.putExtra(ApplicationConstants.tebakanKata, tebakanKataObject.getTebakKata());
                         intent.putExtra(ApplicationConstants.jawabanTebakan, tebakanKataObject.getJawabanTebakKata());
+                        intent.putExtra(ApplicationConstants.level, tebakanKataObject.getLevel());
 
                         activity.startActivity(intent);
                     }
@@ -400,7 +401,6 @@ public class Tebakan {
                     if(isRightAnswer(jawabanUser,kunciJawaban)){
                         // jawaban benar sekali
                         Toast.makeText(context, "Benar Sekali", Toast.LENGTH_SHORT).show();
-                        saveProgressLevel(activity, level);
                         CoinsManager.getInstance().setCoinOnRightAnswer(activity);
                         //save progress gambar
                         GambarCompleteManager.getInstance().setTebakGambarComplete(activity,level,idGambar);

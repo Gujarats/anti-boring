@@ -104,7 +104,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
 
         // set setaction back and showing dialong
         LogicInterfaceManager.getInstance().backAction(this, btnBack);
-        LogicInterfaceManager.getInstance().showDialogForHint(this, btnHelp, jawabanTebakan, imageUrl);
+        LogicInterfaceManager.getInstance().showDialogForHint(this, btnHelp, jawabanTebakan, imageUrl,level,idGambar);
 
         //set action for check answer
         Tebakan.getInstance().checkAnswer(AnswerTebakGambarActivity.this, this, jawabanTebakanEditText, jawabanTebakan,level, btnCek,idGambar);

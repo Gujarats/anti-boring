@@ -45,11 +45,12 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
 
     private void initAction() {
         LogicInterfaceManager.getInstance().backAction(this, btnBack);
-        Tebakan.getInstance().checkAnswerTebakKata(AnswerTebakKataActivity.this, this, level,jawabanTebakanEditText, jawabanTebakan, level,btnCek);
+        Tebakan.getInstance().checkAnswerTebakKata(AnswerTebakKataActivity.this, this, level, jawabanTebakanEditText, jawabanTebakan, level, btnCek);
 
         TebakanKataObject tebakanKataObject = new TebakanKataObject();
         tebakanKataObject.setJawabanTebakKata(jawabanTebakan);
         tebakanKataObject.setTebakKata(TebakKata.getText().toString());
+        tebakanKataObject.setLevel(level);
         Tebakan.getInstance().setOnClickHintTebakKata(this, btnHelp, tebakanKataObject);
 
     }
