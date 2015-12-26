@@ -451,6 +451,7 @@ public class Tebakan {
                     if(isRightAnswer(jawabanUser,kunciJawaban)){
                         // jawaban benar sekali
                         Toast.makeText(context, "Benar Sekali", Toast.LENGTH_SHORT).show();
+                        //save progress stars at level
                         saveProgressLevel(activity,currentLevel);
 
                         //save stage complete at tebakKata

@@ -87,6 +87,8 @@ public class StageManger {
 
                 if(stage.has(tebakGambar)){
                     starStageTebakGambar.setVisibility(View.VISIBLE);
+                    //save progress stars at level
+                    Tebakan.getInstance().saveProgressLevel(activity, level);
                 }else{
                     starStageTebakGambar.setVisibility(View.INVISIBLE);
                 }
