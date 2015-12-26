@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,9 +21,9 @@ import santana.tebaktebakan.model.object.TebakanKataObject;
  */
 public class StageActivity extends AppCompatActivity {
 
-    @Bind(R.id.TebakKata) AppCompatTextView tebakKata;
+    @Bind(R.id.TebakKata) RelativeLayout tebakKata;
     @Bind(R.id.txtLvl) AppCompatTextView txtLevel;
-    @Bind(R.id.TebakGambar) AppCompatTextView tebakGambar;
+    @Bind(R.id.TebakGambar) RelativeLayout tebakGambar;
     @Bind(R.id.btnBack) LinearLayout btnBack;
     private int lvl;
     @Override
