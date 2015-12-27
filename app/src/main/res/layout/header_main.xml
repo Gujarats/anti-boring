@@ -21,6 +21,7 @@
         android:layout_below="@+id/headerIcon"
         android:layout_centerHorizontal="true"
         android:text="Anti Boring"
+        android:textColor="@color/white"
         android:textSize="25sp"/>
 
 </RelativeLayout>

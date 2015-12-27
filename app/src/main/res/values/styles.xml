@@ -6,9 +6,9 @@
     </style>
 
     <style name="Base.Theme.DesignDemo" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#303F9F</item>
-        <item name="colorPrimaryDark">#3F51B5</item>
-        <item name="colorAccent">#5C6BC0</item>
+        <item name="colorPrimary">@color/blue_level</item>
+        <item name="colorPrimaryDark">@color/blue_level_dark</item>
+        <item name="colorAccent">@color/blue_level</item>
         <item name="android:windowBackground">@color/window_background</item>
 
     </style>

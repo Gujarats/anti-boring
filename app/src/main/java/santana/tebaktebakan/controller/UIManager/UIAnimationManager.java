@@ -53,8 +53,8 @@ public class UIAnimationManager {
     }
 
     private void applyPalette(Context context,Activity activity,Palette palette,CollapsingToolbarLayout collapsingToolbarLayout) {
-        int primaryDark = context.getResources().getColor(R.color.primary);
-        int primary = context.getResources().getColor(R.color.primary);
+        int primaryDark = context.getResources().getColor(R.color.blue_level_dark);
+        int primary = context.getResources().getColor(R.color.blue_level);
         collapsingToolbarLayout.setContentScrimColor(palette.getMutedColor(primary));
         collapsingToolbarLayout.setStatusBarScrimColor(palette.getDarkMutedColor(primaryDark));
         FragmentActivity fragmentActivity = (FragmentActivity) activity;
