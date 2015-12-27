@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="10dp"
-        android:background="@drawable/dialog_shape_smooth"
+        android:background="@drawable/dialog_selector"
         android:gravity="center">
         <santana.tebaktebakan.view.font.CostumFont
 
