@@ -71,7 +71,11 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
+        //set Coins to UI
+        CoinsManager.getInstance().setCoinForUI(MainActivity.this, coins);
+        // load progress user
         onLoadProgressUser();
+        //load ads
         if(mInterstitialAd.isLoaded()) {
             Log.i(TAG, "onLoadAds: "+UserPlayManager.getInstance().isUserPlayed(MainActivity.this));
             if(UserPlayManager.getInstance().isUserPlayed(MainActivity.this)){
@@ -112,8 +116,7 @@ public class MainActivity extends AppCompatActivity{
 
         mainActivityAdapter = new MainActivityAdapter(getApplicationContext(),this,R.layout.item_level);
 
-        //set Coins to UI
-        CoinsManager.getInstance().setCoinForUI(MainActivity.this, coins);
+
 
 
         // set onClick Effect
