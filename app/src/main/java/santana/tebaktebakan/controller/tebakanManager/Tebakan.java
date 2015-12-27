@@ -410,6 +410,11 @@ public class Tebakan {
                         //save progress gambar
                         GambarCompleteManager.getInstance().setTebakGambarComplete(activity,level,idGambar);
 
+                        //check progress and save it to StageManger giving stars
+                        if(GambarCompleteManager.getInstance().isAllTebakGambarComplete(activity,level)){
+                            StageManger.getInstance().setTebakGambarStageComplete(activity,level);
+                        }
+
                         //check stage complete to get bonus coins
                         if(StageManger.getInstance().isAllStageClear(activity,level)){
                             CoinsManager.getInstance().setOnCompleteAllStars(activity);
