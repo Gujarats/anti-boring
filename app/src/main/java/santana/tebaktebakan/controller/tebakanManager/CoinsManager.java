@@ -57,7 +57,7 @@ public class CoinsManager {
     public void setCoinOnRightAnswer(Activity activity){
         SessionCoin sessionCoin = new SessionCoin(activity);
         int result = sessionCoin.getCoins();
-        if(result>0){
+        if(result>=0){
             result = result+onRighAnswer;
             if(result <0){
                 result=0;
@@ -69,7 +69,7 @@ public class CoinsManager {
     public void setOnCompleteAllStars(Activity activity){
         SessionCoin sessionCoin = new SessionCoin(activity);
         int result = sessionCoin.getCoins();
-        if(result>0){
+        if(result>=0){
             result = result+onCompleteAllStars;
             if(result <0){
                 result=0;
