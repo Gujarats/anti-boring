@@ -30,6 +30,7 @@ import santana.tebaktebakan.R;
 import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.common.JsonConstantKey;
 import santana.tebaktebakan.controller.SessionManager.SessionStars;
+import santana.tebaktebakan.controller.UIManager.DialogCorrectAnswer;
 import santana.tebaktebakan.controller.UIManager.UIAnimationManager;
 import santana.tebaktebakan.model.object.TebakanGambarObject;
 import santana.tebaktebakan.model.object.TebakanKataObject;
@@ -408,7 +409,7 @@ public class Tebakan {
                         //set coin on right answer
                         CoinsManager.getInstance().setCoinOnRightAnswer(activity);
                         //save progress gambar
-                        GambarCompleteManager.getInstance().setTebakGambarComplete(activity,level,idGambar);
+                        GambarCompleteManager.getInstance().setTebakGambarComplete(activity, level, idGambar);
 
                         //check progress and save it to StageManger giving stars
                         if(GambarCompleteManager.getInstance().isAllTebakGambarComplete(activity,level)){
@@ -418,10 +419,15 @@ public class Tebakan {
                         //check stage complete to get bonus coins
                         if(StageManger.getInstance().isAllStageClear(activity,level)){
                             CoinsManager.getInstance().setOnCompleteAllStars(activity);
+
+                            //show dialog complate all stage
+                            DialogCorrectAnswer.getInstance().setCompleteAllDialog(activity,R.layout.dialog_complete_all_stars);
+                            SoundEffectManager.getInstance().playCorrectAnswer(activity);
+                        }else{
+                            //show dialog for correct answer
+                            DialogCorrectAnswer.getInstance().setCorrectAnswerDialog(activity,R.layout.dialog_correct_answer);
+                            SoundEffectManager.getInstance().playCorrectAnswer(activity);
                         }
-
-                        activity.finish();
-
 
                     }else{
                         String [] kunciJawabanSplit = kunciJawaban.split(" ");
@@ -481,9 +487,16 @@ public class Tebakan {
                         //check stage complete to get bonus coins
                         if(StageManger.getInstance().isAllStageClear(activity,level)){
                             CoinsManager.getInstance().setOnCompleteAllStars(activity);
+
+                            //show dialog complate all stage
+                            DialogCorrectAnswer.getInstance().setCompleteAllDialog(activity,R.layout.dialog_complete_all_stars);
+                            SoundEffectManager.getInstance().playCorrectAnswer(activity);
+                        }else{
+                            //show dialog for correct answer
+                            DialogCorrectAnswer.getInstance().setCorrectAnswerDialog(activity,R.layout.dialog_correct_answer);
+                            SoundEffectManager.getInstance().playCorrectAnswer(activity);
                         }
 
-                        activity.finish();
                     }else{
                         String [] kunciJawabanSplit = kunciJawaban.split(" ");
                         if(kunciJawabanSplit.length==3){
