@@ -404,6 +404,8 @@ public class Tebakan {
                     if(isRightAnswer(jawabanUser,kunciJawaban)){
                         // jawaban benar sekali
                         Toast.makeText(context, "Benar Sekali", Toast.LENGTH_SHORT).show();
+
+                        //set coin on right answer
                         CoinsManager.getInstance().setCoinOnRightAnswer(activity);
                         //save progress gambar
                         GambarCompleteManager.getInstance().setTebakGambarComplete(activity,level,idGambar);
@@ -454,6 +456,9 @@ public class Tebakan {
                     if(isRightAnswer(jawabanUser,kunciJawaban)){
                         // jawaban benar sekali
                         Toast.makeText(context, "Benar Sekali", Toast.LENGTH_SHORT).show();
+
+                        //set coin on right answer
+                        CoinsManager.getInstance().setCoinOnRightAnswer(activity);
                         //save progress stars at level
                         saveProgressLevel(activity,currentLevel);
 
