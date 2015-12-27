@@ -47,6 +47,28 @@ public class StageManger {
 
     }
 
+    public boolean isAllStageClear(Activity activity,int level){
+        try {
+            SessionStage sessionStage = new SessionStage(activity);
+            String jsonStage = sessionStage.getKeyStageComplete(level);
+
+            if(!jsonStage.isEmpty()){
+                JSONObject stage  = new JSONObject(jsonStage);
+                if(stage.has(tebakGambar) && stage.has(tebakKata)){
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
     
 
     public void setTebakGambarStageComplete(Activity activity,int level){

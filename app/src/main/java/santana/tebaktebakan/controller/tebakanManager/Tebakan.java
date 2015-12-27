@@ -410,6 +410,11 @@ public class Tebakan {
                         //save progress gambar
                         GambarCompleteManager.getInstance().setTebakGambarComplete(activity,level,idGambar);
 
+                        //check stage complete to get bonus coins
+                        if(StageManger.getInstance().isAllStageClear(activity,level)){
+                            CoinsManager.getInstance().setOnCompleteAllStars(activity);
+                        }
+
 
                     }else{
                         String [] kunciJawabanSplit = kunciJawaban.split(" ");
@@ -464,6 +469,11 @@ public class Tebakan {
 
                         //save stage complete at tebakKata
                         StageManger.getInstance().setTebakKataStageComplete(activity, level);
+
+                        //check stage complete to get bonus coins
+                        if(StageManger.getInstance().isAllStageClear(activity,level)){
+                            CoinsManager.getInstance().setOnCompleteAllStars(activity);
+                        }
                     }else{
                         String [] kunciJawabanSplit = kunciJawaban.split(" ");
                         if(kunciJawabanSplit.length==3){

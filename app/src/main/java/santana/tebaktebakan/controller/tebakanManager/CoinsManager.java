@@ -13,6 +13,7 @@ public class CoinsManager {
     private int onHintActivity = 10;
     private int onDisplayChar = 60;
     private int onRighAnswer = 15;
+    private int onCompleteAllStars = 120;
 
 
     private CoinsManager() {}
@@ -58,6 +59,18 @@ public class CoinsManager {
         int result = sessionCoin.getCoins();
         if(result>0){
             result = result+onRighAnswer;
+            if(result <0){
+                result=0;
+            }
+        }
+        sessionCoin.setCoins(result);
+    }
+
+    public void setOnCompleteAllStars(Activity activity){
+        SessionCoin sessionCoin = new SessionCoin(activity);
+        int result = sessionCoin.getCoins();
+        if(result>0){
+            result = result+onCompleteAllStars;
             if(result <0){
                 result=0;
             }
