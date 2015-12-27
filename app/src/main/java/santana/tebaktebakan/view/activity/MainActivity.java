@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity{
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnSetting);
 
         //initial header bar animation
-        UIAnimationManager.getInstance().setAnimationHeader(getApplicationContext(), this, collapsingToolbarLayout, headerIcon, R.drawable.anti_boring);
+        UIAnimationManager.getInstance().setAnimationHeader(getApplicationContext(), this, collapsingToolbarLayout, headerIcon, R.drawable.icon_correct_answer);
 
         //layout for item view
         mLayoutManager = new GridLayoutManager(this, 2);
