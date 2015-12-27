@@ -469,6 +469,7 @@ public class Tebakan {
 
                         //set coin on right answer
                         CoinsManager.getInstance().setCoinOnRightAnswer(activity);
+
                         //save progress stars at level
                         saveProgressLevel(activity,currentLevel);
 
