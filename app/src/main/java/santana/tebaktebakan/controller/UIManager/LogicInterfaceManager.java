@@ -166,9 +166,16 @@ public class LogicInterfaceManager {
                 DialogHintManager.getInstance().setDialogHint(activity, R.layout.dialog_hint, new DialogHintManager.CallBackDialog() {
                     @Override
                     public void yes(AppCompatDialog dialog) {
-                        CoinsManager.getInstance().setCoinsOnHintActivity(activity);
-                        startActivityHintsTebakanGambar(activity, jawabanTebakan, imageUrl, level, idGambar);
-                        dialog.dismiss();
+                        if(CoinsManager.getInstance().isEnoughCoinHint(activity)){
+                            CoinsManager.getInstance().setCoinsOnHintActivity(activity);
+                            startActivityHintsTebakanGambar(activity, jawabanTebakan, imageUrl, level, idGambar);
+                            dialog.dismiss();
+                        }else {
+                            CoinsManager.getInstance().showDialogZeroCoin(activity);
+                            dialog.dismiss();
+                        }
+
+
                     }
                 });
 
@@ -184,9 +191,15 @@ public class LogicInterfaceManager {
                 DialogHintManager.getInstance().setDialogHint(activity, R.layout.dialog_hint, new DialogHintManager.CallBackDialog() {
                     @Override
                     public void yes(AppCompatDialog dialog) {
-                        CoinsManager.getInstance().setCoinsOnHintActivity(activity);
-                        startActivityHintsTebakKata(activity,jawabanTebakan,tebakanKata,level);
-                        dialog.dismiss();
+                        if(CoinsManager.getInstance().isEnoughCoinHint(activity)){
+                            CoinsManager.getInstance().setCoinsOnHintActivity(activity);
+                            startActivityHintsTebakKata(activity,jawabanTebakan,tebakanKata,level);
+                            dialog.dismiss();
+                        }else{
+                            CoinsManager.getInstance().showDialogZeroCoin(activity);
+                            dialog.dismiss();
+                        }
+
                     }
                 });
 

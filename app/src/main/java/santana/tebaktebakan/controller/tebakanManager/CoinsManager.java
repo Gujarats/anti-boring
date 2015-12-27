@@ -1,8 +1,12 @@
 package santana.tebaktebakan.controller.tebakanManager;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.AppCompatTextView;
 
+import santana.tebaktebakan.R;
 import santana.tebaktebakan.controller.SessionManager.SessionCoin;
 
 /**
@@ -22,6 +26,26 @@ public class CoinsManager {
         if (instance == null) instance = new CoinsManager();
         return instance;
     }
+
+    public boolean isEnoughCoinHint(Activity activity){
+        SessionCoin sessionCoin = new SessionCoin(activity);
+        int currentCoins = sessionCoin.getCoins();
+        if(currentCoins>=onHintActivity){
+            return true;
+        }else
+            return false;
+    }
+
+    public boolean isEnoughCoinDislplayChat(Activity activity){
+        SessionCoin sessionCoin = new SessionCoin(activity);
+        int currentCoins = sessionCoin.getCoins();
+        if(currentCoins>=onDisplayChar){
+            return true;
+        }else
+            return false;
+    }
+
+
 
 
 
@@ -84,4 +108,10 @@ public class CoinsManager {
         sessionCoin.setCoins(resultCoins);
     }
 
+    public void showDialogZeroCoin(Activity activity){
+        AppCompatDialog dialog = new AppCompatDialog(activity);
+        dialog.setContentView(R.layout.dialog_zero_coin);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+    }
 }

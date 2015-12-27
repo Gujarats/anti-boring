@@ -45,9 +45,16 @@ public class HintsManager {
                 DialogDisplayCharManager.getInstance().setDialogHint(activity, R.layout.dialog_display_char, new DialogDisplayCharManager.CallBackDialog() {
                     @Override
                     public void yes(AppCompatDialog dialog) {
-                        dialog.dismiss();
-                        CoinsManager.getInstance().setCoinsOnDisplayChar(activity);
-                        displayHintTebakGambar(activity, hint, jawabanTebakan, level, idGambar);
+
+                        if(CoinsManager.getInstance().isEnoughCoinDislplayChat(activity)){
+                            dialog.dismiss();
+                            CoinsManager.getInstance().setCoinsOnDisplayChar(activity);
+                            displayHintTebakGambar(activity, hint, jawabanTebakan, level, idGambar);
+                        }else {
+                            CoinsManager.getInstance().showDialogZeroCoin(activity);
+                            dialog.dismiss();
+                        }
+
                     }
                 });
 
@@ -62,9 +69,16 @@ public class HintsManager {
                 DialogDisplayCharManager.getInstance().setDialogHint(activity, R.layout.dialog_display_char, new DialogDisplayCharManager.CallBackDialog() {
                     @Override
                     public void yes(AppCompatDialog dialog) {
-                        dialog.dismiss();
-                        CoinsManager.getInstance().setCoinsOnDisplayChar(activity);
-                        displayHintTebakKata(activity, hint, jawabanTebakan, level);
+                        if(CoinsManager.getInstance().isEnoughCoinDislplayChat(activity)){
+                            dialog.dismiss();
+                            CoinsManager.getInstance().setCoinsOnDisplayChar(activity);
+                            displayHintTebakKata(activity, hint, jawabanTebakan, level);
+                        }else {
+                            CoinsManager.getInstance().showDialogZeroCoin(activity);
+                            dialog.dismiss();
+                        }
+
+
                     }
                 });
 

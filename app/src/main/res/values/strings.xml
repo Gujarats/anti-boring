@@ -12,6 +12,8 @@
     <string name="dialog_display_char">Use Display for 60 coins</string>
     <string name="dialog_correct_answer">Yeaayy!!! 15 coins</string>
     <string name="dialog_complete_all">Complete all!!! 120 coins</string>
+    <string name="dialog_zero_coin">Insufficient coins\nBuy coins in coins center</string>
+    <string name="key_buy_coins">Buy Coins</string>
     <string name="admob_key">ca-app-pub-7786975749587909/7517791075</string>
 
 </resources>
