@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -429,6 +430,19 @@ public class Tebakan {
                             SoundEffectManager.getInstance().playCorrectAnswer(activity);
                         }
 
+                        // finish activity after 2 seconds
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        activity.finish();
+                                    }
+                                }, 2000);
+                            }
+                        });
+
                     }else{
                         String [] kunciJawabanSplit = kunciJawaban.split(" ");
                         if(kunciJawabanSplit.length==3){
@@ -496,6 +510,19 @@ public class Tebakan {
                             DialogCorrectAnswer.getInstance().setCorrectAnswerDialog(activity,R.layout.dialog_correct_answer);
                             SoundEffectManager.getInstance().playCorrectAnswer(activity);
                         }
+
+                        // finish activity after 2 seconds
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        activity.finish();
+                                    }
+                                }, 2000);
+                            }
+                        });
 
                     }else{
                         String [] kunciJawabanSplit = kunciJawaban.split(" ");

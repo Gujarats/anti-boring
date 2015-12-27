@@ -1,6 +1,7 @@
 package santana.tebaktebakan.controller.tebakanManager;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
@@ -18,6 +19,7 @@ import java.util.Random;
 
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.controller.SessionManager.SessionHintDisplay;
+import santana.tebaktebakan.controller.UIManager.DialogCorrectAnswer;
 import santana.tebaktebakan.controller.UIManager.DialogDisplayCharManager;
 
 /**
@@ -253,18 +255,43 @@ public class HintsManager {
     }
 
 
-    public void checkAnswerHintTebakGambar(Activity activity, String userAnswer, String sourceAnswer, int level, String idGambar){
+    public void checkAnswerHintTebakGambar(final Activity activity, String userAnswer, String sourceAnswer, int level, String idGambar){
 
         if(!isUnderScoreExist(userAnswer)){
             String userAnswerConverted = getUserAnswerToSentence(userAnswer);
             String sourceAnswerConverted = getUserAnswerToSentence(sourceAnswer);
 
             if(isRightAnswer(userAnswerConverted,sourceAnswerConverted)){
-                activity.finish();
                 Toast.makeText(activity, "Benar Sekali", Toast.LENGTH_SHORT).show();
 
                 //save progress gambar
                 GambarCompleteManager.getInstance().setTebakGambarComplete(activity, level, idGambar);
+
+                //check stage complete to get bonus coins
+                if(StageManger.getInstance().isAllStageClear(activity,level)){
+                    CoinsManager.getInstance().setOnCompleteAllStars(activity);
+
+                    //show dialog complate all stage
+                    DialogCorrectAnswer.getInstance().setCompleteAllDialog(activity,R.layout.dialog_complete_all_stars);
+                    SoundEffectManager.getInstance().playCorrectAnswer(activity);
+                }else{
+                    //show dialog for correct answer
+                    DialogCorrectAnswer.getInstance().setCorrectAnswerDialog(activity,R.layout.dialog_correct_answer);
+                    SoundEffectManager.getInstance().playCorrectAnswer(activity);
+                }
+
+                // finish activity after 2 seconds
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                activity.finish();
+                            }
+                        }, 2000);
+                    }
+                });
 
             }else{
                 if(userAnswerConverted.length()==sourceAnswerConverted.length()){
@@ -275,14 +302,13 @@ public class HintsManager {
 
     }
 
-    public void checkAnswerHintTebakKata (Activity activity,String userAnswer,String sourceAnswer,int level){
+    public void checkAnswerHintTebakKata (final Activity activity,String userAnswer,String sourceAnswer,int level){
 
         if(!isUnderScoreExist(userAnswer)){
             String userAnswerConverted = getUserAnswerToSentence(userAnswer);
             String sourceAnswerConverted = getUserAnswerToSentence(sourceAnswer);
 
             if(isRightAnswer(userAnswerConverted,sourceAnswerConverted)){
-                activity.finish();
                 Toast.makeText(activity, "Benar Sekali", Toast.LENGTH_SHORT).show();
 
                 //save progress stars at level
@@ -290,6 +316,32 @@ public class HintsManager {
 
                 //save progress stage TebakKata
                 StageManger.getInstance().setTebakKataStageComplete(activity,level);
+
+                //check stage complete to get bonus coins
+                if(StageManger.getInstance().isAllStageClear(activity,level)){
+                    CoinsManager.getInstance().setOnCompleteAllStars(activity);
+
+                    //show dialog complate all stage
+                    DialogCorrectAnswer.getInstance().setCompleteAllDialog(activity,R.layout.dialog_complete_all_stars);
+                    SoundEffectManager.getInstance().playCorrectAnswer(activity);
+                }else{
+                    //show dialog for correct answer
+                    DialogCorrectAnswer.getInstance().setCorrectAnswerDialog(activity,R.layout.dialog_correct_answer);
+                    SoundEffectManager.getInstance().playCorrectAnswer(activity);
+                }
+
+                // finish activity after 2 seconds
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                activity.finish();
+                            }
+                        }, 2000);
+                    }
+                });
 
             }else{
                 if(userAnswerConverted.length()==sourceAnswerConverted.length()){

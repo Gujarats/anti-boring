@@ -22,6 +22,8 @@ public class DialogCorrectAnswer {
     public void setCorrectAnswerDialog(Activity activity, int layout){
         dialog = new AppCompatDialog(activity);
         dialog.setContentView(layout);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
     }
@@ -29,6 +31,8 @@ public class DialogCorrectAnswer {
     public void setCompleteAllDialog(Activity activity, int layout){
         dialog = new AppCompatDialog(activity);
         dialog.setContentView(layout);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
     }
