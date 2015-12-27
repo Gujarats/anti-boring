@@ -45,7 +45,7 @@ public class HintsManager {
                     public void yes(AppCompatDialog dialog) {
                         dialog.dismiss();
                         CoinsManager.getInstance().setCoinsOnDisplayChar(activity);
-                        setOnClickDisplayHintTebakGambar(activity, linearLayout, hint, jawabanTebakan,level,idGambar);
+                        displayHintTebakGambar(activity, hint, jawabanTebakan, level, idGambar);
                     }
                 });
 
@@ -62,7 +62,7 @@ public class HintsManager {
                     public void yes(AppCompatDialog dialog) {
                         dialog.dismiss();
                         CoinsManager.getInstance().setCoinsOnDisplayChar(activity);
-                        setOnClickDisplayHintTebakKata(activity, linearLayout, hint, jawabanTebakan, level);
+                        displayHintTebakKata(activity, hint, jawabanTebakan, level);
                     }
                 });
 
@@ -70,14 +70,14 @@ public class HintsManager {
         });
     }
 
-    public void setOnClickDisplayHintTebakKata(final Activity activity,LinearLayout linearLayout, final AppCompatTextView hint,final String jawabanTebakan,int level){
+    public void displayHintTebakKata(final Activity activity, final AppCompatTextView hint, final String jawabanTebakan, int level){
         String hintDisplayText = hint.getText().toString();
         String result = displayHintChar(activity, jawabanTebakan, hintDisplayText);
         HintsManager.getInstance().checkAnswerHintTebakKata(activity, result, jawabanTebakan,level);
         hint.setText(result);
     }
 
-    public void setOnClickDisplayHintTebakGambar(final Activity activity,LinearLayout linearLayout, final AppCompatTextView hint,final String jawabanTebakan,int level, String idGambar){
+    public void displayHintTebakGambar(final Activity activity, final AppCompatTextView hint, final String jawabanTebakan, int level, String idGambar){
         String hintDisplayText = hint.getText().toString();
         String result = displayHintChar(activity, jawabanTebakan, hintDisplayText);
         HintsManager.getInstance().checkAnswerHintTebakGambar(activity, result, jawabanTebakan,level,idGambar);
@@ -285,7 +285,10 @@ public class HintsManager {
                 activity.finish();
                 Toast.makeText(activity, "Benar Sekali", Toast.LENGTH_SHORT).show();
 
-                //save progress gambar
+                //save progress stars at level
+                Tebakan.getInstance().saveProgressLevel(activity, level);
+
+                //save progress stage TebakKata
                 StageManger.getInstance().setTebakKataStageComplete(activity,level);
 
             }else{

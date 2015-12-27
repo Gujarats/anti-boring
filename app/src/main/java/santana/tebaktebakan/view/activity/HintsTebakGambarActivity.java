@@ -62,7 +62,6 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         // setOnClick effect
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnBack);
-        LogicInterfaceManager.getInstance().setOnClickEffect(this, hintDisplay);
 
         // set size imageVIew for TebakGambar
         Tebakan.getInstance().setSizeImageView(this, TebakGambar);
