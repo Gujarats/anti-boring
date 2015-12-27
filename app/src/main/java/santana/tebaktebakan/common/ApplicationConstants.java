@@ -21,7 +21,7 @@ public class ApplicationConstants {
     public static final String gcmID = "gcmID";
     public static final String _idUserTebakan = "_idUserTebakan";
     public static final String _idTebakan = "_idTebakan";
-    public static final String idGambar = "idGambar";
+    public static final String keyGambar = "keyGambar";
 
     //id tebakan
     public static final String _listChatBrow = "_listChatBrow.txt";

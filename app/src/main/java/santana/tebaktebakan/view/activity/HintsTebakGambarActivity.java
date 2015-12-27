@@ -72,7 +72,7 @@ public class HintsTebakGambarActivity extends AppCompatActivity {
         imageUrl = getDataIntent.get(ApplicationConstants.imageUrl);
         jawabanTebakan = getDataIntent.get(ApplicationConstants.jawabanTebakan);
         level = Integer.parseInt(getDataIntent.get(ApplicationConstants.level));
-        idGambar = getDataIntent.get(ApplicationConstants.idGambar);
+        idGambar = getDataIntent.get(ApplicationConstants.keyGambar);
         Tebakan.getInstance().loadImageToImageView2(TebakGambar, imageUrl, getApplicationContext());
 
         /*2. init keyboardView*/

@@ -18,6 +18,7 @@ import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
 import santana.tebaktebakan.controller.adsManager.AdColonyManager;
 import santana.tebaktebakan.controller.tebakanManager.CoinsManager;
+import santana.tebaktebakan.controller.tebakanManager.DisableAnswerManager;
 import santana.tebaktebakan.controller.tebakanManager.Tebakan;
 
 
@@ -42,7 +43,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
     private String jawabanTebakan;
     private String imageUrl;
     private int level;
-    private String idGambar;
+    private String keyGambar;
 
     
 
@@ -89,7 +90,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
             imageUrl = dataIntent.get(ApplicationConstants.imageUrl);
             jawabanTebakan = dataIntent.get(ApplicationConstants.jawabanTebakan);
             level = Integer.parseInt(dataIntent.get(ApplicationConstants.level));
-            idGambar = dataIntent.get(ApplicationConstants.idGambar);
+            keyGambar = dataIntent.get(ApplicationConstants.keyGambar);
             Tebakan.getInstance().loadImageToImageView2(TebakGambar, imageUrl,getApplicationContext());
 
         }
@@ -104,10 +105,10 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
 
         // set setaction back and showing dialong
         LogicInterfaceManager.getInstance().backAction(this, btnBack);
-        LogicInterfaceManager.getInstance().showDialogForHint(this, btnHelp, jawabanTebakan, imageUrl,level,idGambar);
+        LogicInterfaceManager.getInstance().showDialogForHint(this, btnHelp, jawabanTebakan, imageUrl,level, keyGambar);
 
         //set action for check answer
-        Tebakan.getInstance().checkAnswer(AnswerTebakGambarActivity.this, this, jawabanTebakanEditText, jawabanTebakan,level, btnCek,idGambar);
+        Tebakan.getInstance().checkAnswer(AnswerTebakGambarActivity.this, this, jawabanTebakanEditText, jawabanTebakan,level, btnCek, keyGambar);
 
     }
 
@@ -115,6 +116,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         AdColony.resume(this);
+        DisableAnswerManager.getInstance().disableAnswerforTebakGambar(this,level,btnCek,btnHelp,keyGambar);
     }
 
     @Override

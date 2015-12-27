@@ -367,7 +367,7 @@ public class Tebakan {
                 intent.putExtra(ApplicationConstants.imageUrl, tebakanObject.getGambarUrl());
                 intent.putExtra(ApplicationConstants.jawabanTebakan, tebakanObject.getJawaban());
                 intent.putExtra(ApplicationConstants.level,tebakanObject.getLevel());
-                intent.putExtra(ApplicationConstants.idGambar,idGambar);
+                intent.putExtra(ApplicationConstants.keyGambar,idGambar);
 
                 activity.startActivity(intent);
             }

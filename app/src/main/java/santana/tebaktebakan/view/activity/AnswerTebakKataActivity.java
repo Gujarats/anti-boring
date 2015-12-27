@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
+import santana.tebaktebakan.controller.tebakanManager.DisableAnswerManager;
 import santana.tebaktebakan.controller.tebakanManager.Tebakan;
 
 /**
@@ -40,6 +41,12 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
         initUI();
         // initial for action button or widget
         initAction();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DisableAnswerManager.getInstance().disableAnswerforTebakKata(this, level, btnCek, btnHelp);
     }
 
     private void initAction() {

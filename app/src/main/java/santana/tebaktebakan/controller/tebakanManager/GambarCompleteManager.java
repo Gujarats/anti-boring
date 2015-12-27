@@ -107,4 +107,20 @@ public class GambarCompleteManager {
 
         return false;
     }
+
+    public boolean isKeyGambarComplete(Activity activity, int level, String keyGambar){
+        SessionTebakGambar sessionStage = new SessionTebakGambar(activity);
+        String gambarStageComplete = sessionStage.getGambarComplete(level);
+        try {
+            JSONObject stageGTebakGambar = new JSONObject(gambarStageComplete);
+            if(stageGTebakGambar.has(keyGambar)){
+                return true;
+            }else
+                return false;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }

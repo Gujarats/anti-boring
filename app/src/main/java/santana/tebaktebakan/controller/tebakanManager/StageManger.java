@@ -13,9 +13,9 @@ import santana.tebaktebakan.controller.SessionManager.SessionStage;
  * Created by Gujarat Santana on 26/12/15.
  */
 public class StageManger {
+    public static final String tebakKata = "tebakKata";
+    public static final String tebakGambar = "tebakGambar";
     public static StageManger instance;
-    private String tebakKata = "tebakKata";
-    private String tebakGambar = "tebakGambar";
 
 
     private StageManger() {}
@@ -101,5 +101,18 @@ public class StageManger {
             starStageTebakGambar.setVisibility(View.INVISIBLE);
         }
 
+    }
+
+    public JSONObject getStageJson(Activity activity,int level){
+
+        try {
+            SessionStage sessionStage = new SessionStage(activity);
+            String stageJsonString = sessionStage.getKeyStageComplete(level);
+            JSONObject jsonStage = new JSONObject(stageJsonString);
+            return jsonStage;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

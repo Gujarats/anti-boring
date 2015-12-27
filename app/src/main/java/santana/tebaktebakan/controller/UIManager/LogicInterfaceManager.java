@@ -198,7 +198,7 @@ public class LogicInterfaceManager {
         Intent intent = new Intent(activity, HintsTebakGambarActivity.class);
         intent.putExtra(ApplicationConstants.jawabanTebakan, jawabanTebakan);
         intent.putExtra(ApplicationConstants.imageUrl, imageUrl);
-        intent.putExtra(ApplicationConstants.idGambar,idGambar);
+        intent.putExtra(ApplicationConstants.keyGambar,idGambar);
         intent.putExtra(ApplicationConstants.level,level);
         activity.startActivity(intent);
 
@@ -223,7 +223,7 @@ public class LogicInterfaceManager {
                 value.put(ApplicationConstants.imageUrl,intent.getExtras().getString(ApplicationConstants.imageUrl));
                 value.put(ApplicationConstants.jawabanTebakan,intent.getExtras().getString(ApplicationConstants.jawabanTebakan));
                 value.put(ApplicationConstants.level, String.valueOf(intent.getExtras().getInt(ApplicationConstants.level)));
-                value.put(ApplicationConstants.idGambar, String.valueOf(intent.getExtras().getString(ApplicationConstants.idGambar)));
+                value.put(ApplicationConstants.keyGambar, String.valueOf(intent.getExtras().getString(ApplicationConstants.keyGambar)));
 
 
                 return value;
