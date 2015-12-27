@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="10dp"
         android:text="@string/dialog_hint_text"
         android:textColor="@color/white"
         android:textSize="25sp"
@@ -20,16 +21,17 @@
         android:id="@+id/premiumUser"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_margin="@dimen/abc_action_bar_content_inset_material"
+        android:layout_margin="10dp"
         android:background="@drawable/dialog_shape_smooth"
         android:gravity="center">
         <santana.tebaktebakan.view.font.CostumFont
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:text="@string/dialog_hint_premium"
             android:textColor="@color/white"
-            android:textSize="20sp"/>
+            android:textSize="13sp"/>
     </LinearLayout>
 
 
