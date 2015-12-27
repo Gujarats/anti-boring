@@ -86,13 +86,16 @@ public class Tebakan {
                 KeyLevelJsonObject.put(String.valueOf(currentLevel),jsonArray);
 
                 // open/unlocked next level
-                jsonObject = new JSONObject();
-                jsonObject.put(JsonConstantKey.key_level,currentLevel+1);
-                jsonObject.put(JsonConstantKey.key_stars,0);
+                if(!KeyLevelJsonObject.has(String.valueOf(currentLevel+1))){
+                    jsonObject = new JSONObject();
+                    jsonObject.put(JsonConstantKey.key_level,currentLevel+1);
+                    jsonObject.put(JsonConstantKey.key_stars,0);
 
-                jsonArray = new JSONArray();
-                jsonArray.put(jsonObject);
-                KeyLevelJsonObject.put(String.valueOf(currentLevel+1),jsonArray);
+                    jsonArray = new JSONArray();
+                    jsonArray.put(jsonObject);
+                    KeyLevelJsonObject.put(String.valueOf(currentLevel+1),jsonArray);
+                }
+
 
                 // saved it into SharedPreference
                 sessionStars.setKeyLevelJson(KeyLevelJsonObject.toString());
@@ -131,6 +134,30 @@ public class Tebakan {
             *
             * }
             * */
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void unlockedNextLevel(int currentLevel,JSONObject jsonObject,JSONArray jsonArray, JSONObject KeyLevelJsonObject, SessionStars sessionStars){
+
+        try {
+
+            if(!KeyLevelJsonObject.has(String.valueOf(currentLevel+1))){
+                jsonObject = new JSONObject();
+                jsonObject.put(JsonConstantKey.key_level,currentLevel+1);
+                jsonObject.put(JsonConstantKey.key_stars,0);
+
+                jsonArray = new JSONArray();
+                jsonArray.put(jsonObject);
+                KeyLevelJsonObject.put(String.valueOf(currentLevel+1),jsonArray);
+
+                // saved it into SharedPreference
+                sessionStars.setKeyLevelJson(KeyLevelJsonObject.toString());
+            }
 
 
         } catch (JSONException e) {
