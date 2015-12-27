@@ -3,7 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:layout_margin="@dimen/abc_action_bar_content_inset_material"
-              android:background="@drawable/dialog_shape_smooth"
+              android:background="@drawable/dialog_selector"
               android:gravity="center"
               android:orientation="vertical">
 
