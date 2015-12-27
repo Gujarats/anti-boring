@@ -420,6 +420,8 @@ public class Tebakan {
                             CoinsManager.getInstance().setOnCompleteAllStars(activity);
                         }
 
+                        activity.finish();
+
 
                     }else{
                         String [] kunciJawabanSplit = kunciJawaban.split(" ");
@@ -480,6 +482,8 @@ public class Tebakan {
                         if(StageManger.getInstance().isAllStageClear(activity,level)){
                             CoinsManager.getInstance().setOnCompleteAllStars(activity);
                         }
+
+                        activity.finish();
                     }else{
                         String [] kunciJawabanSplit = kunciJawaban.split(" ");
                         if(kunciJawabanSplit.length==3){

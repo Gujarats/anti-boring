@@ -32,11 +32,11 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
     @Bind(R.id.btnCek) ImageView btnCek;
     @Bind(R.id.btnHelp) ImageView btnHelp;
     @Bind(R.id.btnShare) ImageView btnShare;
-    @Bind(R.id.gift) ImageView gift;
     @Bind(R.id.TebakGambar) ImageView TebakGambar;
     @Bind(R.id.layoutAnim) LinearLayout layoutAnim;
     @Bind(R.id.jawabanTebakan) EditText jawabanTebakanEditText;
     @Bind(R.id.coins) AppCompatTextView coins;
+    @Bind(R.id.gift) ImageView gift;
 
 
 

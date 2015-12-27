@@ -2,6 +2,7 @@ package santana.tebaktebakan.view.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,6 +15,8 @@ import butterknife.ButterKnife;
 import santana.tebaktebakan.R;
 import santana.tebaktebakan.common.ApplicationConstants;
 import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
+import santana.tebaktebakan.controller.adsManager.AdColonyManager;
+import santana.tebaktebakan.controller.tebakanManager.CoinsManager;
 import santana.tebaktebakan.controller.tebakanManager.DisableAnswerManager;
 import santana.tebaktebakan.controller.tebakanManager.Tebakan;
 
@@ -28,7 +31,8 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
     @Bind(R.id.btnShare) ImageView btnShare;
     @Bind(R.id.TebakKata) TextView TebakKata;
     @Bind(R.id.jawabanTebakanEditText) EditText jawabanTebakanEditText;
-
+    @Bind(R.id.coins) AppCompatTextView coins;
+    @Bind(R.id.gift) ImageView gift;
     private String jawabanTebakan;
     private int level;
 
@@ -41,12 +45,19 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
         initUI();
         // initial for action button or widget
         initAction();
+        // init ads
+        initAdColony();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         DisableAnswerManager.getInstance().disableAnswerforTebakKata(this, level, btnCek, btnHelp);
+    }
+
+    private void initAdColony(){
+        AdColonyManager.getInstance().setUpAdColony(AnswerTebakKataActivity.this, gift, coins);
+        AdColonyManager.getInstance().setOnClickGfit(AnswerTebakKataActivity.this, gift);
     }
 
     private void initAction() {
@@ -77,5 +88,7 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
             jawabanTebakan = dataIntent.get(ApplicationConstants.jawabanTebakan);
             level = Integer.parseInt(dataIntent.get(ApplicationConstants.level));
         }
+
+        CoinsManager.getInstance().setCoinForUI(AnswerTebakKataActivity.this, coins);
     }
 }
