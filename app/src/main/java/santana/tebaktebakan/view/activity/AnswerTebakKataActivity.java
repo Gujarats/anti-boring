@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jirbo.adcolony.AdColony;
+
 import java.util.Map;
 
 import butterknife.Bind;
@@ -53,6 +55,13 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         DisableAnswerManager.getInstance().disableAnswerforTebakKata(this, level, btnCek, btnHelp);
+        AdColony.resume(this);
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        AdColony.pause();
     }
 
     private void initAdColony(){
