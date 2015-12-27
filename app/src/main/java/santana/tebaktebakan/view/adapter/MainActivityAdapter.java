@@ -83,6 +83,7 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
                 activity.startActivity(intent);
             }
         });
+        layoutCompat.setBackgroundResource(R.drawable.selector_level);
     }
 
     private void disableLevel(LinearLayout layoutCompat){
