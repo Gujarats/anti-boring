@@ -8,6 +8,8 @@
     <color name="white">#FFFFFF</color>
     <color name="blue_smooth">#6eccec</color>
     <color name="blue_smooth_dark">#1b9ecb</color>
+    <color name="blue_level">#0379f7</color>
+    <color name="blue_level_dark">#023e7e</color>
 
 
     <!--menu settings-->

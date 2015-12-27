@@ -83,7 +83,6 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
                 activity.startActivity(intent);
             }
         });
-        layoutCompat.setBackgroundColor(Color.parseColor("#303F9F"));
     }
 
     private void disableLevel(LinearLayout layoutCompat){

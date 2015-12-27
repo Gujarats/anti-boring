@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity{
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         ImageView headerIcon = (ImageView) findViewById(R.id.headerIcon);
 
-        mainActivityAdapter = new MainActivityAdapter(getApplicationContext(),this,R.layout.layout_grid_level);
+        mainActivityAdapter = new MainActivityAdapter(getApplicationContext(),this,R.layout.item_level);
 
         //set Coins to UI
         CoinsManager.getInstance().setCoinForUI(MainActivity.this, coins);
