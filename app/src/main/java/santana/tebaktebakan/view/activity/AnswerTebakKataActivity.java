@@ -55,6 +55,7 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         DisableAnswerManager.getInstance().disableAnswerforTebakKata(this, level, btnCek, btnHelp);
+        CoinsManager.getInstance().setCoinForUI(AnswerTebakKataActivity.this, coins);
         AdColony.resume(this);
     }
 
@@ -98,6 +99,6 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
             level = Integer.parseInt(dataIntent.get(ApplicationConstants.level));
         }
 
-        CoinsManager.getInstance().setCoinForUI(AnswerTebakKataActivity.this, coins);
+
     }
 }

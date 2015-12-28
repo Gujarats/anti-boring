@@ -95,7 +95,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
 
         }
 
-        CoinsManager.getInstance().setCoinForUI(AnswerTebakGambarActivity.this, coins);
+
     }
 
 
@@ -116,7 +116,8 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         AdColony.resume(this);
-        DisableAnswerManager.getInstance().disableAnswerforTebakGambar(this,level,btnCek,btnHelp,keyGambar);
+        DisableAnswerManager.getInstance().disableAnswerforTebakGambar(this, level, btnCek, btnHelp, keyGambar);
+        CoinsManager.getInstance().setCoinForUI(AnswerTebakGambarActivity.this, coins);
     }
 
     @Override
