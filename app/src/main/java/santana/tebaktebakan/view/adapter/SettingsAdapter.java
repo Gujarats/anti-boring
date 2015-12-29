@@ -37,31 +37,31 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 
         // add login item
         SettingsObject login = new SettingsObject();
-        login.setSourceImage(R.drawable.anti_boring);
+        login.setSourceImage(R.drawable.login);
         login.setTextSettings("Login");
         settingsObjects.add(login);
 
         //add buy coins item
         SettingsObject buyCoins = new SettingsObject();
-        buyCoins.setSourceImage(R.drawable.anti_boring);
+        buyCoins.setSourceImage(R.drawable.buy);
         buyCoins.setTextSettings("Buy Coins");
         settingsObjects.add(buyCoins);
 
         //add become premium
         SettingsObject premium = new SettingsObject();
-        premium.setSourceImage(R.drawable.anti_boring);
+        premium.setSourceImage(R.drawable.premium);
         premium.setTextSettings("Become Premium");
         settingsObjects.add(premium);
 
         //add become premium
         SettingsObject rate = new SettingsObject();
-        rate.setSourceImage(R.drawable.anti_boring);
+        rate.setSourceImage(R.drawable.rate_us);
         rate.setTextSettings("Rate");
         settingsObjects.add(rate);
 
         //add become premium
         SettingsObject share = new SettingsObject();
-        share.setSourceImage(R.drawable.anti_boring);
+        share.setSourceImage(R.drawable.share_setting);
         share.setTextSettings("Share");
         settingsObjects.add(share);
 
