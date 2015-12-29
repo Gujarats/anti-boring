@@ -80,6 +80,38 @@ public class LogicInterfaceManager {
 
     }
 
+    public void setOnClickEffect(final Activity activity, View view) {
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        LinearLayout view = (LinearLayout) v;
+                        //overlay is black with transparency of 0x77 (119)
+                        view.setBackgroundResource(R.drawable.square_shape);
+                        GradientDrawable drawable = (GradientDrawable) v.getBackground();
+                        drawable.setColor(Color.parseColor("#ccccff"));
+//                        view.setBackgroundColor(Color.parseColor("#ccccff"));
+                        view.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                    }
+                    case MotionEvent.ACTION_CANCEL: {
+//                        ImageView view = (ImageView) v;
+                        LinearLayout view = (LinearLayout) v;
+                        //clear the overlay
+                        view.setBackgroundColor(0);
+//                        view.getDrawable().clearColorFilter();
+                        view.invalidate();
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
     public void setOnClickEffect(final Activity activity, LinearLayout imageView) {
         imageView.setOnTouchListener(new View.OnTouchListener() {
             @Override

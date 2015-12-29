@@ -1,6 +1,8 @@
 package santana.tebaktebakan.view.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import santana.tebaktebakan.R;
+import santana.tebaktebakan.controller.UIManager.LogicInterfaceManager;
 import santana.tebaktebakan.model.object.SettingsObject;
 
 /**
@@ -83,6 +86,29 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
         Picasso.with(activity).load(settingsObject.getSourceImage()).into(holder.iconSetting);
         //set text
         holder.textStting.setText(settingsObject.getTextSettings());
+        LogicInterfaceManager.getInstance().setOnClickEffect(activity,holder.mView);
+        initAction(holder.mView, settingsObject.getTextSettings());
+    }
+
+    private void initAction(View view,String title){
+        switch (title){
+            case "Rate":
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        final String appPackageName = activity.getPackageName(); // getPackageName() from Context or Activity object
+                        try {
+                            activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                        } catch (android.content.ActivityNotFoundException anfe) {
+                            activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                        }
+                    }
+                });
+
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
