@@ -100,7 +100,7 @@ public class HintsManager {
         hint.setText(result);
     }
 
-    public void setDeleteAction(final AppCompatTextView hint, AppCompatButton delelte){
+    public void setDeleteAction(final AppCompatTextView hint, LinearLayout delelte){
         delelte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

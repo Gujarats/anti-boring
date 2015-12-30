@@ -37,6 +37,7 @@
                     android:layout_height="40dp"
                     android:layout_weight="1"
                     android:background="#348dcc"
+                    android:textColor="@color/white"
                     android:textSize="25sp">
                     <requestFocus/>
                 </android.support.v7.widget.AppCompatEditText>
