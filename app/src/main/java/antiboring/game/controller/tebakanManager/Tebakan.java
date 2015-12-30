@@ -328,6 +328,7 @@ public class Tebakan {
             int HeightPhone = size.y;
 
         imageView.getLayoutParams().height = WidthPhone;
+        imageView.getLayoutParams().width = WidthPhone;
         imageView.requestLayout();
     }
 
