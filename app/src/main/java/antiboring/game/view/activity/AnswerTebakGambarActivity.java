@@ -110,10 +110,10 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
 
     private void initAction() {
 
-        // set setaction back and showing dialong
+        // set action back and showing dialong
         LogicInterfaceManager.getInstance().backAction(this, btnBack);
         LogicInterfaceManager.getInstance().showDialogForHint(this, btnHelp, jawabanTebakan, imageUrl, level, keyGambar);
-        LogicInterfaceManager.getInstance().showDialogSocialMedia(this, btnShare,imageUrl);
+        LogicInterfaceManager.getInstance().showDialogSocialMedia(getApplicationContext(),this, btnShare,imageUrl);
 
 
         //set action for check answer

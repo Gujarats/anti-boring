@@ -1,6 +1,7 @@
 package antiboring.game.controller.UIManager;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatDialog;
@@ -24,7 +25,7 @@ public class DialogSocialMedia {
         return instance;
     }
 
-    public void showShareDialogTebakGambar(final Activity activity,final String imageUrl){
+    public void showShareDialogTebakGambar(final Context context,final Activity activity,final String imageUrl){
         dialog = new AppCompatDialog(activity);
         dialog.setContentView(R.layout.dialog_share_media);
 
@@ -32,7 +33,7 @@ public class DialogSocialMedia {
         facebookShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FacebookManager.getInstance().loginFacebook(activity,imageUrl);
+                FacebookManager.getInstance().loginFacebook(context,activity,imageUrl);
 
             }
         });

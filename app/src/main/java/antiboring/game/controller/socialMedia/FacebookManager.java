@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,6 +31,7 @@ import antiboring.game.controller.tebakanManager.Tebakan;
  * Created by Gujarat Santana on 30/12/15.
  */
 public class FacebookManager {
+    private static final String TAG = "FacebookManager";
     public static FacebookManager instance;
     CallbackManager callbackManager;
     private LoginManager loginManager;
@@ -49,7 +51,7 @@ public class FacebookManager {
     }
 
 
-    public void loginFacebook(final Activity activity,final String imageUrl){
+    public void loginFacebook(final Context context,final Activity activity,final String imageUrl){
         List<String> permissionNeeds = Arrays.asList("publish_actions");
         loginManager = LoginManager.getInstance();
         loginManager.logInWithPublishPermissions(activity, permissionNeeds);
@@ -57,7 +59,7 @@ public class FacebookManager {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Toast.makeText(activity, "Success share facebook", Toast.LENGTH_SHORT).show();
-                shareTebakGambar(activity,imageUrl);
+                shareTebakGambar(context,activity,imageUrl);
             }
 
             @Override
@@ -77,8 +79,9 @@ public class FacebookManager {
         return this.callbackManager;
     }
 
-    public void shareTebakGambar(Activity activity,String imageUrl){
-        Bitmap image = getBitmapForShareTebakGambar(activity,imageUrl);
+    public void shareTebakGambar(Context context, Activity activity,String imageUrl){
+        Log.d(TAG, "shareTebakGambar() called with: " + "context = [" + context + "], activity = [" + activity + "], imageUrl = [" + imageUrl + "]");
+        Bitmap image = getBitmapForShareTebakGambar(context,activity,imageUrl);
         SharePhoto photo = new SharePhoto.Builder()
                 .setBitmap(image)
                 .build();
@@ -89,7 +92,7 @@ public class FacebookManager {
         ShareApi.share(content, null);
     }
 
-    private Bitmap getBitmapForShareTebakGambar(Activity activity,String imageUrl) {
+    private Bitmap getBitmapForShareTebakGambar(Context context ,Activity activity,String imageUrl) {
         LayoutInflater mInflater = (LayoutInflater) activity.getSystemService(activity.LAYOUT_INFLATER_SERVICE);
 
         //Inflate the layout into a view and configure it the way you like
@@ -97,10 +100,11 @@ public class FacebookManager {
         mInflater.inflate(R.layout.layout_tebak_gambar_share, view, true);
         ImageView TebakGambar = (ImageView) view.findViewById(R.id.TebakGambar);
 
-        //set height image
+        //set size image view
         Tebakan.getInstance().setSizeImageView(activity,TebakGambar);
-        //set image to imageView
-        Tebakan.getInstance().loadImageToImageView2(TebakGambar,imageUrl,activity);
+
+        //set image view
+        TebakGambar.setImageResource(Tebakan.getInstance().getID(imageUrl, context));
 
         //Provide it with a layout params. It should necessarily be wrapping the
         //content as we not really going to have a parent for it.
@@ -112,7 +116,7 @@ public class FacebookManager {
                 View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
 
         //Assign a size and position to the view and all of its descendants
-        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+        view.layout(view.getMeasuredWidth(), view.getMeasuredHeight(), view.getMeasuredWidth(), view.getMeasuredHeight());
 
         //Create the bitmap
         Bitmap bitmap = Bitmap.createBitmap(view.getMeasuredWidth(),
