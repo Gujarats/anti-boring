@@ -63,7 +63,7 @@
                         android:layout_alignParentTop="true"
                         android:src="@drawable/coins"/>
 
-                    <santana.tebaktebakan.view.font.CostumFont
+                    <antiboring.game.view.font.CostumFont
                         android:id="@+id/coins"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

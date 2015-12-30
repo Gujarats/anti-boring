@@ -13,7 +13,7 @@
         android:layout_height="200dp"
         android:src="@drawable/icon_correct_answer"/>
 
-    <santana.tebaktebakan.view.font.CostumFont
+    <antiboring.game.view.font.CostumFont
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/dialog_selector"
         android:gravity="center">
-        <santana.tebaktebakan.view.font.CostumFont
+        <antiboring.game.view.font.CostumFont
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"

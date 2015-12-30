@@ -36,7 +36,7 @@
         android:layout_margin="10dp"
         android:gravity="center">
 
-        <santana.tebaktebakan.view.font.CostumFont
+        <antiboring.game.view.font.CostumFont
             android:id="@+id/level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <santana.tebaktebakan.view.font.CostumFont
+                <antiboring.game.view.font.CostumFont
                     android:id="@+id/txtLvl"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
@@ -75,7 +75,7 @@
                     android:background="@drawable/backgorund_selector"
                     android:gravity="center">
 
-                    <santana.tebaktebakan.view.font.CostumFont
+                    <antiboring.game.view.font.CostumFont
                         android:id="@+id/TebakKataText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
                 android:gravity="center">
 
 
-                <santana.tebaktebakan.view.font.CostumFont
+                <antiboring.game.view.font.CostumFont
                     android:id="@+id/TebakGambarText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

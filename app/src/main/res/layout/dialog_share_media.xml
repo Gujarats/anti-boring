@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_margin="@dimen/abc_action_bar_content_inset_material"
+              android:background="@drawable/dialog_selector"
+              android:gravity="center"
+              android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/facebook"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/facebook_share"/>
+
+
+
+</LinearLayout>

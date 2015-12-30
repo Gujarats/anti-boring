@@ -15,5 +15,6 @@
     <string name="dialog_zero_coin">Insufficient coins\nBuy coins in coins center</string>
     <string name="key_buy_coins">Buy Coins</string>
     <string name="admob_key">ca-app-pub-7786975749587909/7517791075</string>
+    <string name="facebook_app_id">1516570408642924</string>
 
 </resources>
