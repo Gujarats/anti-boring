@@ -179,7 +179,7 @@ public class TwitterManager {
                     Thread backgroundTask = new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            sendTebakanKataToTwitter("#AntiBoring Gambar Apa itu?");
+                            sendTebakanKataToTwitter("#AntiBoring Kira - kira apa ya?");
                         }
                     });
                     backgroundTask.start();
