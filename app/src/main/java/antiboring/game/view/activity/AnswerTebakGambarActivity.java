@@ -72,7 +72,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
         initAdColony();
 
         //init Twitter
-        TwitterManager.getInstance().initTwitter(this, getApplicationContext(), imageUrl);
+        TwitterManager.getInstance().initTwitterTebakGambar(this, getApplicationContext(), imageUrl);
     }
 
     private void initAdColony(){
@@ -120,7 +120,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
         // set action back and showing dialong
         LogicInterfaceManager.getInstance().backAction(this, btnBack);
         LogicInterfaceManager.getInstance().showDialogForHint(this, btnHelp, jawabanTebakan, imageUrl, level, keyGambar);
-        LogicInterfaceManager.getInstance().showDialogSocialMedia(getApplicationContext(),this, btnShare,imageUrl);
+        LogicInterfaceManager.getInstance().showDialogSocialMediaTebakGambar(getApplicationContext(), this, btnShare, imageUrl);
 
 
         //set action for check answer

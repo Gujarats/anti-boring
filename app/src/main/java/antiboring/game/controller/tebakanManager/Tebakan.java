@@ -319,6 +319,7 @@ public class Tebakan {
         return json;
     }
 
+
     public void setSizeImageView(Activity activity,ImageView imageView){
          /*get widht of the phone*/
             Display display = activity.getWindowManager().getDefaultDisplay();
@@ -343,6 +344,8 @@ public class Tebakan {
         int HeightPhone = size.y;
 
         linearLayout.getLayoutParams().height = WidthPhone;
+        linearLayout.getLayoutParams().width = WidthPhone;
+
         linearLayout.requestLayout();
     }
 

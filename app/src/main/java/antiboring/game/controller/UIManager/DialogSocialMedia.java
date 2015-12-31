@@ -26,6 +26,31 @@ public class DialogSocialMedia {
         return instance;
     }
 
+    public void showShareDialogTebakKata(final Context context,final Activity activity,final String tebakKata){
+        dialog = new AppCompatDialog(activity);
+        dialog.setContentView(R.layout.dialog_share_media);
+
+        ImageView facebookShare = (ImageView)dialog.findViewById(R.id.facebook);
+        facebookShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FacebookManager.getInstance().loginFacebook(context, activity, tebakKata);
+
+            }
+        });
+
+        ImageView twitterShare = (ImageView) dialog.findViewById(R.id.twitter);
+        twitterShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TwitterManager.getInstance().shareTwitterTebakKata(activity);
+            }
+        });
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+    }
+
     public void showShareDialogTebakGambar(final Context context,final Activity activity,final String imageUrl){
         dialog = new AppCompatDialog(activity);
         dialog.setContentView(R.layout.dialog_share_media);

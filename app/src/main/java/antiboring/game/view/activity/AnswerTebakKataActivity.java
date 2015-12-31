@@ -1,5 +1,6 @@
 package antiboring.game.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
@@ -16,6 +17,7 @@ import antiboring.game.R;
 import antiboring.game.common.ApplicationConstants;
 import antiboring.game.controller.UIManager.LogicInterfaceManager;
 import antiboring.game.controller.adsManager.AdColonyManager;
+import antiboring.game.controller.socialMedia.twitter.TwitterManager;
 import antiboring.game.controller.tebakanManager.CoinsManager;
 import antiboring.game.controller.tebakanManager.DisableAnswerManager;
 import antiboring.game.controller.tebakanManager.Tebakan;
@@ -49,8 +51,17 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
         initAction();
         // init ads
         initAdColony();
+
+        //init Twitter
+        TwitterManager.getInstance().initTwitterTebakKata(this, getApplicationContext(), TebakKata.getText().toString());
     }
 
+
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        TwitterManager.getInstance().onActivityResult(this, requestCode, resultCode, data);
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -73,6 +84,8 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
     private void initAction() {
         LogicInterfaceManager.getInstance().backAction(this, btnBack);
         Tebakan.getInstance().checkAnswerTebakKata(AnswerTebakKataActivity.this, this, level, jawabanTebakanEditText, jawabanTebakan, level, btnCek);
+
+        LogicInterfaceManager.getInstance().showDialogSocialMediaTebakKata(getApplicationContext(), this, btnShare, TebakKata.getText().toString());
 
         LogicInterfaceManager.getInstance().showDialogForHintTebakKata(this,btnHelp,jawabanTebakan,TebakKata.getText().toString(),level);
 

@@ -6,10 +6,26 @@
     android:layout_height="wrap_content">
 
 
-    <ImageView
-        android:id="@+id/TebakGambar"
+    <LinearLayout
+        android:id="@+id/layoutTebakKata"
         android:layout_width="200dp"
-        android:layout_height="300dp"/>
+        android:layout_height="300dp"
+        android:background="#6eccec"
+        android:gravity="center"
+        android:padding="20dp">
+
+        <antiboring.game.view.font.CostumFont
+            android:id="@+id/TebakKata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Advasjnviwhefkndn"
+            android:textColor="#ffffff"
+            android:textSize="35sp" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"

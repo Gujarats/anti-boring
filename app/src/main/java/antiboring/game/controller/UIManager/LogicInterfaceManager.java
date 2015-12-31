@@ -215,7 +215,18 @@ public class LogicInterfaceManager {
         });
     }
 
-    public void showDialogSocialMedia(final Context context,final Activity activity, final ImageView btnShare, final String imageUrl){
+    public void showDialogSocialMediaTebakKata(final Context context,final Activity activity, final ImageView btnShare, final String tebakKata){
+
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogSocialMedia.getInstance().showShareDialogTebakKata(context, activity, tebakKata);
+
+            }
+        });
+    }
+
+    public void showDialogSocialMediaTebakGambar(final Context context, final Activity activity, final ImageView btnShare, final String imageUrl){
 
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override

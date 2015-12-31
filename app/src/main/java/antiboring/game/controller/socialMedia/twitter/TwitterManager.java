@@ -7,10 +7,12 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.StrictMode;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -41,6 +43,7 @@ public class TwitterManager {
     private Context context;
     private SessionTwitter sessionTwitter;
     private String imageUrl;
+    private String tebakanKata;
     private Twitter twitter;
     private TwitterManager() {}
 
@@ -49,7 +52,53 @@ public class TwitterManager {
         return instance;
     }
 
-    public void initTwitter(Activity activity,Context context, String imageUrl){
+    public void initTwitterTebakKata(Activity activity, Context context, String tebakanKata){
+        /**
+         *  Enabling strict mode for twitter
+         *  */
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        this.activity =activity;
+        this.context = context;
+        this.sessionTwitter = new SessionTwitter(activity);
+        this.tebakanKata = tebakanKata;
+
+        if (!isLogin(activity)) {
+
+            Uri uri = activity.getIntent().getData();
+            if (uri != null && uri.toString().startsWith(TwitterConstants.callbackTwitter)) {
+                // oAuth verifier
+                Log.d("masukkk", "gan");
+                String verifier = uri
+                        .getQueryParameter(TwitterConstants.oAuthVerifier);
+
+                try {
+                    // Get the access token
+                    AccessToken accessToken = twitter.getOAuthAccessToken(
+                            requestToken, verifier);
+
+                    // Getting user details from twitter
+                    // For now i am getting his name only
+                    long userID = accessToken.getUserId();
+                    User user = twitter.showUser(userID);
+                    String username = user.getName();
+
+                    sessionTwitter.setLogin(true);
+                    sessionTwitter.setPrefKeyOauthSecret(accessToken.getTokenSecret());
+                    sessionTwitter.setPrefKeyOauthToken(accessToken.getToken());
+
+
+                    // Displaying in xml ui
+                } catch (Exception e) {
+                    // Check log for login errors
+                    Log.e("Twitter Login Error", "> " + e.getMessage());
+                }
+            }
+        }
+    }
+
+    public void initTwitterTebakGambar(Activity activity, Context context, String imageUrl){
         /**
          *  Enabling strict mode for twitter
          *  */
@@ -105,11 +154,36 @@ public class TwitterManager {
                         Thread backgroundTask = new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                updateStatusTwitter("#AntiBoring Gambar Apa itu?");
+                                sendTebakanGambarToTwitter("#AntiBoring Gambar Apa itu?");
                             }
                         });
                         backgroundTask.start();
                         Toast.makeText(activity, "Yeayy Share Twitter Success", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        }else {
+            loginToTwitter();
+        }
+
+
+    }
+
+    public void shareTwitterTebakKata(final Activity activity){
+
+        if(isLogin(activity)){
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    Thread backgroundTask = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            sendTebakanKataToTwitter("#AntiBoring Gambar Apa itu?");
+                        }
+                    });
+                    backgroundTask.start();
+                    Toast.makeText(activity, "Yeayy Share Twitter Success", Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -176,7 +250,47 @@ public class TwitterManager {
         return sessionTwitter.isLogin();
     }
 
-    public void updateStatusTwitter(String status){
+    public void sendTebakanKataToTwitter(String status){
+        String statusku;
+        try {
+            ConfigurationBuilder builder = new ConfigurationBuilder();
+            builder.setOAuthConsumerKey(TwitterConstants.consumerKeyTwitter);
+            builder.setOAuthConsumerSecret(TwitterConstants.consumerSecretTwitter);
+
+            // Access Token
+            String access_token = sessionTwitter.getPrefKeyOauthToken();
+
+            //Access Token Secret
+            String access_token_secret = sessionTwitter.getPrefKeyOauthSecret();
+
+            AccessToken accessToken = new AccessToken(access_token, access_token_secret);
+            twitter4j.Twitter twitter = new TwitterFactory(builder.build()).getInstance(accessToken);
+
+            // Update status
+            if (status.length() >= 100) {
+
+                statusku = status.substring(0, 70);
+            } else {
+                statusku = status;
+            }
+            StatusUpdate statusUpdate = new StatusUpdate(statusku + "Game AntiBoring");
+
+            //get Image and save it ot file
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            Bitmap bmp = getBitmapTebakKata(tebakanKata);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            InputStream is = new ByteArrayInputStream(stream.toByteArray());
+            statusUpdate.setMedia("antiBoring.jpg", is);
+
+            twitter.updateStatus(statusUpdate);
+
+
+        } catch (TwitterException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendTebakanGambarToTwitter(String status){
         String statusku;
         try {
             ConfigurationBuilder builder = new ConfigurationBuilder();
@@ -252,5 +366,45 @@ public class TwitterManager {
         //Render this view (and all of its children) to the given Canvas
         view.draw(c);
         return bitmap;
+    }
+
+    private Bitmap getBitmapTebakKata(String tebakKata){
+        LayoutInflater mInflater = (LayoutInflater) activity.getSystemService(activity.LAYOUT_INFLATER_SERVICE);
+
+        //Inflate the layout into a view and configure it the way you like
+        RelativeLayout view = new RelativeLayout(activity);
+        mInflater.inflate(R.layout.layout_tebak_kata_share, view, true);
+        LinearLayout layout = (LinearLayout) view.findViewById(R.id.layoutTebakKata);
+        AppCompatTextView tebakanKata = (AppCompatTextView) view.findViewById(R.id.TebakKata);
+
+        //set size image view
+        Tebakan.getInstance().setSizeLinearLayout(activity, layout);
+
+        //set TExt tebakan
+        tebakanKata.setText(tebakKata);
+
+        //Provide it with a layout params. It should necessarily be wrapping the
+        //content as we not really going to have a parent for it.
+        view.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT));
+
+        //Pre-measure the view so that height and width don't remain null.
+        view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+
+        //Assign a size and position to the view and all of its descendants
+        view.layout(view.getMeasuredWidth(), view.getMeasuredHeight(), view.getMeasuredWidth(), view.getMeasuredHeight());
+
+        //Create the bitmap
+        Bitmap bitmap = Bitmap.createBitmap(view.getMeasuredWidth(),
+                view.getMeasuredHeight(),
+                Bitmap.Config.ARGB_8888);
+        //Create a canvas with the specified bitmap to draw into
+        Canvas c = new Canvas(bitmap);
+
+        //Render this view (and all of its children) to the given Canvas
+        view.draw(c);
+        return bitmap;
+
     }
 }
