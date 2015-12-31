@@ -1,13 +1,11 @@
 package antiboring.game.controller.socialMedia.twitter;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,12 +33,10 @@ import twitter4j.conf.ConfigurationBuilder;
 /**
  * Created by Gujarat Santana on 30/12/15.
  */
-public class TwitterManager extends AsyncTask<String, String, Void> {
+public class TwitterManager {
     private static final String TAG = "TwitterManager";
     public static TwitterManager instance;
     private static RequestToken requestToken;
-    ProgressDialog pDialog;
-    private FinishShare finishShare;
     private Activity activity;
     private Context context;
     private SessionTwitter sessionTwitter;
@@ -53,14 +49,13 @@ public class TwitterManager extends AsyncTask<String, String, Void> {
         return instance;
     }
 
-    public void initTwitter(Activity activity,Context context, String imageUrl,FinishShare finishShare){
+    public void initTwitter(Activity activity,Context context, String imageUrl){
         /**
          *  Enabling strict mode for twitter
          *  */
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        this.finishShare = finishShare;
         this.activity =activity;
         this.context = context;
         this.sessionTwitter = new SessionTwitter(activity);
@@ -221,35 +216,6 @@ public class TwitterManager extends AsyncTask<String, String, Void> {
         }
     }
 
-    private void showProgresDialog(Activity activity){
-        pDialog = new ProgressDialog(activity);
-        pDialog.setMessage("Posting to twitter...");
-        pDialog.setIndeterminate(false);
-        pDialog.setCancelable(false);
-        pDialog.show();
-    }
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-//       showProgresDialog();
-    }
-
-    @Override
-    protected Void doInBackground(String... args) {
-        String status = args[0];
-        updateStatusTwitter(status);
-        return null;
-    }
-
-    @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-        pDialog.dismiss();
-        Toast.makeText(activity, "Yeayy shared Twitter Success", Toast.LENGTH_SHORT).show();
-        finishShare.finishShareTwitter();
-    }
-
     private Bitmap getBitmapForShareTebakGambar(Context context ,Activity activity,String imageUrl) {
         LayoutInflater mInflater = (LayoutInflater) activity.getSystemService(activity.LAYOUT_INFLATER_SERVICE);
 
@@ -286,9 +252,5 @@ public class TwitterManager extends AsyncTask<String, String, Void> {
         //Render this view (and all of its children) to the given Canvas
         view.draw(c);
         return bitmap;
-    }
-
-    public interface FinishShare{
-        void finishShareTwitter();
     }
 }

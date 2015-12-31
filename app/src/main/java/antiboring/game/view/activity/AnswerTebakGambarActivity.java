@@ -7,7 +7,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.jirbo.adcolony.AdColony;
 
@@ -73,13 +72,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
         initAdColony();
 
         //init Twitter
-        TwitterManager.getInstance().initTwitter(this, getApplicationContext(), imageUrl, new TwitterManager.FinishShare() {
-            @Override
-            public void finishShareTwitter() {
-                //do something when finish share to twitter
-                Toast.makeText(AnswerTebakGambarActivity.this, "Yeasyy! Share Success", Toast.LENGTH_SHORT).show();
-            }
-        });
+        TwitterManager.getInstance().initTwitter(this, getApplicationContext(), imageUrl);
     }
 
     private void initAdColony(){
