@@ -34,7 +34,7 @@ public class DialogSocialMedia {
         facebookShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FacebookManager.getInstance().loginFacebook(context, activity, tebakKata);
+                FacebookManager.getInstance().loginFacebookTebakKata(context, activity, tebakKata);
 
             }
         });
@@ -59,7 +59,7 @@ public class DialogSocialMedia {
         facebookShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FacebookManager.getInstance().loginFacebook(context, activity, imageUrl);
+                FacebookManager.getInstance().loginFacebookTebakGambar(context, activity, imageUrl);
 
             }
         });

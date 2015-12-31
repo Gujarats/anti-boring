@@ -59,7 +59,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // init facebook
-        FacebookManager.getInstance().InitFacebook(getApplicationContext(),this);
+        FacebookManager.getInstance().InitFacebook(getApplicationContext());
 
         setContentView(R.layout.layout_answer_tebak_gambar);
 

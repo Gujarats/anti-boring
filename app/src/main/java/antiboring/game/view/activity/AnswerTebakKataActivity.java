@@ -17,6 +17,7 @@ import antiboring.game.R;
 import antiboring.game.common.ApplicationConstants;
 import antiboring.game.controller.UIManager.LogicInterfaceManager;
 import antiboring.game.controller.adsManager.AdColonyManager;
+import antiboring.game.controller.socialMedia.FacebookManager;
 import antiboring.game.controller.socialMedia.twitter.TwitterManager;
 import antiboring.game.controller.tebakanManager.CoinsManager;
 import antiboring.game.controller.tebakanManager.DisableAnswerManager;
@@ -43,6 +44,9 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // init facebook
+        FacebookManager.getInstance().InitFacebook(getApplicationContext());
+
         setContentView(R.layout.layout_answer_tebak_kata);
 
         //initial Interface
@@ -60,6 +64,7 @@ public class AnswerTebakKataActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        FacebookManager.getInstance().getCallbackManager().onActivityResult(requestCode, resultCode, data);
         TwitterManager.getInstance().onActivityResult(this, requestCode, resultCode, data);
     }
     @Override

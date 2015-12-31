@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -43,15 +45,13 @@ public class FacebookManager {
         return instance;
     }
 
-    public void InitFacebook(Context context, final Activity activity){
+    public void InitFacebook(Context context){
         FacebookSdk.sdkInitialize(context);
         callbackManager = CallbackManager.Factory.create();
-
-
     }
 
 
-    public void loginFacebook(final Context context,final Activity activity,final String imageUrl){
+    public void loginFacebookTebakGambar(final Context context, final Activity activity, final String imageUrl){
         List<String> permissionNeeds = Arrays.asList("publish_actions");
         loginManager = LoginManager.getInstance();
         loginManager.logInWithPublishPermissions(activity, permissionNeeds);
@@ -74,6 +74,29 @@ public class FacebookManager {
         });
     }
 
+    public void loginFacebookTebakKata(final Context context, final Activity activity, final String tebakKata){
+        List<String> permissionNeeds = Arrays.asList("publish_actions");
+        loginManager = LoginManager.getInstance();
+        loginManager.logInWithPublishPermissions(activity, permissionNeeds);
+        loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Toast.makeText(activity, "Success share facebook", Toast.LENGTH_SHORT).show();
+                shareTebakKata(context, activity, tebakKata);
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(activity, "Cancel share facebook", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Toast.makeText(activity, "Error share facebook", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     public CallbackManager getCallbackManager(){
         return this.callbackManager;
@@ -82,6 +105,19 @@ public class FacebookManager {
     public void shareTebakGambar(Context context, Activity activity,String imageUrl){
         Log.d(TAG, "shareTebakGambar() called with: " + "context = [" + context + "], activity = [" + activity + "], imageUrl = [" + imageUrl + "]");
         Bitmap image = getBitmapForShareTebakGambar(context,activity,imageUrl);
+        SharePhoto photo = new SharePhoto.Builder()
+                .setBitmap(image)
+                .build();
+        SharePhotoContent content = new SharePhotoContent.Builder()
+                .addPhoto(photo)
+                .build();
+
+        ShareApi.share(content, null);
+    }
+
+    public void shareTebakKata(Context context, Activity activity,String tebakkata){
+        Log.d(TAG, "shareTebakGambar() called with: " + "context = [" + context + "], activity = [" + activity + "], imageUrl = [" + tebakkata + "]");
+        Bitmap image = getBitmapTebakKata(activity, tebakkata);
         SharePhoto photo = new SharePhoto.Builder()
                 .setBitmap(image)
                 .build();
@@ -128,6 +164,46 @@ public class FacebookManager {
         //Render this view (and all of its children) to the given Canvas
         view.draw(c);
         return bitmap;
+    }
+
+    private Bitmap getBitmapTebakKata(Activity activity,String tebakKata){
+        LayoutInflater mInflater = (LayoutInflater) activity.getSystemService(activity.LAYOUT_INFLATER_SERVICE);
+
+        //Inflate the layout into a view and configure it the way you like
+        RelativeLayout view = new RelativeLayout(activity);
+        mInflater.inflate(R.layout.layout_tebak_kata_share, view, true);
+        LinearLayout layout = (LinearLayout) view.findViewById(R.id.layoutTebakKata);
+        AppCompatTextView tebakanKata = (AppCompatTextView) view.findViewById(R.id.TebakKata);
+
+        //set size image view
+        Tebakan.getInstance().setSizeLinearLayout(activity, layout);
+
+        //set TExt tebakan
+        tebakanKata.setText(tebakKata);
+
+        //Provide it with a layout params. It should necessarily be wrapping the
+        //content as we not really going to have a parent for it.
+        view.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT));
+
+        //Pre-measure the view so that height and width don't remain null.
+        view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+
+        //Assign a size and position to the view and all of its descendants
+        view.layout(view.getMeasuredWidth(), view.getMeasuredHeight(), view.getMeasuredWidth(), view.getMeasuredHeight());
+
+        //Create the bitmap
+        Bitmap bitmap = Bitmap.createBitmap(view.getMeasuredWidth(),
+                view.getMeasuredHeight(),
+                Bitmap.Config.ARGB_8888);
+        //Create a canvas with the specified bitmap to draw into
+        Canvas c = new Canvas(bitmap);
+
+        //Render this view (and all of its children) to the given Canvas
+        view.draw(c);
+        return bitmap;
+
     }
 
 }
