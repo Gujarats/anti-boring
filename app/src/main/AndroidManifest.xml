@@ -53,8 +53,32 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="antiboring.game.view.activity.AnswerTebakKataActivity"/>
-        <activity android:name="antiboring.game.view.activity.AnswerTebakGambarActivity"/>
+        <activity android:name="antiboring.game.view.activity.AnswerTebakKataActivity"
+                  android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="t4jsample"
+                    android:scheme="oauth" />
+            </intent-filter>
+        </activity>
+        <activity android:name="antiboring.game.view.activity.AnswerTebakGambarActivity"
+                  android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="t4jsample"
+                    android:scheme="oauth" />
+            </intent-filter>
+        </activity>
         <activity android:name="antiboring.game.view.activity.HintsTebakGambarActivity"/>
         <activity android:name="antiboring.game.view.activity.HintsTebakKataActivity"/>
         <activity android:name="antiboring.game.view.activity.ChooseImageTebakanActivity"/>
@@ -73,6 +97,9 @@
         <activity android:name="com.jirbo.adcolony.AdColonyBrowser"
                   android:configChanges="keyboardHidden|orientation|screenSize"
                   android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
+
+        //web View twitter
+        <activity android:name="antiboring.game.controller.socialMedia.twitter.WebViewTwitterActivity" />
     </application>
 
 

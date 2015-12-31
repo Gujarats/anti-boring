@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import antiboring.game.R;
 import antiboring.game.controller.socialMedia.FacebookManager;
+import antiboring.game.controller.socialMedia.twitter.TwitterManager;
 
 /**
  * Created by Gujarat Santana on 30/12/15.
@@ -33,8 +34,16 @@ public class DialogSocialMedia {
         facebookShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FacebookManager.getInstance().loginFacebook(context,activity,imageUrl);
+                FacebookManager.getInstance().loginFacebook(context, activity, imageUrl);
 
+            }
+        });
+
+        ImageView twitterShare = (ImageView) dialog.findViewById(R.id.twitter);
+        twitterShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TwitterManager.getInstance().shareTwitterTebakGambar(activity);
             }
         });
 

@@ -7,6 +7,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.jirbo.adcolony.AdColony;
 
@@ -17,6 +18,7 @@ import antiboring.game.common.ApplicationConstants;
 import antiboring.game.controller.UIManager.LogicInterfaceManager;
 import antiboring.game.controller.adsManager.AdColonyManager;
 import antiboring.game.controller.socialMedia.FacebookManager;
+import antiboring.game.controller.socialMedia.twitter.TwitterManager;
 import antiboring.game.controller.tebakanManager.CoinsManager;
 import antiboring.game.controller.tebakanManager.DisableAnswerManager;
 import antiboring.game.controller.tebakanManager.Tebakan;
@@ -47,6 +49,9 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
     private int level;
     private String keyGambar;
 
+    //twitter
+    private TwitterManager twitterManager;
+
 
 
     
@@ -66,6 +71,15 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
         initAction();
         // init ads
         initAdColony();
+
+        //init Twitter
+        TwitterManager.getInstance().initTwitter(this, getApplicationContext(), imageUrl, new TwitterManager.FinishShare() {
+            @Override
+            public void finishShareTwitter() {
+                //do something when finish share to twitter
+                Toast.makeText(AnswerTebakGambarActivity.this, "Yeasyy! Share Success", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initAdColony(){
@@ -125,6 +139,7 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         FacebookManager.getInstance().getCallbackManager().onActivityResult(requestCode, resultCode, data);
+        TwitterManager.getInstance().onActivityResult(this, requestCode, resultCode, data);
     }
 
     @Override
