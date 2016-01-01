@@ -79,12 +79,18 @@
                     android:scheme="oauth" />
             </intent-filter>
         </activity>
-        <activity android:name="antiboring.game.view.activity.HintsTebakGambarActivity"/>
-        <activity android:name="antiboring.game.view.activity.HintsTebakKataActivity"/>
-        <activity android:name="antiboring.game.view.activity.ChooseImageTebakanActivity"/>
-        <activity android:name="antiboring.game.view.activity.StageActivity"/>
-        <activity android:name="antiboring.game.view.activity.SettingActivity"/>
-
+        <activity android:name="antiboring.game.view.activity.HintsTebakGambarActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="antiboring.game.view.activity.HintsTebakKataActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="antiboring.game.view.activity.ChooseImageTebakanActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="antiboring.game.view.activity.StageActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="antiboring.game.view.activity.SettingActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="antiboring.game.view.activity.BuyCoinsActivity"
+                  android:screenOrientation="portrait"/>
         //adcolony
         <activity android:name="com.jirbo.adcolony.AdColonyOverlay"
                   android:configChanges="keyboardHidden|orientation|screenSize"

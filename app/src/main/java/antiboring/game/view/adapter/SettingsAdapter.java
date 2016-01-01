@@ -18,6 +18,7 @@ import java.util.List;
 import antiboring.game.R;
 import antiboring.game.controller.UIManager.LogicInterfaceManager;
 import antiboring.game.model.object.SettingsObject;
+import antiboring.game.view.activity.BuyCoinsActivity;
 
 /**
  * Created by Gujarat Santana on 26/12/15.
@@ -102,6 +103,16 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         } catch (android.content.ActivityNotFoundException anfe) {
                             activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                         }
+                    }
+                });
+
+                break;
+            case "Buy Coins":
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(activity, BuyCoinsActivity.class);
+                        activity.startActivity(intent);
                     }
                 });
 
