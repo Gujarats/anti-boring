@@ -36,18 +36,19 @@
             android:text="Premium User Free Access Hint,\n no Ads + 400 coins"
             android:textColor="@color/primary_red"
             android:textSize="15sp"/>
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:background="@color/blue_smooth"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="IDR 10.000"
+            android:textColor="@color/white"/>
     </LinearLayout>
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:background="@color/blue_smooth"
-        android:gravity="center"
-        android:padding="5dp"
-        android:text="IDR 10.000"
-        android:textColor="@color/white"/>
+
 
 
 

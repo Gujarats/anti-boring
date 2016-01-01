@@ -33,7 +33,6 @@ public class BuyCoinsAdapter extends RecyclerView.Adapter<BuyCoinsAdapter.ViewHo
 
     private void initSettingObjects(){
 
-
         // first item
         BuyCoinsObject first = new BuyCoinsObject();
         first.setIcon(R.drawable.coins);
@@ -51,22 +50,22 @@ public class BuyCoinsAdapter extends RecyclerView.Adapter<BuyCoinsAdapter.ViewHo
 
         BuyCoinsObject thirdCoins = new BuyCoinsObject();
         thirdCoins.setIcon(R.drawable.coins);
-        thirdCoins.setTitle("700");
-        thirdCoins.setDescription("");
+        thirdCoins.setTitle("700 coins");
+        thirdCoins.setDescription("Regular");
         thirdCoins.setPrice("IDR 14.000");
         buyCoinsObjects.add(thirdCoins);
 
         BuyCoinsObject fourthCoins = new BuyCoinsObject();
         fourthCoins.setIcon(R.drawable.coins);
         fourthCoins.setTitle("2000 coins");
-        fourthCoins.setDescription("");
+        fourthCoins.setDescription("Double Regular");
         fourthCoins.setPrice("IDR 30.000");
         buyCoinsObjects.add(fourthCoins);
 
         BuyCoinsObject fifthCoins = new BuyCoinsObject();
         fifthCoins.setIcon(R.drawable.coins);
         fifthCoins.setTitle("4500 coins");
-        fifthCoins.setDescription("");
+        fifthCoins.setDescription("Awesome Pack");
         fifthCoins.setPrice("IDR 50.000");
         buyCoinsObjects.add(fifthCoins);
 
@@ -101,12 +100,10 @@ public class BuyCoinsAdapter extends RecyclerView.Adapter<BuyCoinsAdapter.ViewHo
             holder.desc.setText(buyCoinsObject.getDescription());
             holder.desc.setVisibility(View.VISIBLE);
         }else{
-            holder.desc.setVisibility(View.INVISIBLE);
+            holder.desc.setVisibility(View.GONE);
         }
 
         holder.price.setText(buyCoinsObject.getPrice());
-
-
 
     }
 
