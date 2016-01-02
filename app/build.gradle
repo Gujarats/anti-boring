@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23"
+    useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "antiboring.game"
@@ -16,8 +17,9 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro'
         }
     }
 
@@ -25,6 +27,7 @@ android {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/LICENSE'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
 
     compileOptions {
@@ -38,7 +41,13 @@ android {
         }
         main { java.srcDirs = ['src/main/java', 'src/androidTest/java'] }
     }
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
 }
+
+
 
 
 repositories {
@@ -52,10 +61,9 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.android.support:palette-v7:23.0.1'
     compile 'com.android.support:design:23.1.0'
-    compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.balysv.materialmenu:material-menu-toolbar:1.5.4'
-    compile 'com.google.android.gms:play-services-gcm:8.4.0'
     compile 'com.google.android.gms:play-services-ads:8.4.0'
+    compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
 
     //social media

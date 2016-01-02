@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.graphics.Palette;
 import android.transition.Slide;
 import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
@@ -74,11 +75,16 @@ public class UIAnimationManager {
         RotateAnimation rotate = new RotateAnimation(0f, degree,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
+
+        DecelerateInterpolator decelerateInterpolator  =new DecelerateInterpolator();
+        decelerateInterpolator.getInterpolation(android.R.anim.linear_interpolator);
+
         imageView.setDrawingCacheEnabled(true);
         rotate.setDuration(300);
-        rotate.setInterpolator(context, android.R.anim.linear_interpolator);
+        rotate.setInterpolator(decelerateInterpolator);
         rotate.setFillBefore(true);
         rotate.setFillAfter(true);
+
         imageView.startAnimation(rotate);
 
 
