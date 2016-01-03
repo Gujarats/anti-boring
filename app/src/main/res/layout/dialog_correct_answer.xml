@@ -11,7 +11,7 @@
         android:id="@+id/icon"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@drawable/icon_correct_answer"/>
+        android:src="@drawable/anjing_senang"/>
 
     <antiboring.game.view.font.CostumFont
         android:layout_width="wrap_content"
