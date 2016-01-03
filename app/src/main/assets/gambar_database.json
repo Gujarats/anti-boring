@@ -400,11 +400,25 @@
     },
     {
       "gambar_url": "gambar_medium27",
-      "jawaban": ""
+      "jawaban": "hutan hujan tropis"
     },
     {
       "gambar_url": "gambar_hard27",
-      "jawaban": ""
+      "jawaban": "mawar merah"
+    }
+  ],
+  "28" : [
+    {
+      "gambar_url": "gambar_easy28",
+      "jawaban": "samurai x"
+    },
+    {
+      "gambar_url": "gambar_medium28",
+      "jawaban": "tukang siomay"
+    },
+    {
+      "gambar_url": "gambar_hard28",
+      "jawaban": "tongkat sihir"
     }
   ]
 }
