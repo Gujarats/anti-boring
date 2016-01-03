@@ -465,6 +465,7 @@ public class Tebakan {
 
                             }else{
                                 // jawaban salah total
+                                jawaban.setText("");
                                 YoYo.with(Techniques.Shake).playOn(activity.findViewById(R.id.layoutAnim));
                                 UIAnimationManager.getInstance().setRotateAnimation(context, btnCek, 45);
                             }
@@ -546,6 +547,7 @@ public class Tebakan {
 
                             }else{
                                 // jawaban salah total
+                                jawaban.setText("");
                                 YoYo.with(Techniques.Shake).playOn(activity.findViewById(R.id.layoutAnim));
                                 UIAnimationManager.getInstance().setRotateAnimation(context, btnCek, 45);
                             }
