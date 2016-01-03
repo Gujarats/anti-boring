@@ -35,42 +35,42 @@ public class BuyCoinsAdapter extends RecyclerView.Adapter<BuyCoinsAdapter.ViewHo
 
         // first item
         BuyCoinsObject first = new BuyCoinsObject();
-        first.setIcon(R.drawable.coins);
+        first.setIcon(R.drawable.coin_700);
         first.setTitle("290 coins");
         first.setDescription("Hot Offer");
         first.setPrice("IDR 6000");
         buyCoinsObjects.add(first);
 
         BuyCoinsObject premiumUser = new BuyCoinsObject();
-        premiumUser.setIcon(R.drawable.coins);
+        premiumUser.setIcon(R.drawable.premium_pack);
         premiumUser.setTitle("Premium Pack");
         premiumUser.setDescription("Premium User Free Access Hint, no Ads + 400 coins");
         premiumUser.setPrice("IDR 24.000");
         buyCoinsObjects.add(premiumUser);
 
         BuyCoinsObject thirdCoins = new BuyCoinsObject();
-        thirdCoins.setIcon(R.drawable.coins);
+        thirdCoins.setIcon(R.drawable.coin_700);
         thirdCoins.setTitle("700 coins");
         thirdCoins.setDescription("Regular");
         thirdCoins.setPrice("IDR 14.000");
         buyCoinsObjects.add(thirdCoins);
 
         BuyCoinsObject fourthCoins = new BuyCoinsObject();
-        fourthCoins.setIcon(R.drawable.coins);
+        fourthCoins.setIcon(R.drawable.coin_2000);
         fourthCoins.setTitle("2000 coins");
         fourthCoins.setDescription("Double Regular");
         fourthCoins.setPrice("IDR 30.000");
         buyCoinsObjects.add(fourthCoins);
 
         BuyCoinsObject fifthCoins = new BuyCoinsObject();
-        fifthCoins.setIcon(R.drawable.coins);
+        fifthCoins.setIcon(R.drawable.coin_4500);
         fifthCoins.setTitle("4500 coins");
         fifthCoins.setDescription("Awesome Pack");
         fifthCoins.setPrice("IDR 50.000");
         buyCoinsObjects.add(fifthCoins);
 
         BuyCoinsObject sixCoins = new BuyCoinsObject();
-        sixCoins.setIcon(R.drawable.coins);
+        sixCoins.setIcon(R.drawable.coin_20000);
         sixCoins.setTitle("20.000 coins");
         sixCoins.setDescription("Best Offer");
         sixCoins.setPrice("IDR 100.000");
