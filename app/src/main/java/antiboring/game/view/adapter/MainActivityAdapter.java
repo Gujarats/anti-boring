@@ -3,7 +3,6 @@ package antiboring.game.view.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -83,11 +82,12 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
                 activity.startActivity(intent);
             }
         });
-        layoutCompat.setBackgroundResource(R.drawable.selector_level);
+        layoutCompat.setBackgroundResource(R.drawable.level_active_selector);
     }
 
     private void disableLevel(LinearLayout layoutCompat){
-        layoutCompat.setBackgroundColor(Color.parseColor("#999999"));
+//        layoutCompat.setBackgroundColor(Color.parseColor("#999999"));
+        layoutCompat.setBackgroundResource(R.drawable.level_inactive);
         layoutCompat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

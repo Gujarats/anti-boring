@@ -82,6 +82,7 @@
         android:id="@+id/list_level"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/primary2"
         android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 

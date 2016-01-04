@@ -3,6 +3,7 @@
 
 <resources>
     <color name="window_background">#FFF5F5F5</color>
+    <color name="primary2">#2cbf41</color>
     <color name="primary">#303F9F</color>
     <color name="primary_red">#ff4d4d</color>
     <color name="white">#FFFFFF</color>
