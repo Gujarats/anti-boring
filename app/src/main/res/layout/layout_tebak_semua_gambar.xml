@@ -60,7 +60,7 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:text="01"
-                    android:textColor="@color/blue_level_dark"
+                    android:textColor="@color/blue_level"
                     android:textSize="40sp" />
             </LinearLayout>
 

@@ -129,7 +129,7 @@
                 android:layout_toLeftOf="@+id/coins"
                 android:src="@drawable/coins"/>
 
-            <antiboring.game.view.font.CostumFont
+            <antiboring.game.view.font.RobotoFont
                 android:id="@+id/coins"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -138,7 +138,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="@dimen/abc_action_bar_content_inset_material"
                 android:text="1200"
-                android:textColor="@color/primary"
+                android:textColor="@color/yellow"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
         </RelativeLayout>
