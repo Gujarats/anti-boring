@@ -40,3 +40,9 @@
 #
 # Twitter library - end
 #
+
+# adcolony start
+-dontwarn com.immersion.**
+-dontnote com.immersion.**
+-dontwarn android.webkit.**
+#adcolony end

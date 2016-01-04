@@ -31,7 +31,7 @@ public class AdColonyManager {
     }
 
     public void setUpAdColony(final Activity activity, final ImageView gift,final AppCompatTextView coins){
-        AdColony.configure(activity, "version:1.0,store:google", APP_ID, ZONE_ID);
+        AdColony.configure(activity, "version:1.7,store:google", APP_ID, ZONE_ID);
 
         //Register an AdColonyAdAvailabilityListener to be notified of changes in a zone's
         //ad availability.
