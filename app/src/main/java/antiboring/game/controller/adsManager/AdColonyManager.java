@@ -63,7 +63,7 @@ public class AdColonyManager {
                     CoinsManager.getInstance().setCoinsOnAdsResult(activity,amount);
                     CoinsManager.getInstance().setCoinForUI(activity,coins);
                     String name = reward.name();
-                    Toast.makeText(activity, amount + " " + name + " awarded!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, amount + " coins awarded!", Toast.LENGTH_LONG).show();
                 }
             }
         });
