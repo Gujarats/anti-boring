@@ -104,7 +104,7 @@ public class StageManger {
                 if(stage.has(tebakKata)){
                     starStageTebakKata.setVisibility(View.VISIBLE);
                 }else{
-                    starStageTebakKata.setVisibility(View.INVISIBLE);
+                    starStageTebakKata.setVisibility(View.GONE);
                 }
 
                 if(stage.has(tebakGambar)){
@@ -112,15 +112,15 @@ public class StageManger {
                     //save progress stars at level
                     Tebakan.getInstance().saveProgressLevel(activity, level);
                 }else{
-                    starStageTebakGambar.setVisibility(View.INVISIBLE);
+                    starStageTebakGambar.setVisibility(View.GONE);
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }else{
-            starStageTebakKata.setVisibility(View.INVISIBLE);
-            starStageTebakGambar.setVisibility(View.INVISIBLE);
+            starStageTebakKata.setVisibility(View.GONE);
+            starStageTebakGambar.setVisibility(View.GONE);
         }
 
     }

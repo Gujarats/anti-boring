@@ -36,13 +36,13 @@
         android:layout_margin="10dp"
         android:gravity="center">
 
-        <antiboring.game.view.font.CostumFont
+        <antiboring.game.view.font.RobotoFont
             android:id="@+id/level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text="@string/level"
-            android:textColor="@color/blue_level_dark"
+            android:textColor="@color/blue_smooth"
             android:textSize="@dimen/level"/>
 
         <LinearLayout
@@ -59,7 +59,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <antiboring.game.view.font.CostumFont
+                <antiboring.game.view.font.RobotoFont
                     android:id="@+id/txtLvl"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
@@ -75,7 +75,7 @@
                     android:background="@drawable/background_selector2"
                     android:gravity="center">
 
-                    <antiboring.game.view.font.CostumFont
+                    <antiboring.game.view.font.RobotoFont
                         android:id="@+id/TebakKataText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                         android:gravity="center"
                         android:text="@string/tebakkata"
                         android:textColor="@color/white"
-                        android:textSize="30sp"/>
+                        android:textSize="25sp"/>
                     <ImageView
                         android:id="@+id/starKata"
                         android:layout_width="30dp"
@@ -107,7 +107,7 @@
                 android:gravity="center">
 
 
-                <antiboring.game.view.font.CostumFont
+                <antiboring.game.view.font.RobotoFont
                     android:id="@+id/TebakGambarText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                     android:gravity="center"
                     android:text="@string/tebakgambar"
                     android:textColor="@color/white"
-                    android:textSize="30sp"/>
+                    android:textSize="25sp"/>
                 <ImageView
                     android:id="@+id/starGambar"
                     android:layout_width="30dp"
