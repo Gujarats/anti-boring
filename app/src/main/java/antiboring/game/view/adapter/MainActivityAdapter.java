@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,11 +67,12 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
         int starsAtLevel = levelTebakanObjects.get(position).getStars();
         if(!levelTebakanObjects.get(position).isLocked()){
             enableLevel(level, holder.layoutLevel);
-
+            setStarsAtLevelEnable(holder.txtLevel, holder.bintang1, holder.bintang2, holder.locked, starsAtLevel);
         }else{
             disableLevel(holder.layoutLevel);
+            setStarsAtLevelDisable(holder.txtLevel, holder.bintang1, holder.bintang2, holder.locked);
         }
-        setStarsAtLevel(holder.bintang1,holder.bintang2,starsAtLevel);
+
     }
 
     private void enableLevel(int levelPosition,LinearLayout layoutCompat){
@@ -105,18 +108,34 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
         }
     }
 
-    private void setStarsAtLevel(ImageView bintang1, ImageView bintang2, int starsComplete){
+    public void setStarsAtLevelDisable(AppCompatTextView level, ImageView bintang1, ImageView bintang2, ImageView locked){
+        bintang1.setVisibility(View.GONE);
+        bintang2.setVisibility(View.GONE);
+        level.setVisibility(View.GONE);
+        locked.setVisibility(View.VISIBLE);
+
+    }
+
+    private void setStarsAtLevelEnable(AppCompatTextView level,ImageView bintang1, ImageView bintang2, ImageView locked,int starsComplete){
+        level.setVisibility(View.VISIBLE);
+        locked.setVisibility(View.GONE);
         if(starsComplete==1){
             // bintang 1
+            Picasso.with(activity).load(R.drawable.finish_stars).into(bintang1);
+            Picasso.with(activity).load(R.drawable.unfinish_stars).into(bintang2);
             bintang1.setVisibility(View.VISIBLE);
-            bintang2.setVisibility(View.INVISIBLE);
+            bintang2.setVisibility(View.VISIBLE);
         }else if(starsComplete==2){
             // bintang 2
+            Picasso.with(activity).load(R.drawable.finish_stars).into(bintang1);
+            Picasso.with(activity).load(R.drawable.finish_stars).into(bintang2);
             bintang1.setVisibility(View.VISIBLE);
             bintang2.setVisibility(View.VISIBLE);
         } else if(starsComplete==0){
-            bintang1.setVisibility(View.INVISIBLE);
-            bintang2.setVisibility(View.INVISIBLE);
+            Picasso.with(activity).load(R.drawable.unfinish_stars).into(bintang1);
+            Picasso.with(activity).load(R.drawable.unfinish_stars).into(bintang2);
+            bintang1.setVisibility(View.VISIBLE);
+            bintang2.setVisibility(View.VISIBLE);
         }
     }
 
@@ -205,8 +224,9 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public AppCompatTextView txtLevel;
-        public ImageView bintang1, bintang2;
+        public ImageView bintang1, bintang2,locked;
         public LinearLayout layoutLevel;
+
 
 
         public ViewHolder(View view) {
@@ -216,6 +236,7 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
             txtLevel = (AppCompatTextView) view.findViewById(R.id.txtLvl);
             bintang1 = (ImageView) view.findViewById(R.id.bintang1);
             bintang2 = (ImageView) view.findViewById(R.id.bintang2);
+            locked = (ImageView) view.findViewById(R.id.locked);
 
         }
 

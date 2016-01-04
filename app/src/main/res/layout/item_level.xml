@@ -17,15 +17,22 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <antiboring.game.view.font.CostumFont
+        <ImageView
+            android:id="@+id/locked"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/locked"
+            android:visibility="gone"/>
+
+        <antiboring.game.view.font.RobotoFont
             android:id="@+id/txtLvl"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_weight="1"
             android:gravity="center_vertical|center_horizontal"
             android:text="01"
-            android:textColor="@color/white"
-            android:textSize="40sp" />
+            android:textColor="@color/primary_dark"
+            android:textSize="30sp" />
 
         <ImageView
             android:id="@+id/bintang1"
@@ -33,7 +40,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:src="@drawable/bintang" />
+            />
 
         <ImageView
             android:id="@+id/bintang2"
@@ -41,7 +48,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:src="@drawable/bintang" />
+            />
     </LinearLayout>
 
 </LinearLayout>
