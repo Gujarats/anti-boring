@@ -3,12 +3,12 @@
 
 <resources>
     <color name="window_background">#FFF5F5F5</color>
-    <color name="primary2">#2cbf41</color>
-    <color name="primary">#303F9F</color>
+    <color name="primary">#2cbf41</color>
+    <color name="primary2">#303F9F</color>
     <color name="primary_red">#ff4d4d</color>
     <color name="white">#FFFFFF</color>
-    <color name="blue_smooth">#6eccec</color>
-    <color name="blue_smooth_dark">#1b9ecb</color>
+    <color name="blue_smooth">#2abcbd</color>
+    <color name="blue_smooth_dark">#43cfd0</color>
     <color name="blue_level">#0379f7</color>
     <color name="blue_level_dark">#023e7e</color>
 

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0069b9"
+    android:background="@drawable/background_result"
     android:fitsSystemWindows="true"
     tools:context=".StageActivity">
 
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text="@string/level"
-            android:textColor="@color/white"
+            android:textColor="@color/blue_level_dark"
             android:textSize="@dimen/level"/>
 
         <LinearLayout
@@ -65,14 +65,14 @@
                     android:layout_height="150dp"
                     android:gravity="center"
                     android:text="01"
-                    android:textColor="@color/white"
+                    android:textColor="@color/blue_smooth"
                     android:textSize="@dimen/level01"/>
 
                 <RelativeLayout
                     android:id="@+id/TebakKata"
                     android:layout_width="140dp"
                     android:layout_height="150dp"
-                    android:background="@drawable/backgorund_selector"
+                    android:background="@drawable/background_selector2"
                     android:gravity="center">
 
                     <antiboring.game.view.font.CostumFont
@@ -80,10 +80,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:background="@drawable/backgorund_selector"
                         android:gravity="center"
                         android:text="@string/tebakkata"
-                        android:textColor="#0069b9"
+                        android:textColor="@color/white"
                         android:textSize="30sp"/>
                     <ImageView
                         android:id="@+id/starKata"
@@ -116,7 +115,7 @@
                     android:layout_marginLeft="5dp"
                     android:gravity="center"
                     android:text="@string/tebakgambar"
-                    android:textColor="#0069b9"
+                    android:textColor="@color/white"
                     android:textSize="30sp"/>
                 <ImageView
                     android:id="@+id/starGambar"
