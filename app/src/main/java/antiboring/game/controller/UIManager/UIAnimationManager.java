@@ -18,6 +18,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import antiboring.game.R;
+import antiboring.game.controller.tebakanManager.Tebakan;
 
 /**
  * Created by Gujarat Santana on 09/11/15.
@@ -34,23 +35,28 @@ public class UIAnimationManager {
 
     public void setAnimationHeader(final Context context,final Activity activity, final CollapsingToolbarLayout header, final ImageView headerIcon, int headerIconRes){
         initActivityTransitions(activity);
-        header.setExpandedTitleColor(context.getResources().getColor(android.R.color.transparent));
-        Picasso.with(activity).load(headerIconRes).into(headerIcon, new Callback() {
-            @Override
-            public void onSuccess() {
-                Bitmap bitmap = ((BitmapDrawable) headerIcon.getDrawable()).getBitmap();
-                Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-                    public void onGenerated(Palette palette) {
-                        applyPalette(context,activity,palette,header);
+        Tebakan.getInstance().setSizeImageView(activity, headerIcon);
+//        header.setExpandedTitleColor(context.getResources().getColor(android.R.color.transparent));
+        Picasso.with(activity)
+                .load(headerIconRes)
+                .fit()
+                .centerCrop()
+                .into(headerIcon, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Bitmap bitmap = ((BitmapDrawable) headerIcon.getDrawable()).getBitmap();
+                        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+                            public void onGenerated(Palette palette) {
+                                applyPalette(context, activity, palette, header);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError() {
+
                     }
                 });
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        });
     }
 
     private void applyPalette(Context context,Activity activity,Palette palette,CollapsingToolbarLayout collapsingToolbarLayout) {
