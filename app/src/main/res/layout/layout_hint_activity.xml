@@ -33,6 +33,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
                     android:text="T_ _ _T  S _ _ _T"
+                    android:textColor="@color/white"
                     android:textSize="18sp"/>
             </LinearLayout>
 
