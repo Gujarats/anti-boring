@@ -11,6 +11,8 @@
     <color name="blue_smooth_dark">#43cfd0</color>
     <color name="blue_level">#0379f7</color>
     <color name="blue_level_dark">#023e7e</color>
+    <color name="blue_answer">#00b4b9</color>
+    <color name="blue_answer_edit_text">#19d2d7</color>
 
 
     <!--menu settings-->
