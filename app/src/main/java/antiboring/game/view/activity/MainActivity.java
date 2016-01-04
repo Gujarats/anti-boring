@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity{
         initFacebook();
         setContentView(R.layout.layout_main);
 
-        pritinKeyHashDevelopment();
+//        pritinKeyHashDevelopment();
 
 
 
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity{
     private void initialAds(){
         // initial ads
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId("ca-app-pub-7786975749587909/7517791075");
 
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
@@ -125,7 +125,6 @@ public class MainActivity extends AppCompatActivity{
 
     private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
 
         mInterstitialAd.loadAd(adRequest);
