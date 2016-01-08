@@ -71,6 +71,8 @@ public class AdColonyManager {
         if (AdColony.statusForZone( ZONE_ID ).equals( "active" ))
         {
             gift.setVisibility(View.VISIBLE);
+        }else{
+            gift.setVisibility(View.INVISIBLE);
         }
     }
 

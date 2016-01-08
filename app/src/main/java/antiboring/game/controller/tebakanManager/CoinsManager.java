@@ -16,8 +16,8 @@ public class CoinsManager {
     public static CoinsManager instance;
     private int onHintActivity = 10;
     private int onDisplayChar = 60;
-    private int onRighAnswer = 15;
-    private int onCompleteAllStars = 120;
+    private int onRighAnswer = 5;
+    private int onCompleteAllStars = 10;
 
 
     private CoinsManager() {}
