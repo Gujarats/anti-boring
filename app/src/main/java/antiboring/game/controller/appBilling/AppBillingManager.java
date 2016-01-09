@@ -308,7 +308,7 @@ public class AppBillingManager {
     public void checkItemUserOwned(Inventory inventory){
 
         if(isHotOffer(inventory)){
-            // user brough hot offer
+            // user bought hot offer
 
         }
 
@@ -373,6 +373,17 @@ public class AppBillingManager {
                     }
                 });
     }
+
+    public boolean isPremiumUser(Activity activity){
+        SessionPremiumUser sessionPremiumUser = new SessionPremiumUser(activity);
+        return sessionPremiumUser.isPremiumUser();
+    }
+
+    public void setPremiumUser(Activity activity,boolean isPremium){
+        SessionPremiumUser sessionPremiumUser = new SessionPremiumUser(activity);
+        sessionPremiumUser.setPremiumUser(isPremium);
+    }
+
 
     public void bindingToAppBillingService(Activity activity){
         mServiceConn = new ServiceConnection() {
