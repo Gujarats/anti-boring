@@ -15,9 +15,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.facebook.FacebookSdk;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -25,6 +22,7 @@ import java.security.NoSuchAlgorithmException;
 import antiboring.game.R;
 import antiboring.game.controller.UIManager.LogicInterfaceManager;
 import antiboring.game.controller.UIManager.UIAnimationManager;
+import antiboring.game.controller.appBilling.AppBillingManager;
 import antiboring.game.controller.tebakanManager.CoinsManager;
 import antiboring.game.controller.tebakanManager.UserPlayManager;
 import antiboring.game.view.adapter.MainActivityAdapter;
@@ -44,7 +42,6 @@ public class MainActivity extends AppCompatActivity{
     @Bind(R.id.btnSetting)
     LinearLayout btnSetting;
     @Bind(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbarLayout;
-    InterstitialAd mInterstitialAd;
     private RecyclerView.LayoutManager mLayoutManager;
     /**
      * Adapater
@@ -57,17 +54,17 @@ public class MainActivity extends AppCompatActivity{
         initFacebook();
         setContentView(R.layout.layout_main);
 
-//        pritinKeyHashDevelopment();
-
-
-
-        initialAds();
-        requestNewInterstitial();
+        //init admob ads
+//        AdmobManager.getInstance().initialAds(getApplicationContext());
+//        AdmobManager.getInstance().requestNewInterstitial();
 
         //initial Interface
         initUI();
         // initial for action button or widget
         initAction();
+
+        // ini app-billing
+        AppBillingManager.getInstance().initBilling(getApplicationContext(),this);
 
     }
 
@@ -79,14 +76,15 @@ public class MainActivity extends AppCompatActivity{
         // load progress user
         onLoadProgressUser();
         //load ads
-        if(mInterstitialAd.isLoaded()) {
-            Log.i(TAG, "onLoadAds: "+UserPlayManager.getInstance().isUserPlayed(MainActivity.this));
-            if(UserPlayManager.getInstance().isUserPlayed(MainActivity.this)){
-                mInterstitialAd.show();
-                UserPlayManager.getInstance().setUserPlayed(MainActivity.this, false);
-            }
+//        AdmobManager.getInstance().onResume(this);
 
-        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppBillingManager.getInstance().onDestroy(this);
     }
 
     private void initFacebook(){
@@ -110,30 +108,8 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    private void initialAds(){
-        // initial ads
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7786975749587909/7517791075");
-
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                requestNewInterstitial();
-            }
-        });
-    }
-
-    private void requestNewInterstitial() {
-        AdRequest adRequest = new AdRequest.Builder()
-                .build();
-
-        mInterstitialAd.loadAd(adRequest);
-    }
-
-
     private void onLoadProgressUser(){
         mainActivityAdapter.updateLevelJson();
-
     }
 
 
@@ -151,9 +127,6 @@ public class MainActivity extends AppCompatActivity{
         ImageView headerIcon = (ImageView) findViewById(R.id.headerIcon);
 
         mainActivityAdapter = new MainActivityAdapter(getApplicationContext(),this,R.layout.item_level);
-
-
-
 
         // set onClick Effect
         LogicInterfaceManager.getInstance().setOnClickEffect(this, btnSetting);
