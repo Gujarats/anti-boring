@@ -20,6 +20,7 @@ import antiboring.game.controller.appBilling.util.IabHelper;
 import antiboring.game.controller.appBilling.util.IabResult;
 import antiboring.game.controller.appBilling.util.Inventory;
 import antiboring.game.controller.appBilling.util.Purchase;
+import antiboring.game.view.adapter.BuyCoinsAdapter;
 
 /**
  * Created by Gujarat Santana on 01/01/16.
@@ -33,6 +34,7 @@ public class AppBillingManager {
     static final String SKU_COINS_DOUBLE_REGULAR = "double_regular";
     static final String SKU_COINS_AWESOMEPACK = "awesome_pack";
     static final String SKU_COINS_BEST_OFFER= "best_offer";
+    static final int Rg = 92243;
     private static final String TAG = "AppBillingManager";
     public static AppBillingManager instance;
     // The helper object
@@ -107,7 +109,7 @@ public class AppBillingManager {
 //
 //    }
 
-    public void initBillingBuyActivity(final Context context,final Activity activity){
+    public void initBillingBuyActivity(final Context context,final Activity activity, final BuyCoinsAdapter adapter){
         this.activity = activity;
         Log.d(TAG, "Creating IAB helper.");
         mHelper = new IabHelper(context, "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjFVcXKbW4TvdA04tcXjeNBU3zo59OMXLHcfpwOWE9sNtEUH0H7puxZs2biaC6zTmSk2Ia8Quv30JxUn1h15emE923G/BGR1Hrj0SbNIRHpLrwIjO62RZ+cw0xpzEMrYeKMQTbDe+xrKBzEAMo436P1KbAR/+TDiYw7PhC3fKqGMfq4otGL7RVjvF6NGiTHGEz639pM2Uru46IfSUJGile/9aNGoQaOPs0xGXpVjGarEDr+LuzmoejSmZRkqLpIm/1j4woXnw74a0SuntF5R0mYxPoPtlPvsh/JvP98ppnq4McqAW22CWFOesgOLQi4Gz+y2fkNCJe8IQFiNv3jTXFQIDAQAB");
@@ -142,7 +144,7 @@ public class AppBillingManager {
                     @Override
                     public void receivedBroadcast() {
                         Log.d(TAG, "Received broadcast notification. Querying inventory.");
-                        getAvailableItemForPurchase();
+                        getAvailableItemForPurchase(adapter);
                     }
                 });
                 IntentFilter broadcastFilter = new IntentFilter(IabBroadcastReceiver.ACTION);
@@ -150,14 +152,8 @@ public class AppBillingManager {
 
                 // IAB is fully set up. Now, let's get an inventory of stuff we own.
                 Log.d(TAG, "Setup successful. Querying inventory.");
-//                mHelper.queryInventoryAsync(new IabHelper.QueryInventoryFinishedListener() {
-//                    @Override
-//                    public void onQueryInventoryFinished(IabResult result, Inventory inv) {
-//                        settAvailableItems(inv);
-//                    }
-//                });
 
-                getAvailableItemForPurchase();
+                getAvailableItemForPurchase(adapter);
             }
         });
     }
@@ -228,18 +224,29 @@ public class AppBillingManager {
         });
     }
 
-    private void settAvailableItems(Inventory inventory){
-        boolean hot1 = inventory.hasPurchase(SKU_COINS_HOT_OFFER);
-        boolean regular1 =inventory.hasPurchase(SKU_COINS_REGULAR);
-        boolean premium1 = inventory.hasPurchase(SKU_PREMIUM);
 
+    public void buyCoinsHotOffer(Activity activity){
+        String payload = "hotBabyOfferme";
+        mHelper.launchPurchaseFlow(activity, SKU_COINS_HOT_OFFER, Rg,
+                mPurchaseFinishedListener, payload);
 
-        Log.i(TAG, "settAvailableItems: "+"premium "+premium1);
-        Log.i(TAG, "settAvailableItems: " + "hot offer " + hot1);
-        Log.i(TAG, "settAvailableItems: " + "regular " + regular1);
     }
 
-    public boolean isUserPremium(Inventory inventory){
+    public void buyPremium(Activity activity){
+        String payload = "hotBabyOfferme";
+        mHelper.launchPurchaseFlow(activity, SKU_COINS_HOT_OFFER, Rg,
+                mPurchaseFinishedListener, payload);
+
+    }
+
+    public void buyCoinsRegular(Activity activity){
+        String payload = "hotBabyOfferme";
+        mHelper.launchPurchaseFlow(activity, SKU_COINS_HOT_OFFER, Rg,
+                mPurchaseFinishedListener, payload);
+
+    }
+
+    public boolean isUserHasPremiumInventory(Inventory inventory){
         try{
             Purchase premiumPurchase = inventory.getPurchase(SKU_PREMIUM);
             boolean isPremium = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
@@ -319,7 +326,7 @@ public class AppBillingManager {
             Log.i(TAG, "checkItemUserOwned: Not hot");
         }
 
-        if(isUserPremium(inventory)){
+        if(isUserHasPremiumInventory(inventory)){
             // user is Premium
             setPremiumUser(activity,true);
         }else{
@@ -355,12 +362,14 @@ public class AppBillingManager {
         }
     }
 
-    public void getAvailableItemForPurchase(){
+    public void getAvailableItemForPurchase(final BuyCoinsAdapter adapter){
         List additionalSkuList = new ArrayList();
-        final List<String> items = new ArrayList<>();
         additionalSkuList.add(SKU_COINS_HOT_OFFER);
         additionalSkuList.add(SKU_PREMIUM);
         additionalSkuList.add(SKU_COINS_REGULAR);
+        additionalSkuList.add(SKU_COINS_DOUBLE_REGULAR);
+        additionalSkuList.add(SKU_COINS_AWESOMEPACK);
+        additionalSkuList.add(SKU_COINS_BEST_OFFER);
         mHelper.queryInventoryAsync(true, additionalSkuList,
                 new IabHelper.QueryInventoryFinishedListener() {
                     @Override
@@ -371,21 +380,32 @@ public class AppBillingManager {
                             return;
                         }
 
-                        String hotOffer =
+                        final String hotOffer =
                                 inv.getSkuDetails(SKU_COINS_HOT_OFFER).getPrice();
-                        String premium =
+                        final String premium =
                                 inv.getSkuDetails(SKU_PREMIUM).getPrice();
-                        String regular =
+                        final String regular =
                                 inv.getSkuDetails(SKU_COINS_REGULAR).getPrice();
+                        final String doubleRegular =
+                                inv.getSkuDetails(SKU_COINS_DOUBLE_REGULAR).getPrice();
+                        final String awesomePack =
+                                inv.getSkuDetails(SKU_COINS_AWESOMEPACK).getPrice();
+                        final String bestOffer=
+                                inv.getSkuDetails(SKU_COINS_BEST_OFFER).getPrice();
 
-                        items.add(hotOffer);
-                        items.add(premium);
-                        items.add(regular);
-
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.setPrice(hotOffer, premium, regular, doubleRegular, awesomePack,bestOffer);
+                            }
+                        });
 
                         Log.i(TAG, "getAvailableItemForPurchase: " + hotOffer);
                         Log.i(TAG, "getAvailableItemForPurchase: " + premium);
                         Log.i(TAG, "getAvailableItemForPurchase: " + regular);
+                        Log.i(TAG, "getAvailableItemForPurchase: " + doubleRegular);
+                        Log.i(TAG, "getAvailableItemForPurchase: " + awesomePack);
+                        Log.i(TAG, "getAvailableItemForPurchase: " + bestOffer);
 
                     }
                 });

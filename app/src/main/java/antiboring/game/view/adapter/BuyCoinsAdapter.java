@@ -81,6 +81,22 @@ public class BuyCoinsAdapter extends RecyclerView.Adapter<BuyCoinsAdapter.ViewHo
         notifyDataSetChanged();
     }
 
+    public void setPrice(String priceHotOffer,String pricePremium, String priceRegular,String priceDoubleReg, String priceAwesomePack, String priceBestOffer){
+        if(buyCoinsObjects.size()>0){
+            // set hotOffer
+            buyCoinsObjects.get(0).setPrice(priceHotOffer);
+            buyCoinsObjects.get(1).setPrice(pricePremium);
+            buyCoinsObjects.get(2).setPrice(priceRegular);
+            buyCoinsObjects.get(3).setPrice(priceDoubleReg);
+            buyCoinsObjects.get(4).setPrice(priceAwesomePack);
+            buyCoinsObjects.get(5).setPrice(priceBestOffer);
+
+
+        }
+
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())

@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 
 import antiboring.game.R;
 import antiboring.game.controller.UIManager.LogicInterfaceManager;
+import antiboring.game.controller.appBilling.AppBillingManager;
 import antiboring.game.view.adapter.BuyCoinsAdapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,13 +20,23 @@ public class BuyCoinsActivity extends AppCompatActivity {
     @Bind(R.id.list) RecyclerView list;
     @Bind(R.id.btnBack) LinearLayout btnBack;
 
+    /**
+     * adapter
+     */
+    private BuyCoinsAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_buy_coins_activity);
 
+
+
         initUi();
         initAction();
+
+        //init app billing
+        AppBillingManager.getInstance().initBillingBuyActivity(getApplicationContext(), this,adapter);
     }
 
     private void initAction(){
@@ -41,6 +52,13 @@ public class BuyCoinsActivity extends AppCompatActivity {
         //init ui list settings
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         list.setLayoutManager(mLayoutManager);
-        list.setAdapter(new BuyCoinsAdapter(BuyCoinsActivity.this));
+        adapter = new BuyCoinsAdapter(BuyCoinsActivity.this);
+        list.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppBillingManager.getInstance().onDestroy(this);
     }
 }
