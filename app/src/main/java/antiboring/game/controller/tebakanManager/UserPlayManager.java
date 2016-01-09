@@ -2,7 +2,7 @@ package antiboring.game.controller.tebakanManager;
 
 import android.app.Activity;
 
-import antiboring.game.controller.SessionManager.SessionManager;
+import antiboring.game.controller.Session.SessionManager;
 
 /**
  * Created by Gujarat Santana on 25/12/15.

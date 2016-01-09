@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity{
         initAction();
 
         // ini app-billing
-        AppBillingManager.getInstance().initBilling(getApplicationContext(),this);
+        AppBillingManager.getInstance().initBillingMainActivity(getApplicationContext(), this);
 
     }
 

@@ -24,7 +24,7 @@ import java.util.List;
 import antiboring.game.R;
 import antiboring.game.common.ApplicationConstants;
 import antiboring.game.common.JsonConstantKey;
-import antiboring.game.controller.SessionManager.SessionStars;
+import antiboring.game.controller.Session.SessionStars;
 import antiboring.game.controller.tebakanManager.Tebakan;
 import antiboring.game.model.object.LevelTebakanObject;
 import antiboring.game.view.activity.StageActivity;

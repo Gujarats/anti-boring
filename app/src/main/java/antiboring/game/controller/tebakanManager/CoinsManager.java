@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.AppCompatTextView;
 
 import antiboring.game.R;
-import antiboring.game.controller.SessionManager.SessionCoin;
+import antiboring.game.controller.Session.SessionCoin;
 
 /**
  * Created by Gujarat Santana on 24/12/15.

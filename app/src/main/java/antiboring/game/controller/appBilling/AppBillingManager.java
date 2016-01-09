@@ -30,6 +30,9 @@ public class AppBillingManager {
     static final String SKU_PREMIUM= "premium";
     static final String SKU_COINS_HOT_OFFER = "hot_offer";
     static final String SKU_COINS_REGULAR = "regular";
+    static final String SKU_COINS_DOUBLE_REGULAR = "double_regular";
+    static final String SKU_COINS_AWESOMEPACK = "awesome_pack";
+    static final String SKU_COINS_BEST_OFFER= "best_offer";
     private static final String TAG = "AppBillingManager";
     public static AppBillingManager instance;
     // The helper object
@@ -39,49 +42,6 @@ public class AppBillingManager {
     private IInAppBillingService mService;
     private ServiceConnection mServiceConn;
     private Activity activity;
-    // Listener that's called when we finish querying the items and subscriptions we own
-    IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
-        public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-            Log.d(TAG, "Query inventory finished.");
-
-            // Have we been disposed of in the meantime? If so, quit.
-            if (mHelper == null) return;
-
-            // Is it a failure?
-            if (result.isFailure()) {
-                complain(activity,"Failed to query inventory: " + result);
-                return;
-            }
-
-            Log.d(TAG, "Query inventory was successful.");
-
-            /*
-             * Check for items we own. Notice that for each purchase, we check
-             * the developer payload to see if it's correct! See
-             * verifyDeveloperPayload().
-             */
-
-            // Do we have the premium user here
-            Purchase premiumPurchase = inventory.getPurchase(SKU_PREMIUM);
-            if (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase)) {
-                Log.d(TAG, "We have Premium User.");
-                mHelper.consumeAsync(inventory.getPurchase(SKU_PREMIUM), new IabHelper.OnConsumeFinishedListener() {
-                    @Override
-                    public void onConsumeFinished(Purchase purchase, IabResult result) {
-                        Log.d(TAG, "onConsumeFinished() called with: " + "purchase = [" + purchase + "], result = [" + result + "]");
-
-                        if(mHelper == null) return;
-
-                        if(result.isSuccess()){
-                            // user has premium account
-
-                        }
-                    }
-                });
-                return;
-            }
-        }
-    };
     // Called when consumption is complete
     IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
         public void onConsumeFinished(Purchase purchase, IabResult result) {
@@ -96,13 +56,43 @@ public class AppBillingManager {
             if (result.isSuccess()) {
                 // successfully consumed, so we apply the effects of the item in our
                 // game world's logic, which in our case means filling the gas tank a bit
+                Log.d(TAG, "Consumption successful. Provisioning.");
             }
             else {
                 complain(activity,"Error while consuming: " + result);
             }
-//            updateUi();
-//            setWaitScreen(false);
             Log.d(TAG, "End consumption flow.");
+        }
+    };
+    // Callback for when a purchase is finished
+    IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+        public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+            Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
+
+            // if we were disposed of in the meantime, quit.
+            if (mHelper == null) return;
+
+            if (result.isFailure()) {
+                complain(activity,"Error purchasing: " + result);
+                return;
+            }
+            if (!verifyDeveloperPayload(purchase)) {
+                complain(activity,"Error purchasing. Authenticity verification failed.");
+                return;
+            }
+
+            Log.d(TAG, "Purchase successful.");
+
+
+            if (purchase.getSku().equals(SKU_PREMIUM)) {
+                // bought the premium user
+                Log.d(TAG, "Purchase is premium upgrade. Congratulating user.");
+                alert(activity, "Thank you for upgrading to premium!");
+            }else {
+                // bought coins
+                Log.d(TAG, "Purchase is gas. Starting gas consumption.");
+                mHelper.consumeAsync(purchase, mConsumeFinishedListener);
+            }
         }
     };
 
@@ -112,6 +102,10 @@ public class AppBillingManager {
         if (instance == null) instance = new AppBillingManager();
         return instance;
     }
+
+//    public boolean isAppBillingAvailableOnDevice(){
+//
+//    }
 
     public void initBillingBuyActivity(final Context context,final Activity activity){
         this.activity = activity;
@@ -130,7 +124,7 @@ public class AppBillingManager {
 
                 if (!result.isSuccess()) {
                     // Oh noes, there was a problem.
-                    complain(activity,"Problem setting up in-app billing: " + result);
+                    complain(activity, "Problem setting up in-app billing: " + result);
                     return;
                 }
 
@@ -174,7 +168,6 @@ public class AppBillingManager {
      * @param context
      * @param activity
      */
-
     public void initBillingMainActivity(final Context context,final Activity activity){
         this.activity = activity;
         Log.d(TAG, "Creating IAB helper.");
@@ -210,7 +203,12 @@ public class AppBillingManager {
                     @Override
                     public void receivedBroadcast() {
                         Log.d(TAG, "Received broadcast notification. Querying inventory.");
-                        getAvailableItemForPurchase();
+                        mHelper.queryInventoryAsync(new IabHelper.QueryInventoryFinishedListener() {
+                            @Override
+                            public void onQueryInventoryFinished(IabResult result, Inventory inv) {
+                                checkItemUserOwned(inv);
+                            }
+                        });
                     }
                 });
                 IntentFilter broadcastFilter = new IntentFilter(IabBroadcastReceiver.ACTION);
@@ -218,21 +216,17 @@ public class AppBillingManager {
 
                 // IAB is fully set up. Now, let's get an inventory of stuff we own.
                 Log.d(TAG, "Setup successful. Querying inventory.");
-//                mHelper.queryInventoryAsync(new IabHelper.QueryInventoryFinishedListener() {
-//                    @Override
-//                    public void onQueryInventoryFinished(IabResult result, Inventory inv) {
-//                        settAvailableItems(inv);
-//                    }
-//                });
+                mHelper.queryInventoryAsync(new IabHelper.QueryInventoryFinishedListener() {
+                    @Override
+                    public void onQueryInventoryFinished(IabResult result, Inventory inv) {
+                        checkItemUserOwned(inv);
+                    }
+                });
 
-                getAvailableItemForPurchase();
+
             }
         });
     }
-
-//    public boolean isAppBillingAvailableOnDevice(){
-//
-//    }
 
     private void settAvailableItems(Inventory inventory){
         boolean hot1 = inventory.hasPurchase(SKU_COINS_HOT_OFFER);
@@ -245,9 +239,10 @@ public class AppBillingManager {
         Log.i(TAG, "settAvailableItems: " + "regular " + regular1);
     }
 
-    private boolean isUserPremium(Inventory inventory){
+    public boolean isUserPremium(Inventory inventory){
         try{
-            boolean isPremium = inventory.hasPurchase(SKU_PREMIUM);
+            Purchase premiumPurchase = inventory.getPurchase(SKU_PREMIUM);
+            boolean isPremium = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
             return isPremium;
         }catch (NullPointerException e){
             e.printStackTrace();
@@ -255,13 +250,92 @@ public class AppBillingManager {
         }
     }
 
-    public void getItemsUserHasPurchase(){
-        mHelper.queryInventoryAsync(new IabHelper.QueryInventoryFinishedListener() {
-                    @Override
-                    public void onQueryInventoryFinished(IabResult result, Inventory inv) {
-                        settAvailableItems(inv);
-                    }
-                });
+    public boolean isHotOffer(Inventory inventory){
+        try{
+            Purchase hotOfferPurchase = inventory.getPurchase(SKU_COINS_HOT_OFFER);
+            boolean isPremium = (hotOfferPurchase != null && verifyDeveloperPayload(hotOfferPurchase));
+            return isPremium;
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean isRegular(Inventory inventory){
+        try{
+            Purchase regularPurchase = inventory.getPurchase(SKU_COINS_REGULAR);
+            boolean isPremium = (regularPurchase != null && verifyDeveloperPayload(regularPurchase));
+            return isPremium;
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean isDoubleRegular(Inventory inventory){
+        try{
+            Purchase double_regular_purchase = inventory.getPurchase(SKU_COINS_DOUBLE_REGULAR);
+            boolean isPremium = (double_regular_purchase != null && verifyDeveloperPayload(double_regular_purchase));
+            return isPremium;
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean isAwseomePack(Inventory inventory){
+        try{
+            Purchase AwesomePackPurchase = inventory.getPurchase(SKU_COINS_AWESOMEPACK);
+            boolean isPremium = (AwesomePackPurchase != null && verifyDeveloperPayload(AwesomePackPurchase));
+            return isPremium;
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean isBestOffer(Inventory inventory){
+        try{
+            Purchase bestOfferPurchase = inventory.getPurchase(SKU_COINS_BEST_OFFER);
+            boolean isPremium = (bestOfferPurchase != null && verifyDeveloperPayload(bestOfferPurchase));
+            return isPremium;
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void checkItemUserOwned(Inventory inventory){
+
+        if(isHotOffer(inventory)){
+            // user brough hot offer
+
+        }
+
+        if(isUserPremium(inventory)){
+            // user is Premium
+        }
+
+        if(isRegular(inventory)){
+            //user brought regualr
+        }
+
+        if(isDoubleRegular(inventory)){
+            //user brought regualr
+        }
+
+        if(isAwseomePack(inventory)){
+            //user brought regualr
+        }
+
+        if(isBestOffer(inventory)){
+            //user brought regualr
+        }
+
+
+
+
+
     }
 
     public void getAvailableItemForPurchase(){
@@ -292,9 +366,9 @@ public class AppBillingManager {
                         items.add(regular);
 
 
-                        Log.i(TAG, "getAvailableItemForPurchase: "+hotOffer);
-                        Log.i(TAG, "getAvailableItemForPurchase: "+premium);
-                        Log.i(TAG, "getAvailableItemForPurchase: "+regular);
+                        Log.i(TAG, "getAvailableItemForPurchase: " + hotOffer);
+                        Log.i(TAG, "getAvailableItemForPurchase: " + premium);
+                        Log.i(TAG, "getAvailableItemForPurchase: " + regular);
 
                     }
                 });
@@ -321,9 +395,16 @@ public class AppBillingManager {
     }
 
     public void onDestroy(Activity activity){
-        // destroy mHelper
-        if (mHelper != null) mHelper.dispose();
-        mHelper = null;
+        // very important:
+        if (mBroadcastReceiver != null) {
+            activity.unregisterReceiver(mBroadcastReceiver);
+        }
+
+        // Destroying helper
+        if (mHelper != null) {
+            mHelper.dispose();
+            mHelper = null;
+        }
 
         // destroy mService
         if (mService != null) {

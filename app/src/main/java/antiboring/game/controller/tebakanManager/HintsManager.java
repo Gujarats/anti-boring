@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Random;
 
 import antiboring.game.R;
-import antiboring.game.controller.SessionManager.SessionHintDisplay;
+import antiboring.game.controller.Session.SessionHintDisplay;
 import antiboring.game.controller.UIManager.DialogCorrectAnswer;
 import antiboring.game.controller.UIManager.DialogDisplayCharManager;
 

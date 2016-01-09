@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import antiboring.game.controller.SessionManager.SessionStage;
+import antiboring.game.controller.Session.SessionStage;
 
 /**
  * Created by Gujarat Santana on 26/12/15.

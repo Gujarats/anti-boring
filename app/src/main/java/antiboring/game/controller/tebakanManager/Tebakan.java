@@ -30,7 +30,7 @@ import java.util.List;
 import antiboring.game.R;
 import antiboring.game.common.ApplicationConstants;
 import antiboring.game.common.JsonConstantKey;
-import antiboring.game.controller.SessionManager.SessionStars;
+import antiboring.game.controller.Session.SessionStars;
 import antiboring.game.controller.UIManager.DialogCorrectAnswer;
 import antiboring.game.controller.UIManager.UIAnimationManager;
 import antiboring.game.model.object.TebakanGambarObject;

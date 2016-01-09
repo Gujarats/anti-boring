@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import antiboring.game.controller.SessionManager.SessionTebakGambar;
+import antiboring.game.controller.Session.SessionTebakGambar;
 
 /**
  * Created by Gujarat Santana on 26/12/15.

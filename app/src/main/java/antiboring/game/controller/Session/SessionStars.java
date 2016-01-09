@@ -1,4 +1,4 @@
-package antiboring.game.controller.SessionManager;
+package antiboring.game.controller.Session;
 
 import android.content.Context;
 import android.content.SharedPreferences;
