@@ -8,6 +8,7 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
+import antiboring.game.controller.appBilling.AppBillingManager;
 import antiboring.game.controller.tebakanManager.UserPlayManager;
 
 /**
@@ -48,8 +49,12 @@ public class AdmobManager {
     public void onResume(Activity activity){
         if(mInterstitialAd.isLoaded()) {
             Log.i(TAG, "onLoadAds: " + UserPlayManager.getInstance().isUserPlayed(activity));
+            //check if user has played or not
             if(UserPlayManager.getInstance().isUserPlayed(activity)){
-                mInterstitialAd.show();
+                // check if user is premium or not
+                if(!AppBillingManager.getInstance().isPremiumUser(activity)){
+                    mInterstitialAd.show();
+                }
                 UserPlayManager.getInstance().setUserPlayed(activity, false);
             }
 

@@ -305,37 +305,54 @@ public class AppBillingManager {
         }
     }
 
+    /**
+     * checking inventory user that has bought
+     * @param inventory
+     */
     public void checkItemUserOwned(Inventory inventory){
 
         if(isHotOffer(inventory)){
             // user bought hot offer
+            mHelper.consumeAsync(inventory.getPurchase(SKU_COINS_HOT_OFFER), mConsumeFinishedListener);
 
+        }else{
+            Log.i(TAG, "checkItemUserOwned: Not hot");
         }
 
         if(isUserPremium(inventory)){
             // user is Premium
+            setPremiumUser(activity,true);
+        }else{
+            Log.i(TAG, "checkItemUserOwned: Not Premium");
         }
 
         if(isRegular(inventory)){
             //user brought regualr
+            mHelper.consumeAsync(inventory.getPurchase(SKU_COINS_HOT_OFFER), mConsumeFinishedListener);
+        }else{
+            Log.i(TAG, "checkItemUserOwned: Not regular");
         }
 
         if(isDoubleRegular(inventory)){
             //user brought regualr
+            mHelper.consumeAsync(inventory.getPurchase(SKU_COINS_HOT_OFFER), mConsumeFinishedListener);
+        }else{
+            Log.i(TAG, "checkItemUserOwned: Not double regular");
         }
 
         if(isAwseomePack(inventory)){
             //user brought regualr
+            mHelper.consumeAsync(inventory.getPurchase(SKU_COINS_HOT_OFFER), mConsumeFinishedListener);
+        }else{
+            Log.i(TAG, "checkItemUserOwned: Not awesomePack");
         }
 
         if(isBestOffer(inventory)){
             //user brought regualr
+            mHelper.consumeAsync(inventory.getPurchase(SKU_COINS_HOT_OFFER), mConsumeFinishedListener);
+        }else{
+            Log.i(TAG, "checkItemUserOwned: Not best Offer");
         }
-
-
-
-
-
     }
 
     public void getAvailableItemForPurchase(){
