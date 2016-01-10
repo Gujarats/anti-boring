@@ -17,6 +17,7 @@ import java.util.List;
 
 import antiboring.game.R;
 import antiboring.game.controller.UIManager.LogicInterfaceManager;
+import antiboring.game.controller.appBilling.AppBillingManager;
 import antiboring.game.model.object.SettingsObject;
 import antiboring.game.view.activity.BuyCoinsActivity;
 
@@ -113,6 +114,15 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                     public void onClick(View view) {
                         Intent intent = new Intent(activity, BuyCoinsActivity.class);
                         activity.startActivity(intent);
+                    }
+                });
+
+                break;
+            case "Become Premium":
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AppBillingManager.getInstance().buyPremium(activity);
                     }
                 });
 

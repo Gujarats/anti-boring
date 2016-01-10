@@ -252,6 +252,7 @@ public class AppBillingManager {
             mHelper.launchPurchaseFlow(activity, SKU_COINS_HOT_OFFER, R_hot_offer,
                     mPurchaseFinishedListener, payload);
         }catch (IllegalStateException ex){
+            activity.finish();
             ex.printStackTrace();
         }
 
@@ -263,7 +264,9 @@ public class AppBillingManager {
             mHelper.launchPurchaseFlow(activity, SKU_PREMIUM, R_premium,
                     mPurchaseFinishedListener, payload);
         }catch (IllegalStateException ex){
+            activity.finish();
             ex.printStackTrace();
+
         }
 
     }
@@ -274,6 +277,7 @@ public class AppBillingManager {
             mHelper.launchPurchaseFlow(activity, SKU_COINS_REGULAR, R_regular,
                     mPurchaseFinishedListener, payload);
         }catch (IllegalStateException ex){
+            activity.finish();
             ex.printStackTrace();
         }
 
@@ -285,6 +289,7 @@ public class AppBillingManager {
             mHelper.launchPurchaseFlow(activity, SKU_COINS_HOT_OFFER, R_double_regular,
                     mPurchaseFinishedListener, payload);
         }catch (IllegalStateException ex){
+            activity.finish();
             ex.printStackTrace();
         }
 
@@ -297,6 +302,7 @@ public class AppBillingManager {
             mHelper.launchPurchaseFlow(activity, SKU_COINS_AWESOMEPACK, R_awesome_pack,
                     mPurchaseFinishedListener, payload);
         }catch (IllegalStateException ex){
+            activity.finish();
             ex.printStackTrace();
         }
 
@@ -308,6 +314,7 @@ public class AppBillingManager {
             mHelper.launchPurchaseFlow(activity, SKU_COINS_BEST_OFFER, R_best_offer,
                     mPurchaseFinishedListener, payload);
         }catch (IllegalStateException ex){
+            activity.finish();
             ex.printStackTrace();
         }
 
@@ -319,6 +326,7 @@ public class AppBillingManager {
             boolean isPremium = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
             return isPremium;
         }catch (NullPointerException e){
+            activity.finish();
             e.printStackTrace();
             return false;
         }
@@ -511,21 +519,21 @@ public class AppBillingManager {
 
     public void onDestroy(Activity activity){
         try{
-            // very important:
-            if (mBroadcastReceiver != null) {
-                activity.unregisterReceiver(mBroadcastReceiver);
-            }
-
             // Destroying helper
             if (mHelper != null) {
                 mHelper.dispose();
                 mHelper = null;
             }
 
-            // destroy mService
-            if (mService != null) {
-                activity.unbindService(mServiceConn);
+            // very important:
+            if (mBroadcastReceiver != null) {
+                activity.unregisterReceiver(mBroadcastReceiver);
             }
+
+            // destroy mService
+//            if (mService != null) {
+//                activity.unbindService(mServiceConn);
+//            }
         }catch (IllegalArgumentException e){
             e.printStackTrace();
         }

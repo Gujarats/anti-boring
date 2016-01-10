@@ -16,6 +16,7 @@ import antiboring.game.R;
 import antiboring.game.common.ApplicationConstants;
 import antiboring.game.controller.UIManager.LogicInterfaceManager;
 import antiboring.game.controller.adsManager.AdColonyManager;
+import antiboring.game.controller.appBilling.AppBillingManager;
 import antiboring.game.controller.socialMedia.FacebookManager;
 import antiboring.game.controller.socialMedia.twitter.TwitterManager;
 import antiboring.game.controller.tebakanManager.CoinsManager;
@@ -73,6 +74,9 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
 
         //init Twitter
         TwitterManager.getInstance().initTwitterTebakGambar(this, getApplicationContext(), imageUrl);
+
+        //init appbilling
+        AppBillingManager.getInstance().initBillingMainActivity(getApplicationContext(),this);
     }
 
     private void initAdColony(){
@@ -147,5 +151,11 @@ public class AnswerTebakGambarActivity extends AppCompatActivity {
     public void onPause(){
         super.onPause();
         AdColony.pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppBillingManager.getInstance().onDestroy(this);
     }
 }

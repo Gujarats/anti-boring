@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import antiboring.game.R;
 import antiboring.game.controller.UIManager.LogicInterfaceManager;
+import antiboring.game.controller.appBilling.AppBillingManager;
 import antiboring.game.view.adapter.SettingsAdapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,6 +31,9 @@ public class SettingActivity extends AppCompatActivity {
         initUi();
         initAction();
 
+        //init app billing
+        AppBillingManager.getInstance().initBillingMainActivity(getApplicationContext(),this);
+
     }
 
     private void initAction(){
@@ -48,4 +52,9 @@ public class SettingActivity extends AppCompatActivity {
         list.setAdapter(new SettingsAdapter(SettingActivity.this));
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppBillingManager.getInstance().onDestroy(this);
+    }
 }

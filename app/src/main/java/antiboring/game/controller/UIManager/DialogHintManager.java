@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import antiboring.game.R;
+import antiboring.game.controller.appBilling.AppBillingManager;
 
 /**
  * Created by Gujarat Santana on 25/12/15.
@@ -25,7 +26,7 @@ public class DialogHintManager {
         return instance;
     }
 
-    public void setDialogHint(Activity activity,int layout, final CallBackDialog callBackDialog){
+    public void setDialogHint(final Activity activity,int layout, final CallBackDialog callBackDialog){
         this.callBackDialog = callBackDialog;
         dialog = new AppCompatDialog(activity);
         dialog.setContentView(layout);
@@ -44,6 +45,13 @@ public class DialogHintManager {
         LogicInterfaceManager.getInstance().setOnClickEffect(activity,yes);
         LogicInterfaceManager.getInstance().setOnClickEffect(activity,no);
         LogicInterfaceManager.getInstance().setOnClickEffect(activity,premiumUser);
+
+        premiumUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppBillingManager.getInstance().buyPremium(activity);
+            }
+        });
 
         no.setOnClickListener(new View.OnClickListener() {
             @Override
