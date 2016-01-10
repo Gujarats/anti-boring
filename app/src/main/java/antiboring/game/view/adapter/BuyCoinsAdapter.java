@@ -115,22 +115,58 @@ public class BuyCoinsAdapter extends RecyclerView.Adapter<BuyCoinsAdapter.ViewHo
         // set onClickListener
         switch (buyCoinsObject.getTitle()){
             case "290 coins":
-                AppBillingManager.getInstance().buyCoinsHotOffer(activity);
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AppBillingManager.getInstance().buyCoinsHotOffer(activity);
+                    }
+                });
+
                 break;
             case "Premium Pack":
-                AppBillingManager.getInstance().buyPremium(activity);
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AppBillingManager.getInstance().buyPremium(activity);
+                    }
+                });
+
                 break;
             case "700 coins":
-                AppBillingManager.getInstance().buyRegular(activity);
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AppBillingManager.getInstance().buyRegular(activity);
+                    }
+                });
+
                 break;
             case "2000 coins":
-                AppBillingManager.getInstance().buyCoinsDoubleRegular(activity);
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AppBillingManager.getInstance().buyCoinsDoubleRegular(activity);
+                    }
+                });
+
                 break;
             case "4500 coins":
-                AppBillingManager.getInstance().buyCoinsAwesomePack(activity);
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AppBillingManager.getInstance().buyCoinsAwesomePack(activity);
+                    }
+                });
+
                 break;
             case "20.000 coins":
-                AppBillingManager.getInstance().buyCoinsBestOffer(activity);
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AppBillingManager.getInstance().buyCoinsBestOffer(activity);
+                    }
+                });
+
                 break;
             default:
                 break;
