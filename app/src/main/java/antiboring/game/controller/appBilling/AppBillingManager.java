@@ -199,7 +199,7 @@ public class AppBillingManager {
 
                 if (!result.isSuccess()) {
                     // Oh noes, there was a problem.
-                    complain(activity,"Problem setting up in-app billing: " + result);
+                    complain(activity, "Problem setting up in-app billing: " + result);
                     return;
                 }
 
@@ -247,43 +247,69 @@ public class AppBillingManager {
         /**
          * payload is need to be generated for simplysity and faster development it'snot
          */
-        String payload = "hotBabyOffer_me";
-        mHelper.launchPurchaseFlow(activity, SKU_COINS_HOT_OFFER, R_hot_offer,
-                mPurchaseFinishedListener, payload);
+        try{
+            String payload = "hotBabyOffer_me";
+            mHelper.launchPurchaseFlow(activity, SKU_COINS_HOT_OFFER, R_hot_offer,
+                    mPurchaseFinishedListener, payload);
+        }catch (IllegalStateException ex){
+            ex.printStackTrace();
+        }
 
     }
 
     public void buyPremium(Activity activity){
-        String payload = "premiumBabyOfferme";
-        mHelper.launchPurchaseFlow(activity, SKU_PREMIUM, R_premium,
-                mPurchaseFinishedListener, payload);
+        try{
+            String payload = "premiumBabyOfferme";
+            mHelper.launchPurchaseFlow(activity, SKU_PREMIUM, R_premium,
+                    mPurchaseFinishedListener, payload);
+        }catch (IllegalStateException ex){
+            ex.printStackTrace();
+        }
 
     }
 
     public void buyRegular(Activity activity){
-        String payload = "regularBabyOfferme";
-        mHelper.launchPurchaseFlow(activity, SKU_COINS_REGULAR, R_regular,
-                mPurchaseFinishedListener, payload);
+        try{
+            String payload = "regularBabyOfferme";
+            mHelper.launchPurchaseFlow(activity, SKU_COINS_REGULAR, R_regular,
+                    mPurchaseFinishedListener, payload);
+        }catch (IllegalStateException ex){
+            ex.printStackTrace();
+        }
+
     }
 
     public void buyCoinsDoubleRegular(Activity activity){
-        String payload = "doubleRegularBabyOfferme";
-        mHelper.launchPurchaseFlow(activity, SKU_COINS_HOT_OFFER, R_double_regular,
-                mPurchaseFinishedListener, payload);
+        try{
+            String payload = "doubleRegularBabyOfferme";
+            mHelper.launchPurchaseFlow(activity, SKU_COINS_HOT_OFFER, R_double_regular,
+                    mPurchaseFinishedListener, payload);
+        }catch (IllegalStateException ex){
+            ex.printStackTrace();
+        }
+
 
     }
 
     public void buyCoinsAwesomePack(Activity activity){
-        String payload = "awesomePackRegularBabyOfferme";
-        mHelper.launchPurchaseFlow(activity, SKU_COINS_AWESOMEPACK, R_awesome_pack,
-                mPurchaseFinishedListener, payload);
+        try{
+            String payload = "awesomePackRegularBabyOfferme";
+            mHelper.launchPurchaseFlow(activity, SKU_COINS_AWESOMEPACK, R_awesome_pack,
+                    mPurchaseFinishedListener, payload);
+        }catch (IllegalStateException ex){
+            ex.printStackTrace();
+        }
 
     }
 
     public void buyCoinsBestOffer(Activity activity){
-        String payload = "bestOfferRegularBabyOfferme";
-        mHelper.launchPurchaseFlow(activity, SKU_COINS_BEST_OFFER, R_best_offer,
-                mPurchaseFinishedListener, payload);
+        try{
+            String payload = "bestOfferRegularBabyOfferme";
+            mHelper.launchPurchaseFlow(activity, SKU_COINS_BEST_OFFER, R_best_offer,
+                    mPurchaseFinishedListener, payload);
+        }catch (IllegalStateException ex){
+            ex.printStackTrace();
+        }
 
     }
 
@@ -484,20 +510,24 @@ public class AppBillingManager {
     }
 
     public void onDestroy(Activity activity){
-        // very important:
-        if (mBroadcastReceiver != null) {
-            activity.unregisterReceiver(mBroadcastReceiver);
-        }
+        try{
+            // very important:
+            if (mBroadcastReceiver != null) {
+                activity.unregisterReceiver(mBroadcastReceiver);
+            }
 
-        // Destroying helper
-        if (mHelper != null) {
-            mHelper.dispose();
-            mHelper = null;
-        }
+            // Destroying helper
+            if (mHelper != null) {
+                mHelper.dispose();
+                mHelper = null;
+            }
 
-        // destroy mService
-        if (mService != null) {
-            activity.unbindService(mServiceConn);
+            // destroy mService
+            if (mService != null) {
+                activity.unbindService(mServiceConn);
+            }
+        }catch (IllegalArgumentException e){
+            e.printStackTrace();
         }
     }
 
