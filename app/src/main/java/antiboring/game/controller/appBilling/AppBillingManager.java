@@ -133,7 +133,7 @@ public class AppBillingManager {
         mHelper = new IabHelper(context, "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjFVcXKbW4TvdA04tcXjeNBU3zo59OMXLHcfpwOWE9sNtEUH0H7puxZs2biaC6zTmSk2Ia8Quv30JxUn1h15emE923G/BGR1Hrj0SbNIRHpLrwIjO62RZ+cw0xpzEMrYeKMQTbDe+xrKBzEAMo436P1KbAR/+TDiYw7PhC3fKqGMfq4otGL7RVjvF6NGiTHGEz639pM2Uru46IfSUJGile/9aNGoQaOPs0xGXpVjGarEDr+LuzmoejSmZRkqLpIm/1j4woXnw74a0SuntF5R0mYxPoPtlPvsh/JvP98ppnq4McqAW22CWFOesgOLQi4Gz+y2fkNCJe8IQFiNv3jTXFQIDAQAB");
 
         // enable debug logging (for a production application, you should set this to false).
-        mHelper.enableDebugLogging(true);
+        mHelper.enableDebugLogging(false);
 
         // Start setup. This is asynchronous and the specified listener
         // will be called once setup completes.
@@ -188,7 +188,7 @@ public class AppBillingManager {
         mHelper = new IabHelper(context, "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjFVcXKbW4TvdA04tcXjeNBU3zo59OMXLHcfpwOWE9sNtEUH0H7puxZs2biaC6zTmSk2Ia8Quv30JxUn1h15emE923G/BGR1Hrj0SbNIRHpLrwIjO62RZ+cw0xpzEMrYeKMQTbDe+xrKBzEAMo436P1KbAR/+TDiYw7PhC3fKqGMfq4otGL7RVjvF6NGiTHGEz639pM2Uru46IfSUJGile/9aNGoQaOPs0xGXpVjGarEDr+LuzmoejSmZRkqLpIm/1j4woXnw74a0SuntF5R0mYxPoPtlPvsh/JvP98ppnq4McqAW22CWFOesgOLQi4Gz+y2fkNCJe8IQFiNv3jTXFQIDAQAB");
 
         // enable debug logging (for a production application, you should set this to false).
-        mHelper.enableDebugLogging(true);
+        mHelper.enableDebugLogging(false);
 
         // Start setup. This is asynchronous and the specified listener
         // will be called once setup completes.
