@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import antiboring.game.R;
+import antiboring.game.controller.appBilling.AppBillingManager;
 import antiboring.game.model.object.BuyCoinsObject;
 
 /**
@@ -90,8 +91,6 @@ public class BuyCoinsAdapter extends RecyclerView.Adapter<BuyCoinsAdapter.ViewHo
             buyCoinsObjects.get(3).setPrice(priceDoubleReg);
             buyCoinsObjects.get(4).setPrice(priceAwesomePack);
             buyCoinsObjects.get(5).setPrice(priceBestOffer);
-
-
         }
 
         notifyDataSetChanged();
@@ -111,15 +110,31 @@ public class BuyCoinsAdapter extends RecyclerView.Adapter<BuyCoinsAdapter.ViewHo
         Picasso.with(activity).load(buyCoinsObject.getIcon()).into(holder.icon);
         //setTitle
         holder.title.setText(buyCoinsObject.getTitle());
-        //setDesc and visibiltiy
-        if(!buyCoinsObject.getDescription().isEmpty()){
-            holder.desc.setText(buyCoinsObject.getDescription());
-            holder.desc.setVisibility(View.VISIBLE);
-        }else{
-            holder.desc.setVisibility(View.GONE);
-        }
-
         holder.price.setText(buyCoinsObject.getPrice());
+
+        // set onClickListener
+        switch (buyCoinsObject.getTitle()){
+            case "290 coins":
+                AppBillingManager.getInstance().buyCoinsHotOffer(activity);
+                break;
+            case "Premium Pack":
+                AppBillingManager.getInstance().buyPremium(activity);
+                break;
+            case "700 coins":
+                AppBillingManager.getInstance().buyRegular(activity);
+                break;
+            case "2000 coins":
+                AppBillingManager.getInstance().buyCoinsDoubleRegular(activity);
+                break;
+            case "4500 coins":
+                AppBillingManager.getInstance().buyCoinsAwesomePack(activity);
+                break;
+            case "20.000 coins":
+                AppBillingManager.getInstance().buyCoinsBestOffer(activity);
+                break;
+            default:
+                break;
+        }
 
     }
 

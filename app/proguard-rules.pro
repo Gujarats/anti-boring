@@ -46,3 +46,7 @@
 -dontnote com.immersion.**
 -dontwarn android.webkit.**
 #adcolony end
+
+#app billing
+-keep class com.android.vending.billing.**
+#end app billing

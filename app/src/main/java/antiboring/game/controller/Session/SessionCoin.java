@@ -33,7 +33,7 @@ public class SessionCoin {
     }
 
     public int getCoins(){
-        return pref.getInt(KEY_COINS, 300);
+        return pref.getInt(KEY_COINS, 170);
     }
 
     public void setCoins(int coins){

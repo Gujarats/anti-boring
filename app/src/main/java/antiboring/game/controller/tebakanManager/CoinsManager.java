@@ -19,12 +19,55 @@ public class CoinsManager {
     private int onRighAnswer = 5;
     private int onCompleteAllStars = 10;
 
+    //logic buy coins
+    private int hotOffer = 290;
+    private int regular = 700;
+    private int doubleRegular = 2000;
+    private int awesomePack = 4500;
+    private int bestOffer = 20000;
+
+
 
     private CoinsManager() {}
 
     public static CoinsManager getInstance() {
         if (instance == null) instance = new CoinsManager();
         return instance;
+    }
+
+    public void setHotOffer(Activity activity){
+        SessionCoin sessionCoin = new SessionCoin(activity);
+        int currentCoins = sessionCoin.getCoins();
+        currentCoins +=hotOffer;
+        sessionCoin.setCoins(currentCoins);
+    }
+
+    public void setRegular(Activity activity){
+        SessionCoin sessionCoin = new SessionCoin(activity);
+        int currentCoins = sessionCoin.getCoins();
+        currentCoins +=regular;
+        sessionCoin.setCoins(currentCoins);
+    }
+
+    public void setDoubleRegular(Activity activity){
+        SessionCoin sessionCoin = new SessionCoin(activity);
+        int currentCoins = sessionCoin.getCoins();
+        currentCoins +=doubleRegular;
+        sessionCoin.setCoins(currentCoins);
+    }
+
+    public void setAwesomePack(Activity activity){
+        SessionCoin sessionCoin = new SessionCoin(activity);
+        int currentCoins = sessionCoin.getCoins();
+        currentCoins +=awesomePack;
+        sessionCoin.setCoins(currentCoins);
+    }
+
+    public void setBestOffer(Activity activity){
+        SessionCoin sessionCoin = new SessionCoin(activity);
+        int currentCoins = sessionCoin.getCoins();
+        currentCoins +=bestOffer;
+        sessionCoin.setCoins(currentCoins);
     }
 
     public boolean isEnoughCoinHint(Activity activity){
@@ -44,9 +87,6 @@ public class CoinsManager {
         }else
             return false;
     }
-
-
-
 
 
     public void setCoinForUI(Activity activity, AppCompatTextView coins){

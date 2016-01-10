@@ -20,6 +20,7 @@ import antiboring.game.controller.appBilling.util.IabHelper;
 import antiboring.game.controller.appBilling.util.IabResult;
 import antiboring.game.controller.appBilling.util.Inventory;
 import antiboring.game.controller.appBilling.util.Purchase;
+import antiboring.game.controller.tebakanManager.CoinsManager;
 import antiboring.game.view.adapter.BuyCoinsAdapter;
 
 /**
@@ -34,7 +35,12 @@ public class AppBillingManager {
     static final String SKU_COINS_DOUBLE_REGULAR = "double_regular";
     static final String SKU_COINS_AWESOMEPACK = "awesome_pack";
     static final String SKU_COINS_BEST_OFFER= "best_offer";
-    static final int Rg = 92243;
+    static final int R_hot_offer = 92243;
+    static final int R_premium = 91241;
+    static final int R_regular = 21341;
+    static final int R_double_regular = 31341;
+    static final int R_awesome_pack = 13121;
+    static final int R_best_offer = 73171;
     private static final String TAG = "AppBillingManager";
     public static AppBillingManager instance;
     // The helper object
@@ -56,9 +62,18 @@ public class AppBillingManager {
             // so we don't check which sku was consumed. If you have more than one
             // sku, you probably should check...
             if (result.isSuccess()) {
-                // successfully consumed, so we apply the effects of the item in our
-                // game world's logic, which in our case means filling the gas tank a bit
                 Log.d(TAG, "Consumption successful. Provisioning.");
+                if(purchase.getSku().equals(SKU_COINS_HOT_OFFER)){
+                    CoinsManager.getInstance().setHotOffer(activity);
+                }else if(purchase.getSku().equals(SKU_COINS_REGULAR)){
+                    CoinsManager.getInstance().setRegular(activity);
+                }else if(purchase.getSku().equals(SKU_COINS_DOUBLE_REGULAR)){
+                    CoinsManager.getInstance().setDoubleRegular(activity);
+                }else if(purchase.getSku().equals(SKU_COINS_AWESOMEPACK)){
+                    CoinsManager.getInstance().setAwesomePack(activity);
+                }else if(purchase.getSku().equals(SKU_COINS_BEST_OFFER)){
+                    CoinsManager.getInstance().setBestOffer(activity);
+                }
             }
             else {
                 complain(activity,"Error while consuming: " + result);
@@ -89,10 +104,13 @@ public class AppBillingManager {
             if (purchase.getSku().equals(SKU_PREMIUM)) {
                 // bought the premium user
                 Log.d(TAG, "Purchase is premium upgrade. Congratulating user.");
+                // set to premium user
+                setPremiumUser(activity,true);
+
                 alert(activity, "Thank you for upgrading to premium!");
             }else {
                 // bought coins
-                Log.d(TAG, "Purchase is gas. Starting gas consumption.");
+                Log.d(TAG, "Purchase is coins. Starting coins consumption.");
                 mHelper.consumeAsync(purchase, mConsumeFinishedListener);
             }
         }
@@ -226,22 +244,45 @@ public class AppBillingManager {
 
 
     public void buyCoinsHotOffer(Activity activity){
-        String payload = "hotBabyOfferme";
-        mHelper.launchPurchaseFlow(activity, SKU_COINS_HOT_OFFER, Rg,
+        /**
+         * payload is need to be generated for simplysity and faster development it'snot
+         */
+        String payload = "hotBabyOffer_me";
+        mHelper.launchPurchaseFlow(activity, SKU_COINS_HOT_OFFER, R_hot_offer,
                 mPurchaseFinishedListener, payload);
 
     }
 
     public void buyPremium(Activity activity){
-        String payload = "hotBabyOfferme";
-        mHelper.launchPurchaseFlow(activity, SKU_COINS_HOT_OFFER, Rg,
+        String payload = "premiumBabyOfferme";
+        mHelper.launchPurchaseFlow(activity, SKU_PREMIUM, R_premium,
                 mPurchaseFinishedListener, payload);
 
     }
 
-    public void buyCoinsRegular(Activity activity){
-        String payload = "hotBabyOfferme";
-        mHelper.launchPurchaseFlow(activity, SKU_COINS_HOT_OFFER, Rg,
+    public void buyRegular(Activity activity){
+        String payload = "regularBabyOfferme";
+        mHelper.launchPurchaseFlow(activity, SKU_COINS_REGULAR, R_regular,
+                mPurchaseFinishedListener, payload);
+    }
+
+    public void buyCoinsDoubleRegular(Activity activity){
+        String payload = "doubleRegularBabyOfferme";
+        mHelper.launchPurchaseFlow(activity, SKU_COINS_HOT_OFFER, R_double_regular,
+                mPurchaseFinishedListener, payload);
+
+    }
+
+    public void buyCoinsAwesomePack(Activity activity){
+        String payload = "awesomePackRegularBabyOfferme";
+        mHelper.launchPurchaseFlow(activity, SKU_COINS_AWESOMEPACK, R_awesome_pack,
+                mPurchaseFinishedListener, payload);
+
+    }
+
+    public void buyCoinsBestOffer(Activity activity){
+        String payload = "bestOfferRegularBabyOfferme";
+        mHelper.launchPurchaseFlow(activity, SKU_COINS_BEST_OFFER, R_best_offer,
                 mPurchaseFinishedListener, payload);
 
     }
