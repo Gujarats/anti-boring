@@ -15,6 +15,7 @@ import com.android.vending.billing.IInAppBillingService;
 import java.util.ArrayList;
 import java.util.List;
 
+import antiboring.game.controller.UIManager.DialogSuccesBuyCoins;
 import antiboring.game.controller.appBilling.util.IabBroadcastReceiver;
 import antiboring.game.controller.appBilling.util.IabHelper;
 import antiboring.game.controller.appBilling.util.IabResult;
@@ -64,14 +65,19 @@ public class AppBillingManager {
             if (result.isSuccess()) {
                 Log.d(TAG, "Consumption successful. Provisioning.");
                 if(purchase.getSku().equals(SKU_COINS_HOT_OFFER)){
+                    DialogSuccesBuyCoins.getInstance().showHotOfferCoins(activity);
                     CoinsManager.getInstance().setHotOffer(activity);
                 }else if(purchase.getSku().equals(SKU_COINS_REGULAR)){
+                    DialogSuccesBuyCoins.getInstance().showRegular(activity);
                     CoinsManager.getInstance().setRegular(activity);
                 }else if(purchase.getSku().equals(SKU_COINS_DOUBLE_REGULAR)){
+                    DialogSuccesBuyCoins.getInstance().showDoubleRegular(activity);
                     CoinsManager.getInstance().setDoubleRegular(activity);
                 }else if(purchase.getSku().equals(SKU_COINS_AWESOMEPACK)){
+                    DialogSuccesBuyCoins.getInstance().showAwesomePack(activity);
                     CoinsManager.getInstance().setAwesomePack(activity);
                 }else if(purchase.getSku().equals(SKU_COINS_BEST_OFFER)){
+                    DialogSuccesBuyCoins.getInstance().showBestOffer(activity);
                     CoinsManager.getInstance().setBestOffer(activity);
                 }
             }
@@ -106,6 +112,8 @@ public class AppBillingManager {
                 Log.d(TAG, "Purchase is premium upgrade. Congratulating user.");
                 // set to premium user
                 setPremiumUser(activity,true);
+                DialogSuccesBuyCoins.getInstance().showPremium(activity);
+                CoinsManager.getInstance().setPremium(activity);
 
                 alert(activity, "Thank you for upgrading to premium!");
             }else {

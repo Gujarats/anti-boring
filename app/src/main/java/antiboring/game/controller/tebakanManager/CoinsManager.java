@@ -14,17 +14,17 @@ import antiboring.game.controller.Session.SessionCoin;
  */
 public class CoinsManager {
     public static CoinsManager instance;
+    //logic buy coins
+    public static int hotOffer = 290;
+    public static int premium = 400;
+    public static int regular = 700;
+    public static int doubleRegular = 2000;
+    public static int awesomePack = 4500;
+    public static int bestOffer = 20000;
     private int onHintActivity = 10;
     private int onDisplayChar = 60;
     private int onRighAnswer = 5;
     private int onCompleteAllStars = 10;
-
-    //logic buy coins
-    private int hotOffer = 290;
-    private int regular = 700;
-    private int doubleRegular = 2000;
-    private int awesomePack = 4500;
-    private int bestOffer = 20000;
 
 
 
@@ -46,6 +46,13 @@ public class CoinsManager {
         SessionCoin sessionCoin = new SessionCoin(activity);
         int currentCoins = sessionCoin.getCoins();
         currentCoins +=regular;
+        sessionCoin.setCoins(currentCoins);
+    }
+
+    public void setPremium(Activity activity){
+        SessionCoin sessionCoin = new SessionCoin(activity);
+        int currentCoins = sessionCoin.getCoins();
+        currentCoins +=premium;
         sessionCoin.setCoins(currentCoins);
     }
 

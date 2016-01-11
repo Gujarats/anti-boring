@@ -14,6 +14,7 @@
         android:src="@drawable/anjing_senang"/>
 
     <antiboring.game.view.font.CostumFont
+        android:id="@+id/coin_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
