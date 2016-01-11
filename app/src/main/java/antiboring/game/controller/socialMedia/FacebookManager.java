@@ -3,6 +3,7 @@ package antiboring.game.controller.socialMedia;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
@@ -51,6 +52,29 @@ public class FacebookManager {
     }
 
 
+    public void loginFacebookShareAntiBoring(final Context context,final Activity activity){
+        List<String> permissionNeeds = Arrays.asList("publish_actions");
+        loginManager = LoginManager.getInstance();
+        loginManager.logInWithPublishPermissions(activity, permissionNeeds);
+        loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Toast.makeText(activity, "Success share facebook", Toast.LENGTH_SHORT).show();
+                shareAntiBoring(context);
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(activity, "Cancel share facebook", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Toast.makeText(activity, "Error share facebook", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     public void loginFacebookTebakGambar(final Context context, final Activity activity, final String imageUrl){
         List<String> permissionNeeds = Arrays.asList("publish_actions");
         loginManager = LoginManager.getInstance();
@@ -59,7 +83,7 @@ public class FacebookManager {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Toast.makeText(activity, "Success share facebook", Toast.LENGTH_SHORT).show();
-                shareTebakGambar(context,activity,imageUrl);
+                shareTebakGambar(context, activity, imageUrl);
             }
 
             @Override
@@ -100,6 +124,18 @@ public class FacebookManager {
 
     public CallbackManager getCallbackManager(){
         return this.callbackManager;
+    }
+
+    public void shareAntiBoring(Context context){
+        Bitmap image = BitmapFactory.decodeResource(context.getResources(), R.drawable.header_);
+        SharePhoto photo = new SharePhoto.Builder()
+                .setBitmap(image)
+                .build();
+        SharePhotoContent content = new SharePhotoContent.Builder()
+                .addPhoto(photo)
+                .build();
+
+        ShareApi.share(content, null);
     }
 
     public void shareTebakGambar(Context context, Activity activity,String imageUrl){

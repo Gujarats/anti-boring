@@ -18,6 +18,7 @@ import java.util.List;
 import antiboring.game.R;
 import antiboring.game.controller.UIManager.LogicInterfaceManager;
 import antiboring.game.controller.appBilling.AppBillingManager;
+import antiboring.game.controller.socialMedia.FacebookManager;
 import antiboring.game.model.object.SettingsObject;
 import antiboring.game.view.activity.BuyCoinsActivity;
 
@@ -123,6 +124,16 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                     @Override
                     public void onClick(View view) {
                         AppBillingManager.getInstance().buyPremium(activity);
+                    }
+                });
+
+                break;
+
+            case "Share":
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        FacebookManager.getInstance().loginFacebookShareAntiBoring(activity,activity);
                     }
                 });
 
