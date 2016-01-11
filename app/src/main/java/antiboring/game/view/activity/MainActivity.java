@@ -22,6 +22,7 @@ import java.security.NoSuchAlgorithmException;
 import antiboring.game.R;
 import antiboring.game.controller.UIManager.LogicInterfaceManager;
 import antiboring.game.controller.UIManager.UIAnimationManager;
+import antiboring.game.controller.adsManager.AdmobManager;
 import antiboring.game.controller.appBilling.AppBillingManager;
 import antiboring.game.controller.tebakanManager.CoinsManager;
 import antiboring.game.controller.tebakanManager.UserPlayManager;
@@ -55,8 +56,8 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.layout_main);
 
         //init admob ads
-//        AdmobManager.getInstance().initialAds(getApplicationContext());
-//        AdmobManager.getInstance().requestNewInterstitial();
+        AdmobManager.getInstance().initialAds(getApplicationContext());
+        AdmobManager.getInstance().requestNewInterstitial();
 
         //initial Interface
         initUI();
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity{
         // load progress user
         onLoadProgressUser();
         //load ads
-//        AdmobManager.getInstance().onResume(this);
+        AdmobManager.getInstance().onResume(this);
 
 
     }
