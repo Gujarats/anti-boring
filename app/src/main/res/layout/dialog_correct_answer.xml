@@ -13,7 +13,7 @@
         android:layout_height="200dp"
         android:src="@drawable/anjing_senang"/>
 
-    <antiboring.game.view.font.CostumFont
+    <antiboring.game.view.font.RobotoFont
         android:id="@+id/coin_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

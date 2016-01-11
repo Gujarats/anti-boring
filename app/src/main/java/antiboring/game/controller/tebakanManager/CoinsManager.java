@@ -1,13 +1,17 @@
 package antiboring.game.controller.tebakanManager;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.AppCompatTextView;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import antiboring.game.R;
 import antiboring.game.controller.Session.SessionCoin;
+import antiboring.game.view.activity.BuyCoinsActivity;
 
 /**
  * Created by Gujarat Santana on 24/12/15.
@@ -25,8 +29,6 @@ public class CoinsManager {
     private int onDisplayChar = 60;
     private int onRighAnswer = 5;
     private int onCompleteAllStars = 10;
-
-
 
     private CoinsManager() {}
 
@@ -155,10 +157,18 @@ public class CoinsManager {
         sessionCoin.setCoins(resultCoins);
     }
 
-    public void showDialogZeroCoin(Activity activity){
+    public void showDialogZeroCoin(final Activity activity){
         AppCompatDialog dialog = new AppCompatDialog(activity);
         dialog.setContentView(R.layout.dialog_zero_coin);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        LinearLayout buyCoins = (LinearLayout)dialog.findViewById(R.id.buyCoins);
+        buyCoins.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent  = new Intent(activity, BuyCoinsActivity.class);
+                activity.startActivity(intent);
+            }
+        });
         dialog.show();
     }
 }
