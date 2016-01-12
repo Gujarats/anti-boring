@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -14,6 +15,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -69,11 +71,11 @@ public class HintsManager {
                 DialogDisplayCharManager.getInstance().setDialogHint(activity, R.layout.dialog_display_char, new DialogDisplayCharManager.CallBackDialog() {
                     @Override
                     public void yes(AppCompatDialog dialog) {
-                        if(CoinsManager.getInstance().isEnoughCoinDislplayChat(activity)){
+                        if (CoinsManager.getInstance().isEnoughCoinDislplayChat(activity)) {
                             dialog.dismiss();
                             CoinsManager.getInstance().setCoinsOnDisplayChar(activity);
                             displayHintTebakKata(activity, hint, jawabanTebakan, level);
-                        }else {
+                        } else {
                             CoinsManager.getInstance().showDialogZeroCoin(activity);
                             dialog.dismiss();
                         }
@@ -88,15 +90,16 @@ public class HintsManager {
 
     public void displayHintTebakKata(final Activity activity, final AppCompatTextView hint, final String jawabanTebakan, int level){
         String hintDisplayText = hint.getText().toString();
-        String result = displayHintChar(activity, jawabanTebakan, hintDisplayText);
-        HintsManager.getInstance().checkAnswerHintTebakKata(activity, result, jawabanTebakan,level);
+//        String result = displayHintChar(activity, jawabanTebakan, hintDisplayText);
+        String result = displayHintCharRandom(jawabanTebakan, hintDisplayText);
+        checkAnswerHintTebakKata(activity, result, jawabanTebakan, level);
         hint.setText(result);
     }
 
     public void displayHintTebakGambar(final Activity activity, final AppCompatTextView hint, final String jawabanTebakan, int level, String idGambar){
         String hintDisplayText = hint.getText().toString();
         String result = displayHintChar(activity, jawabanTebakan, hintDisplayText);
-        HintsManager.getInstance().checkAnswerHintTebakGambar(activity, result, jawabanTebakan,level,idGambar);
+        checkAnswerHintTebakGambar(activity, result, jawabanTebakan, level, idGambar);
         hint.setText(result);
     }
 
@@ -176,12 +179,96 @@ public class HintsManager {
     public String displayHintChar(Activity activity,String sourceAnswer, String hintDisplay){
 
         int indexHint = getIndexHint(activity);
-        sourceAnswer = sourceAnswer.replaceAll("\\s+", "");
+        sourceAnswer = sourceAnswer.replaceAll("\\s+", ""); // replacing white space
         String[] splitSourceAnswer = sourceAnswer.split("");
-        String hintAnswer = splitSourceAnswer[indexHint];
-        String result = setKeyboardValue(hintAnswer,hintDisplay);
+        String hintAnswer = splitSourceAnswer[indexHint];//get the char/variable hint
+        String result = setKeyboardValue(hintAnswer, hintDisplay);//set it to hint for dusplay
         // set next indext hint for display next hint char
         setIndexHint(activity,indexHint+1);
+
+        return result;
+    }
+
+    public String displayHintCharRandom(String sourceAnswer, String hintDisplay){
+//        sourceAnswer = sourceAnswer.replaceAll("\\s+", ""); // replacing white space
+        String[] splitSourceAnswer = sourceAnswer.split("");
+        String hintAnswer =getRandomHintAnswerCharFromSourceAnswer(splitSourceAnswer, hintDisplay);
+//        String result = setKeyboardValue(hintAnswer,hintDisplay);
+
+        return hintAnswer;
+    }
+
+    public String getRandomHintAnswerCharFromSourceAnswer(String[] splitSourceAnswer,String hintDisplay){
+        Log.d(TAG, "getRandomHintAnswerChar() called with: " + "splitSourceAnswer = [" + Arrays.toString(splitSourceAnswer) + "], hintDisplay = [" + hintDisplay + "]");
+        String convertedHintDisplay = getHintDisplayToWord(hintDisplay);
+        String[] splitHintDisplay = convertedHintDisplay.split("");
+        Log.i(TAG, "spliHintDisplay: "+ Arrays.toString(splitHintDisplay));
+        // get all the index of _ in splitHintDisplay
+        List<Integer> listIndexUnderscore = new ArrayList<>();
+        for (int i = 0; i <splitHintDisplay.length ; i++) {
+            if(splitHintDisplay[i].equals("_")){
+                listIndexUnderscore.add(i);
+            }
+        }
+        Log.i(TAG, "getRandomHintAnswerCharFromSourceAnswer underscore: "+splitHintDisplay.length +" source"+splitSourceAnswer.length);
+        Log.i(TAG, "getRandomHintAnswerCharFromSourceAnswer underscore: "+Arrays.toString(splitHintDisplay) +" source "+Arrays.toString(splitSourceAnswer));
+        Log.i(TAG, "getRandomHintAnswerCharFromSourceAnswer underscore: "+listIndexUnderscore.toString());
+
+        Random randomGenerator = new Random();
+        if(listIndexUnderscore.size()>0 && listIndexUnderscore.size()-1>0){
+            int indexUnderScore = randomGenerator.nextInt(listIndexUnderscore.size()-1);
+            Log.i(TAG, "getRandomHintAnswerCharFromSourceAnswer: index "+indexUnderScore);
+            String result = splitSourceAnswer[listIndexUnderscore.get(indexUnderScore)];
+
+            splitHintDisplay[listIndexUnderscore.get(indexUnderScore)] = result;
+
+            Log.i(TAG, "getRandomHintAnswerCharFromSourceAnswer: result" +Arrays.toString(splitHintDisplay));
+
+            result = TextUtils.join("  ",splitHintDisplay);
+            return result;
+
+        }else{
+            String result = splitSourceAnswer[listIndexUnderscore.get(0)];
+
+            splitHintDisplay[listIndexUnderscore.get(0)] = result;
+
+            Log.i(TAG, "getRandomHintAnswerCharFromSourceAnswer: result" +Arrays.toString(splitHintDisplay));
+
+            result = TextUtils.join("  ",splitHintDisplay);
+            return result;
+        }
+
+
+    }
+
+    public String getHintDisplayToWord(String hintDisplay){
+        //split hint display
+        String [] splitHintDisplay = hintDisplay.split("    "); // split 4 white space
+
+        //define List Word
+        List<String> listWord = new ArrayList<>();
+        for (int i = 0; i < splitHintDisplay.length; i++) {
+            Log.i(TAG, "getHintDisplayToWord: "+i+" "+splitHintDisplay[i]);
+            String word = splitHintDisplay[i].replaceAll("\\s+","");
+            word = word.replaceAll(" ","");
+            listWord.add(word);
+        }
+
+        Log.i(TAG, "getHintDisplayToWord: listWord "+listWord.toString());
+
+
+        // convert the listword to sentence
+        String result="";
+        for (int i = 0; i < listWord.size(); i++) {
+
+            if(i==listWord.size()-1){
+                result+=listWord.get(i);
+            }else{
+                result+=listWord.get(i)+" ";
+            }
+        }
+
+        Log.i(TAG, "getHintDisplayToWord: result"+result);
 
         return result;
     }
