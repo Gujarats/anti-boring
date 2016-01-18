@@ -137,7 +137,9 @@ public class HintsManager {
         String[] splitSource = source.split("");
         StringBuilder stringBuilder = new StringBuilder(source);
         char replaceChar = '_';
+
         int indexUnderScore = stringBuilder.indexOf("_")-3;
+
         int indexUnderscoreForArray = stringBuilder.indexOf("_")-2;
 
         if(indexUnderScore>0){
@@ -147,13 +149,15 @@ public class HintsManager {
 
                     indexUnderScore = indexUnderScore-2;
                 }
-            }catch (IndexOutOfBoundsException ex){
 
+                Log.i(TAG, "deleteKeyboardValue: "+indexUnderScore);
+                stringBuilder.setCharAt(indexUnderScore, replaceChar);
+                return stringBuilder.toString();
+
+            }catch (IndexOutOfBoundsException ex){
+                return stringBuilder.toString();
             }
 
-            Log.i(TAG, "deleteKeyboardValue: "+indexUnderScore);
-            stringBuilder.setCharAt(indexUnderScore, replaceChar);
-            return stringBuilder.toString();
         }else{
             // got -1
             indexUnderScore = source.length()-2;
@@ -220,7 +224,7 @@ public class HintsManager {
             Log.i(TAG, "getRandomHintAnswerCharFromSourceAnswer: index "+indexUnderScore);
             String result = splitSourceAnswer[listIndexUnderscore.get(indexUnderScore)];
 
-            splitHintDisplay[listIndexUnderscore.get(indexUnderScore)] = result;
+            splitHintDisplay[listIndexUnderscore.get(indexUnderScore)] = result.toUpperCase();
 
             Log.i(TAG, "getRandomHintAnswerCharFromSourceAnswer: result" +Arrays.toString(splitHintDisplay));
 
