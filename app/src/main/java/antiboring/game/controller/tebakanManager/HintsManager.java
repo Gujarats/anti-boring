@@ -159,6 +159,7 @@ public class HintsManager {
             }
 
         }else{
+            Log.i(TAG, "deleteKeyboardValue: -1");
             // got -1
             indexUnderScore = source.length()-2;
             stringBuilder.setCharAt(indexUnderScore, replaceChar);
@@ -166,6 +167,59 @@ public class HintsManager {
         }
 
     }
+
+    private String deteleKeyboardNew(String sourceHint,List<Integer> indexDisplays){
+        String [] arraySourceHint = sourceHint.split("");
+        System.out.println(Arrays.toString(arraySourceHint));
+        String replacer = "_";
+
+        for (int i = arraySourceHint.length-1; i >=0 ; i--) {
+            if(!arraySourceHint[i].equalsIgnoreCase("_") && !arraySourceHint[i].equalsIgnoreCase(" ") && i!=0){
+                if(!isHintIsExist(indexDisplays,i)){
+                    arraySourceHint[i] = replacer;
+                    break;
+                }
+
+            }
+        }
+
+        String result="";
+        for (int i = 0; i < arraySourceHint.length; i++) {
+            result+=arraySourceHint[i];
+        }
+
+        System.out.println(Arrays.toString(arraySourceHint));
+        System.out.println(result);
+        return result;
+
+    }
+
+
+    private boolean isHintIsExist(List<Integer> indexDisplays,int indextHInt){
+        boolean isExist = false;
+        for (int i1 = 0; i1 < indexDisplays.size(); i1++) {
+            if(indextHInt == indexDisplays.get(i1)){
+                return true;
+            }
+
+        }
+
+        return isExist;
+    }
+
+    private List<Integer> getIndexDisplayHint(String sourceHint,String[] arrayDisplayHint){
+        List<Integer> indexDisplays = new ArrayList<>();
+
+        for (int i = 0; i < arrayDisplayHint.length; i++) {
+            int index  = sourceHint.indexOf(arrayDisplayHint[i]);
+            indexDisplays.add(index);
+        }
+
+        return indexDisplays;
+
+
+    }
+
 
     public  String setKeyboardValue(String keyboard,String source){
         StringBuilder stringBuilder = new StringBuilder(source);
@@ -194,11 +248,8 @@ public class HintsManager {
     }
 
     public String displayHintCharRandom(String sourceAnswer, String hintDisplay){
-//        sourceAnswer = sourceAnswer.replaceAll("\\s+", ""); // replacing white space
         String[] splitSourceAnswer = sourceAnswer.split("");
         String hintAnswer =getRandomHintAnswerCharFromSourceAnswer(splitSourceAnswer, hintDisplay);
-//        String result = setKeyboardValue(hintAnswer,hintDisplay);
-
         return hintAnswer;
     }
 
