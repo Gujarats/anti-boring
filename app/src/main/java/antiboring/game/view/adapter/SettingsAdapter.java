@@ -1,6 +1,7 @@
 package antiboring.game.view.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.AppCompatTextView;
@@ -29,13 +30,16 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 
     private int layout;
     private Activity activity;
+    private Context context;
     private List<SettingsObject> settingsObjects = new ArrayList<SettingsObject>();
+    private FacebookManager facebookManager;
 
-    public SettingsAdapter (Activity activity){
+    public SettingsAdapter (Context context,Activity activity,FacebookManager facebookManager){
         this.activity = activity;
+        this.context = context;
+        this.facebookManager = facebookManager;
         layout = R.layout.item_settings;
         initSettingObjects();
-
     }
 
     private void initSettingObjects(){
@@ -133,7 +137,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        FacebookManager.getInstance().loginFacebookShareAntiBoring(activity,activity);
+                        facebookManager.loginFacebookShareAntiBoring(context, activity);
                     }
                 });
 

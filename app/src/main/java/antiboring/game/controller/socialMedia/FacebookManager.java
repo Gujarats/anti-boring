@@ -59,18 +59,37 @@ public class FacebookManager {
         loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(activity, "Success share facebook", Toast.LENGTH_SHORT).show();
-                shareAntiBoring(context);
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(activity, "Success share facebook", Toast.LENGTH_SHORT).show();
+                        shareAntiBoring(context);
+                    }
+                });
+
+
             }
 
             @Override
             public void onCancel() {
-                Toast.makeText(activity, "Cancel share facebook", Toast.LENGTH_SHORT).show();
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(activity, "Cancel share facebook", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
 
             @Override
             public void onError(FacebookException error) {
-                Toast.makeText(activity, "Error share facebook", Toast.LENGTH_SHORT).show();
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(activity, "Error share facebook", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         });
     }

@@ -23,7 +23,7 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="25dp"
-                android:src="@drawable/panahback" />
+                android:src="@drawable/panahback_putih" />
         </LinearLayout>
 
         <RelativeLayout
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="50dp"
             android:gravity="center">
-            <antiboring.game.view.font.CostumFont
+            <antiboring.game.view.font.RobotoFont
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Settings"

@@ -15,7 +15,7 @@
         android:layout_marginLeft="20dp"
         android:src="@drawable/anti_boring"/>
 
-    <antiboring.game.view.font.CostumFont
+    <antiboring.game.view.font.RobotoFont
         android:id="@+id/textSetting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
