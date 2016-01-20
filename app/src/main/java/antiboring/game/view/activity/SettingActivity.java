@@ -1,7 +1,7 @@
 package antiboring.game.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import antiboring.game.R;
 import antiboring.game.controller.UIManager.LogicInterfaceManager;
 import antiboring.game.controller.appBilling.AppBillingManager;
+import antiboring.game.controller.socialMedia.FacebookManager;
 import antiboring.game.view.adapter.SettingsAdapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,8 +25,11 @@ public class SettingActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // init Facebook
+        FacebookManager.getInstance().InitFacebook(getApplicationContext());
+
         setContentView(R.layout.layout_setting_activity);
 
         initUi();
@@ -34,6 +38,13 @@ public class SettingActivity extends AppCompatActivity {
         //init app billing
         AppBillingManager.getInstance().initBillingMainActivity(getApplicationContext(),this);
 
+
+    }
+
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        FacebookManager.getInstance().getCallbackManager().onActivityResult(requestCode, resultCode, data);
     }
 
     private void initAction(){
@@ -49,7 +60,7 @@ public class SettingActivity extends AppCompatActivity {
         //init ui list settings
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         list.setLayoutManager(mLayoutManager);
-        list.setAdapter(new SettingsAdapter(SettingActivity.this));
+        list.setAdapter(new SettingsAdapter(getApplicationContext(),SettingActivity.this,FacebookManager.getInstance()));
     }
 
     @Override
