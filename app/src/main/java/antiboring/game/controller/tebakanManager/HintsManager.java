@@ -31,6 +31,7 @@ import antiboring.game.controller.UIManager.DialogDisplayCharManager;
 public class HintsManager {
     private static final String TAG = "HintManager";
     public static HintsManager instance;
+    private List<Integer> indexHintDisplays = new ArrayList<>();
 
     private HintsManager() {}
 
@@ -38,7 +39,6 @@ public class HintsManager {
         if (instance == null) instance = new HintsManager();
         return instance;
     }
-
 
     public void setOnDisplayDialogCharHintTebakGambar(final Activity activity, final LinearLayout linearLayout, final AppCompatTextView hint, final String jawabanTebakan,final int level, final String idGambar){
         linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +108,8 @@ public class HintsManager {
             @Override
             public void onClick(View view) {
                 String hintSource = hint.getText().toString();
-                String replaceHint = deleteKeyboardValue(hintSource);
+//                String replaceHint = deleteKeyboardValue(hintSource);
+                String replaceHint = deleteKeyboardNew(hintSource, indexHintDisplays);
                 Log.i(TAG, "onClick: delete " + replaceHint);
                 hint.setText(replaceHint);
             }
@@ -168,7 +169,7 @@ public class HintsManager {
 
     }
 
-    private String deteleKeyboardNew(String sourceHint,List<Integer> indexDisplays){
+    private String deleteKeyboardNew(String sourceHint,List<Integer> indexDisplays){
         String [] arraySourceHint = sourceHint.split("");
         System.out.println(Arrays.toString(arraySourceHint));
         String replacer = "_";
@@ -272,6 +273,9 @@ public class HintsManager {
         Random randomGenerator = new Random();
         if(listIndexUnderscore.size()>0 && listIndexUnderscore.size()-1>0){
             int indexUnderScore = randomGenerator.nextInt(listIndexUnderscore.size()-1);
+            // add index hint display to global variable
+            indexHintDisplays.add(indexUnderScore);
+
             Log.i(TAG, "getRandomHintAnswerCharFromSourceAnswer: index "+indexUnderScore);
             String result = splitSourceAnswer[listIndexUnderscore.get(indexUnderScore)];
 
@@ -283,14 +287,20 @@ public class HintsManager {
             return result;
 
         }else{
-            String result = splitSourceAnswer[listIndexUnderscore.get(0)];
+            try{
+                String result = splitSourceAnswer[listIndexUnderscore.get(0)];
 
-            splitHintDisplay[listIndexUnderscore.get(0)] = result;
+                splitHintDisplay[listIndexUnderscore.get(0)] = result;
 
-            Log.i(TAG, "getRandomHintAnswerCharFromSourceAnswer: result" +Arrays.toString(splitHintDisplay));
+                Log.i(TAG, "getRandomHintAnswerCharFromSourceAnswer: result" +Arrays.toString(splitHintDisplay));
 
-            result = TextUtils.join("  ",splitHintDisplay);
-            return result;
+                result = TextUtils.join("  ",splitHintDisplay);
+                return result;
+            }catch (IndexOutOfBoundsException e){
+                e.printStackTrace();
+            }
+            return TextUtils.join("  ",splitHintDisplay);
+
         }
 
 
