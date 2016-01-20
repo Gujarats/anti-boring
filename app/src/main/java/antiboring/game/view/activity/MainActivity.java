@@ -40,8 +40,7 @@ public class MainActivity extends AppCompatActivity{
      */
     @Bind(R.id.list_level) RecyclerView list_level;
     @Bind(R.id.coins) AppCompatTextView coins;
-    @Bind(R.id.btnSetting)
-    LinearLayout btnSetting;
+    @Bind(R.id.btnSetting) LinearLayout btnSetting;
     @Bind(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbarLayout;
     private RecyclerView.LayoutManager mLayoutManager;
     /**

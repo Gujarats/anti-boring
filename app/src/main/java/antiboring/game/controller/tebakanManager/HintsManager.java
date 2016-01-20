@@ -98,7 +98,8 @@ public class HintsManager {
 
     public void displayHintTebakGambar(final Activity activity, final AppCompatTextView hint, final String jawabanTebakan, int level, String idGambar){
         String hintDisplayText = hint.getText().toString();
-        String result = displayHintChar(activity, jawabanTebakan, hintDisplayText);
+//        String result = displayHintChar(activity, jawabanTebakan, hintDisplayText);
+        String result = displayHintCharRandom(jawabanTebakan, hintDisplayText);
         checkAnswerHintTebakGambar(activity, result, jawabanTebakan, level, idGambar);
         hint.setText(result);
     }
