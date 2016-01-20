@@ -32,8 +32,6 @@ public class SoundEffectManager {
             descriptor.close();
 
             m.prepare();
-//            m.setVolume(1f, 1f);
-//            m.setLooping(true);
             m.start();
         } catch (Exception e) {
             e.printStackTrace();
