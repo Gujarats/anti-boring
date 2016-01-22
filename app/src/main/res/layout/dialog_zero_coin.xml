@@ -27,6 +27,7 @@
         android:id="@+id/buyCoins"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/dialog_selector"
         android:gravity="center">
         <antiboring.game.view.font.CostumFont
