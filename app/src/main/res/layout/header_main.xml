@@ -11,13 +11,4 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/header_"/>
 
-    <!--<antiboring.game.view.font.CostumFont-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/headerIcon"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:text="Anti Boring"-->
-        <!--android:textColor="@color/white"-->
-        <!--android:textSize="25sp"/>-->
-
 </RelativeLayout>
