@@ -3,18 +3,18 @@ package antiboring.game.model.object;
 /**
  * Created by Gujarat Santana on 13/12/15.
  */
-public class TebakanKataObject {
+public class MTebakanKata {
     private String tebakKata;
     private String jawabanTebakKata;
     private int level;
 
-    public TebakanKataObject(String tebakKata, String jawabanTebakKata, int level) {
+    public MTebakanKata(String tebakKata, String jawabanTebakKata, int level) {
         this.tebakKata = tebakKata;
         this.jawabanTebakKata = jawabanTebakKata;
         this.level= level;
     }
 
-    public TebakanKataObject(){}
+    public MTebakanKata(){}
 
 
     public int getLevel() {

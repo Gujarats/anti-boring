@@ -3,14 +3,14 @@ package antiboring.game.model.object;
 /**
  * Created by Gujarat Santana on 08/11/15.
  */
-public class TebakanGambarObject {
+public class MTebakanGambar {
     private String gambarUrl;
     private String jawaban;
     private int level;
 
-    public TebakanGambarObject(){}
+    public MTebakanGambar(){}
 
-    public TebakanGambarObject(String gambarUrl, String jawaban, int level) {
+    public MTebakanGambar(String gambarUrl, String jawaban, int level) {
         this.gambarUrl = gambarUrl;
         this.jawaban = jawaban;
         this.level = level;

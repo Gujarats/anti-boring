@@ -23,10 +23,6 @@ public class ApplicationConstants {
     public static final String _idTebakan = "_idTebakan";
     public static final String keyGambar = "keyGambar";
 
-    //id tebakan
-    public static final String _listChatBrow = "_listChatBrow.txt";
-    public static final String _listChatBrow2 = "_listChatBrow2.txt";
-
 
 
 

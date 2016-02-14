@@ -20,7 +20,7 @@ import antiboring.game.R;
 import antiboring.game.controller.UIManager.LogicInterfaceManager;
 import antiboring.game.controller.appBilling.AppBillingManager;
 import antiboring.game.controller.socialMedia.FacebookManager;
-import antiboring.game.model.object.SettingsObject;
+import antiboring.game.model.object.MSettings;
 import antiboring.game.view.activity.BuyCoinsActivity;
 
 /**
@@ -31,7 +31,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
     private int layout;
     private Activity activity;
     private Context context;
-    private List<SettingsObject> settingsObjects = new ArrayList<SettingsObject>();
+    private List<MSettings> settingsObjects = new ArrayList<MSettings>();
     private FacebookManager facebookManager;
 
     public SettingsAdapter (Context context,Activity activity,FacebookManager facebookManager){
@@ -46,31 +46,31 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 
 
         // add login item
-        SettingsObject login = new SettingsObject();
+        MSettings login = new MSettings();
         login.setSourceImage(R.drawable.login);
         login.setTextSettings("Login");
         settingsObjects.add(login);
 
         //add buy coins item
-        SettingsObject buyCoins = new SettingsObject();
+        MSettings buyCoins = new MSettings();
         buyCoins.setSourceImage(R.drawable.buy);
         buyCoins.setTextSettings("Buy Coins");
         settingsObjects.add(buyCoins);
 
         //add become premium
-        SettingsObject premium = new SettingsObject();
+        MSettings premium = new MSettings();
         premium.setSourceImage(R.drawable.premium);
         premium.setTextSettings("Become Premium");
         settingsObjects.add(premium);
 
         //add become premium
-        SettingsObject rate = new SettingsObject();
+        MSettings rate = new MSettings();
         rate.setSourceImage(R.drawable.rate_us);
         rate.setTextSettings("Rate");
         settingsObjects.add(rate);
 
         //add become premium
-        SettingsObject share = new SettingsObject();
+        MSettings share = new MSettings();
         share.setSourceImage(R.drawable.share_setting);
         share.setTextSettings("Share");
         settingsObjects.add(share);
@@ -88,7 +88,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        SettingsObject settingsObject = settingsObjects.get(position);
+        MSettings settingsObject = settingsObjects.get(position);
         // set icon
         Picasso.with(activity).load(settingsObject.getSourceImage()).into(holder.iconSetting);
         //set text

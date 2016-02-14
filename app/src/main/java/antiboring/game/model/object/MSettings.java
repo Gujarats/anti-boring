@@ -3,16 +3,16 @@ package antiboring.game.model.object;
 /**
  * Created by Gujarat Santana on 26/12/15.
  */
-public class SettingsObject {
+public class MSettings {
     private int sourceImage;
     private String textSettings;
 
-    public SettingsObject(int sourceImage, String textSettings) {
+    public MSettings(int sourceImage, String textSettings) {
         this.sourceImage = sourceImage;
         this.textSettings = textSettings;
     }
 
-    public SettingsObject(){}
+    public MSettings(){}
 
     public int getSourceImage() {
         return sourceImage;

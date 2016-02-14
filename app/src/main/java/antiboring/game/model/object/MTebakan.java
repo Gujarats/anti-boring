@@ -3,7 +3,7 @@ package antiboring.game.model.object;
 /**
  * Created by Gujarat Santana on 12/06/15.
  */
-public class TebakanObject {
+public class MTebakan {
     private String _idTebakan;
     private String _idUser;
     private String UrlGambarTebakan;
@@ -11,9 +11,9 @@ public class TebakanObject {
     private String kunciTebakan;
     private String gcmID;
 
-    public TebakanObject(){}
+    public MTebakan(){}
 
-    public TebakanObject(String _idTebakan, String _idUser, String urlGambarTebakan, String textTebakan, String kunciTebakan, String gcmID) {
+    public MTebakan(String _idTebakan, String _idUser, String urlGambarTebakan, String textTebakan, String kunciTebakan, String gcmID) {
         this._idTebakan = _idTebakan;
         this._idUser = _idUser;
         UrlGambarTebakan = urlGambarTebakan;

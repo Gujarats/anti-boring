@@ -3,14 +3,14 @@ package antiboring.game.model.object;
 /**
  * Created by Gujarat Santana on 12/06/15.
  */
-public class UserObject {
+public class MUser {
     private String _idUser;
     private String UserName;
     private Integer Point;
 
-    public UserObject(){}
+    public MUser(){}
 
-    public UserObject(String _idUser, String userName, Integer point) {
+    public MUser(String _idUser, String userName, Integer point) {
         this._idUser = _idUser;
         UserName = userName;
         Point = point;

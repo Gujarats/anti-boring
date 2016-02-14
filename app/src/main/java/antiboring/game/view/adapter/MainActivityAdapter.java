@@ -26,7 +26,7 @@ import antiboring.game.common.ApplicationConstants;
 import antiboring.game.common.JsonConstantKey;
 import antiboring.game.controller.Session.SessionStars;
 import antiboring.game.controller.tebakanManager.Tebakan;
-import antiboring.game.model.object.LevelTebakanObject;
+import antiboring.game.model.object.MLevelTebakan;
 import antiboring.game.view.activity.StageActivity;
 
 /**
@@ -39,7 +39,7 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
     private int layout;
     private SessionStars sessionStars;
     private String keyLevelJson="";
-    private List<LevelTebakanObject> levelTebakanObjects = new ArrayList<LevelTebakanObject>();
+    private List<MLevelTebakan> levelTebakanObjects = new ArrayList<MLevelTebakan>();
 
     public MainActivityAdapter(Context context, Activity activity, int layout) {
         this.context = context;
@@ -144,7 +144,7 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
             String jsonTebakGambar = Tebakan.getInstance().loadTebakGambarJSONFromAsset(activity);
             JSONObject jsonObject = new JSONObject(jsonTebakGambar);
             for (int i = 0; i <jsonObject.length() ; i++) {
-                LevelTebakanObject levelTebakanObject = new LevelTebakanObject();
+                MLevelTebakan levelTebakanObject = new MLevelTebakan();
                 levelTebakanObject.setLevel(i+1);
                 levelTebakanObjects.add(levelTebakanObject);
             }

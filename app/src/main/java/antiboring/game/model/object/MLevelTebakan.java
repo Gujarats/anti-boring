@@ -3,18 +3,18 @@ package antiboring.game.model.object;
 /**
  * Created by Gujarat Santana on 24/12/15.
  */
-public class LevelTebakanObject {
+public class MLevelTebakan {
     private int stars;
     private int level;
     private  boolean isLocked;
 
 
-    public LevelTebakanObject(int stars, int level, boolean isLocked) {
+    public MLevelTebakan(int stars, int level, boolean isLocked) {
         this.stars = stars;
         this.level = level;
         this.isLocked = isLocked;
     }
-    public LevelTebakanObject(){}
+    public MLevelTebakan(){}
 
 
     public boolean isLocked() {

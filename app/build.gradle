@@ -8,7 +8,7 @@ android {
     defaultConfig {
         applicationId "antiboring.game"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 11
         versionName "1.9.0"
 
@@ -55,12 +55,21 @@ repositories {
 }
 
 dependencies {
+    // App dependencies
+    compile 'com.android.support:support-annotations:23.1.1'
+    compile 'com.google.guava:guava:18.0'
+    //unit testing
+    androidTestCompile 'com.android.support:support-annotations:23.1.1'
+    androidTestCompile 'com.android.support.test:runner:0.4.1'
+    androidTestCompile 'com.android.support.test:rules:0.4.1'
+
+    //apps library
     compile files('libs/twitter4j-core-4.0.2.jar')
     compile fileTree(dir: 'libs', include: ['adcolony.jar'])
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
-    compile 'com.android.support:palette-v7:23.0.1'
-    compile 'com.android.support:design:23.1.0'
+    compile 'com.android.support:palette-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
     compile 'com.balysv.materialmenu:material-menu-toolbar:1.5.4'
     compile 'com.google.android.gms:play-services-ads:8.4.0'
     compile 'com.jakewharton:butterknife:7.0.1'

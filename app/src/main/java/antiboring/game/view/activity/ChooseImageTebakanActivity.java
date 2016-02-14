@@ -14,7 +14,7 @@ import antiboring.game.R;
 import antiboring.game.controller.UIManager.LogicInterfaceManager;
 import antiboring.game.controller.tebakanManager.GambarCompleteManager;
 import antiboring.game.controller.tebakanManager.Tebakan;
-import antiboring.game.model.object.TebakanGambarObject;
+import antiboring.game.model.object.MTebakanGambar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -75,7 +75,7 @@ public class ChooseImageTebakanActivity extends AppCompatActivity {
     }
 
     private void initGambar() {
-        List<TebakanGambarObject> tebakanGambarObjects = Tebakan.getInstance().getImageLevel(level, this);
+        List<MTebakanGambar> tebakanGambarObjects = Tebakan.getInstance().getImageLevel(level, this);
         for (int i = 0; i < tebakanGambarObjects.size(); i++) {
             if (!tebakanGambarObjects.get(i).getGambarUrl().isEmpty()) {
                 switch (i) {

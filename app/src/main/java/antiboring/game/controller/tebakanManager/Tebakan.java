@@ -33,8 +33,8 @@ import antiboring.game.common.JsonConstantKey;
 import antiboring.game.controller.Session.SessionStars;
 import antiboring.game.controller.UIManager.DialogCorrectAnswer;
 import antiboring.game.controller.UIManager.UIAnimationManager;
-import antiboring.game.model.object.TebakanGambarObject;
-import antiboring.game.model.object.TebakanKataObject;
+import antiboring.game.model.object.MTebakanGambar;
+import antiboring.game.model.object.MTebakanKata;
 import antiboring.game.view.activity.AnswerTebakGambarActivity;
 import antiboring.game.view.activity.HintsTebakKataActivity;
 
@@ -43,7 +43,8 @@ import antiboring.game.view.activity.HintsTebakKataActivity;
  */
 public class Tebakan {
 
-    private static final String TAG = "Tebakan";
+    private static final String TAG
+            = "Tebakan";
     public static Tebakan instance;
 
     private Tebakan() {}
@@ -175,16 +176,6 @@ public class Tebakan {
     }
 
 
-    public void setNextLevelSession(Activity activity){
-        SessionStars sessionStars = new SessionStars(activity);
-        int currentLevel = sessionStars.getKeyLevel();
-        // set Next level session
-        sessionStars.setKeyLevel(currentLevel+1);
-
-
-    }
-
-
     public void setStarsSession(Activity activity){
         SessionStars sessionStars = new SessionStars(activity);
         int currentStars = sessionStars.getKeyStars();
@@ -201,7 +192,7 @@ public class Tebakan {
         }
     }
 
-    public void setOnClickHintTebakKata(final Activity activity, final ImageView imageView,final TebakanKataObject tebakanKataObject ){
+    public void setOnClickHintTebakKata(final Activity activity, final ImageView imageView,final MTebakanKata tebakanKataObject ){
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -220,9 +211,9 @@ public class Tebakan {
         });
     }
 
-    public List<TebakanGambarObject> getImageLevel(int level, Activity activity){
+    public List<MTebakanGambar> getImageLevel(int level, Activity activity){
         try {
-            List<TebakanGambarObject> tebakanGambarObjects = new ArrayList<TebakanGambarObject>();
+            List<MTebakanGambar> tebakanGambarObjects = new ArrayList<MTebakanGambar>();
             String json = loadTebakGambarJSONFromAsset(activity);
             if(!json.isEmpty()){
                 //get json from asset
@@ -235,7 +226,7 @@ public class Tebakan {
                 //get content from jsonArray to array list TebakanGambarObject
                 for (int i = 0; i < m_jArry.length(); i++) {
                     JSONObject tebakanObjectLevel = m_jArry.getJSONObject(i);
-                    TebakanGambarObject tebakanGambarObject = new TebakanGambarObject();
+                    MTebakanGambar tebakanGambarObject = new MTebakanGambar();
                     tebakanGambarObject.setGambarUrl(tebakanObjectLevel.getString("gambar_url"));
                     tebakanGambarObject.setJawaban(tebakanObjectLevel.getString("jawaban"));
                     tebakanGambarObject.setLevel(level);
@@ -244,7 +235,7 @@ public class Tebakan {
 
                 return tebakanGambarObjects;
             }else{
-                TebakanGambarObject tebakanGambarObject = new TebakanGambarObject();
+                MTebakanGambar tebakanGambarObject = new MTebakanGambar();
                 tebakanGambarObject.setGambarUrl("");
                 tebakanGambarObject.setGambarUrl("");
                 tebakanGambarObjects.add(tebakanGambarObject);
@@ -258,9 +249,9 @@ public class Tebakan {
         return null;
     }
 
-    public TebakanKataObject getTebakKata(int level,Activity activity){
+    public MTebakanKata getTebakKata(int level,Activity activity){
         try {
-            TebakanKataObject tebakanKataObject = new TebakanKataObject();
+            MTebakanKata tebakanKataObject = new MTebakanKata();
             String jsonTebakKata = loadJsonTebakKataFromAsset(activity);
             if(!jsonTebakKata.isEmpty()){
                 JSONObject jsonObject = new JSONObject(jsonTebakKata);
@@ -354,6 +345,7 @@ public class Tebakan {
         Picasso.with(context)
                 .load(resource)
                 .into(imageView);
+
     }
 
     public void loadImageToImageView2(ImageView imageView,String res, Context context){
@@ -365,7 +357,7 @@ public class Tebakan {
                 .into(imageView);
     }
 
-    public void setOnClickTebakGambar(final Activity activity,ImageView imageView, final TebakanGambarObject tebakanObject, final String idGambar){
+    public void setOnClickTebakGambar(final Activity activity,ImageView imageView, final MTebakanGambar tebakanObject, final String idGambar){
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

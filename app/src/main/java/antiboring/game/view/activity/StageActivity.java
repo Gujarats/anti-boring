@@ -14,7 +14,7 @@ import antiboring.game.common.ApplicationConstants;
 import antiboring.game.controller.UIManager.LogicInterfaceManager;
 import antiboring.game.controller.tebakanManager.StageManger;
 import antiboring.game.controller.tebakanManager.Tebakan;
-import antiboring.game.model.object.TebakanKataObject;
+import antiboring.game.model.object.MTebakanKata;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -54,7 +54,7 @@ public class StageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AnswerTebakKataActivity.class);
-                TebakanKataObject tebakanKataObject = Tebakan.getInstance().getTebakKata(level,StageActivity.this);
+                MTebakanKata tebakanKataObject = Tebakan.getInstance().getTebakKata(level,StageActivity.this);
                 intent.putExtra(ApplicationConstants.tebakanKata,tebakanKataObject.getTebakKata());
                 intent.putExtra(ApplicationConstants.jawabanTebakan,tebakanKataObject.getJawabanTebakKata());
                 intent.putExtra(ApplicationConstants.level, level);

@@ -15,7 +15,7 @@ import java.util.List;
 
 import antiboring.game.R;
 import antiboring.game.controller.appBilling.AppBillingManager;
-import antiboring.game.model.object.BuyCoinsObject;
+import antiboring.game.model.object.MBuyCoins;
 
 /**
  * Created by Gujarat Santana on 01/01/16.
@@ -24,7 +24,7 @@ public class BuyCoinsAdapter extends RecyclerView.Adapter<BuyCoinsAdapter.ViewHo
 
     private int layout;
     private Activity activity;
-    private List<BuyCoinsObject> buyCoinsObjects = new ArrayList<BuyCoinsObject>();
+    private List<MBuyCoins> buyCoinsObjects = new ArrayList<MBuyCoins>();
     
     public BuyCoinsAdapter(Activity activity){
         this.activity = activity;
@@ -35,42 +35,42 @@ public class BuyCoinsAdapter extends RecyclerView.Adapter<BuyCoinsAdapter.ViewHo
     private void initSettingObjects(){
 
         // first item
-        BuyCoinsObject first = new BuyCoinsObject();
+        MBuyCoins first = new MBuyCoins();
         first.setIcon(R.drawable.coin_700);
         first.setTitle("290 coins");
         first.setDescription("Hot Offer");
         first.setPrice("IDR 6000");
         buyCoinsObjects.add(first);
 
-        BuyCoinsObject premiumUser = new BuyCoinsObject();
+        MBuyCoins premiumUser = new MBuyCoins();
         premiumUser.setIcon(R.drawable.premium_pack);
         premiumUser.setTitle("Premium Pack");
         premiumUser.setDescription("Premium User Free Access Hint, no Ads + 400 coins");
         premiumUser.setPrice("IDR 24.000");
         buyCoinsObjects.add(premiumUser);
 
-        BuyCoinsObject thirdCoins = new BuyCoinsObject();
+        MBuyCoins thirdCoins = new MBuyCoins();
         thirdCoins.setIcon(R.drawable.coin_700);
         thirdCoins.setTitle("700 coins");
         thirdCoins.setDescription("Regular");
         thirdCoins.setPrice("IDR 14.000");
         buyCoinsObjects.add(thirdCoins);
 
-        BuyCoinsObject fourthCoins = new BuyCoinsObject();
+        MBuyCoins fourthCoins = new MBuyCoins();
         fourthCoins.setIcon(R.drawable.coin_2000);
         fourthCoins.setTitle("2000 coins");
         fourthCoins.setDescription("Double Regular");
         fourthCoins.setPrice("IDR 30.000");
         buyCoinsObjects.add(fourthCoins);
 
-        BuyCoinsObject fifthCoins = new BuyCoinsObject();
+        MBuyCoins fifthCoins = new MBuyCoins();
         fifthCoins.setIcon(R.drawable.coin_4500);
         fifthCoins.setTitle("4500 coins");
         fifthCoins.setDescription("Awesome Pack");
         fifthCoins.setPrice("IDR 50.000");
         buyCoinsObjects.add(fifthCoins);
 
-        BuyCoinsObject sixCoins = new BuyCoinsObject();
+        MBuyCoins sixCoins = new MBuyCoins();
         sixCoins.setIcon(R.drawable.coin_20000);
         sixCoins.setTitle("20.000 coins");
         sixCoins.setDescription("Best Offer");
@@ -105,7 +105,7 @@ public class BuyCoinsAdapter extends RecyclerView.Adapter<BuyCoinsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        BuyCoinsObject buyCoinsObject = buyCoinsObjects.get(position);
+        MBuyCoins buyCoinsObject = buyCoinsObjects.get(position);
         // set icon
         Picasso.with(activity).load(buyCoinsObject.getIcon()).into(holder.icon);
         //setTitle

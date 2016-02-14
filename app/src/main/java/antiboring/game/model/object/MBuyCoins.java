@@ -3,20 +3,20 @@ package antiboring.game.model.object;
 /**
  * Created by Gujarat Santana on 01/01/16.
  */
-public class BuyCoinsObject {
+public class MBuyCoins {
     private String title;
     private String description;
     private String price;
     private int icon;
 
-    public BuyCoinsObject(String title, String price, int icon,String desc) {
+    public MBuyCoins(String title, String price, int icon, String desc) {
         this.title = title;
         this.price = price;
         this.icon = icon;
         this.description = desc;
     }
 
-    public BuyCoinsObject(){}
+    public MBuyCoins(){}
 
     public String getDescription() {
         return description;
