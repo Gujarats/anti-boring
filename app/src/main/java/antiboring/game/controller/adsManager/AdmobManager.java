@@ -29,7 +29,7 @@ public class AdmobManager {
     public void initialAds(Context context){
         // initial ads
         mInterstitialAd = new InterstitialAd(context);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7786975749587909/7517791075");
+        mInterstitialAd.setAdUnitId("");
 
         mInterstitialAd.setAdListener(new AdListener() {
             @Override

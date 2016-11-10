@@ -21,8 +21,8 @@ import antiboring.game.controller.tebakanManager.CoinsManager;
  */
 public class AdColonyManager {
     public static AdColonyManager instance;
-    final private String APP_ID  = "app843102734e634b7595";
-    final private String ZONE_ID = "vzf3420409b7024beebc";
+    final private String APP_ID  = "";
+    final private String ZONE_ID = "";
     private AdColonyManager() {}
 
     public static AdColonyManager getInstance() {

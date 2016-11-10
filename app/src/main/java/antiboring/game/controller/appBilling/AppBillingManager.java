@@ -138,7 +138,7 @@ public class AppBillingManager {
     public void initBillingBuyActivity(final Context context,final Activity activity, final BuyCoinsAdapter adapter){
         this.activity = activity;
         Log.d(TAG, "Creating IAB helper.");
-        mHelper = new IabHelper(context, "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjFVcXKbW4TvdA04tcXjeNBU3zo59OMXLHcfpwOWE9sNtEUH0H7puxZs2biaC6zTmSk2Ia8Quv30JxUn1h15emE923G/BGR1Hrj0SbNIRHpLrwIjO62RZ+cw0xpzEMrYeKMQTbDe+xrKBzEAMo436P1KbAR/+TDiYw7PhC3fKqGMfq4otGL7RVjvF6NGiTHGEz639pM2Uru46IfSUJGile/9aNGoQaOPs0xGXpVjGarEDr+LuzmoejSmZRkqLpIm/1j4woXnw74a0SuntF5R0mYxPoPtlPvsh/JvP98ppnq4McqAW22CWFOesgOLQi4Gz+y2fkNCJe8IQFiNv3jTXFQIDAQAB");
+        mHelper = new IabHelper(context, "");
 
         // enable debug logging (for a production application, you should set this to false).
         mHelper.enableDebugLogging(false);
@@ -193,7 +193,7 @@ public class AppBillingManager {
     public void initBillingMainActivity(final Context context,final Activity activity){
         this.activity = activity;
         Log.d(TAG, "Creating IAB helper.");
-        mHelper = new IabHelper(context, "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjFVcXKbW4TvdA04tcXjeNBU3zo59OMXLHcfpwOWE9sNtEUH0H7puxZs2biaC6zTmSk2Ia8Quv30JxUn1h15emE923G/BGR1Hrj0SbNIRHpLrwIjO62RZ+cw0xpzEMrYeKMQTbDe+xrKBzEAMo436P1KbAR/+TDiYw7PhC3fKqGMfq4otGL7RVjvF6NGiTHGEz639pM2Uru46IfSUJGile/9aNGoQaOPs0xGXpVjGarEDr+LuzmoejSmZRkqLpIm/1j4woXnw74a0SuntF5R0mYxPoPtlPvsh/JvP98ppnq4McqAW22CWFOesgOLQi4Gz+y2fkNCJe8IQFiNv3jTXFQIDAQAB");
+        mHelper = new IabHelper(context, "");
 
         // enable debug logging (for a production application, you should set this to false).
         mHelper.enableDebugLogging(false);

@@ -10,7 +10,7 @@ import android.content.pm.PackageManager;
 public class ApplicationConstants {
 
     //admob
-    public static final String admobKey = "ca-app-pub-7786975749587909/7517791075";
+    public static final String admobKey = "";
 
 
     //important data to answer activity
@@ -22,12 +22,6 @@ public class ApplicationConstants {
     public static final String _idUserTebakan = "_idUserTebakan";
     public static final String _idTebakan = "_idTebakan";
     public static final String keyGambar = "keyGambar";
-
-
-
-
-    public static final String SENDER_ID_GCM = "390993870271";
-
 
     public static int getAppVersion(Context context) {
         try {
