@@ -19,10 +19,10 @@ If you're going to make this project fully functional, you need to make sure you
 <ol>
 
 <li> Facebook Sharing</li>
-<p> You can share image to facebook. The Image is taken from the <i>Tebakan Image<i/> </p>
+<p> You can share image to facebook. The Image is taken from the <i>Tebakan Image</i> </p>
 
 <li> Twitter Sharing</li>
-<p> You can share image to Twitter. The Image is taken from the <i>Tebakan Image<i/> </p>
+<p> You can share image to Twitter. The Image is taken from the <i>Tebakan Image</i> </p>
 
 <li> Google App Billing </li>
 <p> I've include in App Purchase Feature in this app, remember that you can change or manage this depends on the In-app Product setup in your google play developer console</p>
@@ -33,6 +33,14 @@ If you're going to make this project fully functional, you need to make sure you
 <li> Admob</li>
 <p> This is for showing ads from Admob I'm using Interstitial ads </p>
 
+# Project Structure
+The project Structure is using MVC (Model View Controller) so for example I create every view like Activity, Fragment, Adapter, in View package. <br>
+Controller package for main business logic. And Last Model it is for Object Java Or POJO(Plain Old Java Object).<br>
+Common is for Constant Variable.
+
+#Resources Image and <i>Tebakan kata</i>
+You can add more resource Image and the guess Word (Tebakan Kata).
+I save the reference in Json file you can find it in `assets` folder.<br>
+And the Image files stored in `res->drawable`.
 </ol>
 
-hello
