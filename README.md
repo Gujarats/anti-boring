@@ -18,19 +18,19 @@ If you're going to make this project fully functional, you need to make sure you
 # What is the Feature inside this project ?
 <ol>
 
-<li> Facebook Sharing</li>
+<li> <b>Facebook Sharing </b> </li>
 <p> You can share image to facebook. The Image is taken from the <i>Tebakan Image</i> </p>
 
-<li> Twitter Sharing</li>
+<li> <b>Twitter Sharing</b></li>
 <p> You can share image to Twitter. The Image is taken from the <i>Tebakan Image</i> </p>
 
-<li> Google App Billing </li>
+<li> <b>Google App Billing</b> </li>
 <p> I've include in App Purchase Feature in this app, remember that you can change or manage this depends on the In-app Product setup in your google play developer console</p>
 
-<li> AdColony Account </li>
+<li> <b>AdColony Account </b></li>
 <p> This is for showing ads from Adcolony</p>
 
-<li> Admob</li>
+<li> <b>Admob </b></li>
 <p> This is for showing ads from Admob I'm using Interstitial ads </p>
 
 # Project Structure
