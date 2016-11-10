@@ -2,6 +2,10 @@
 This is my side project with my friend.
 I would like to share this for learning purpose and get every cool insight/suggestion to improve readable code and reusable code.
 
+# Contribution Guide
+There are maybe some bugs in this apps, I would be happy if you have found it and make it better, pull request and changes are welcome.
+If you have idea to improve the project is also welcome.
+
 #IMPORTANT NOTE
 If you're going to make this project fully functional, you need to make sure you have these account and get the required ID or Key : <br>
 
