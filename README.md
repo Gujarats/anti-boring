@@ -33,6 +33,8 @@ If you're going to make this project fully functional, you need to make sure you
 <li> <b>Admob </b></li>
 <p> This is for showing ads from Admob I'm using Interstitial ads </p>
 
+</ol>
+
 # Project Structure
 The project Structure is using MVC (Model View Controller) so for example I create every view like Activity, Fragment, Adapter, in View package. <br>
 Controller package for main business logic. And Last Model it is for Object Java Or POJO(Plain Old Java Object).<br>
