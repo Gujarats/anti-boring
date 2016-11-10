@@ -3,13 +3,14 @@ This is my side project with my friend.
 I would like to share this for learning purpose and get every cool insight/suggestion to improve readable code and reusable code.
 
 #IMPORTANT NOTE
-If you're going to make this project fully functional, you need to make sure you have these account : <br>
+If you're going to make this project fully functional, you need to make sure you have these account and get the required ID or Key : <br>
 
 <ol>
 
 <li> Facebook Account Developer </li>
 <li> Twitter Account Developer </li>
 <li> Google App Billing </li>
+<li> AdColony Account </li>
 
 </ol>
 
