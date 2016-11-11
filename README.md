@@ -1,6 +1,7 @@
 # Anti-boring
 This is my side project with my friend.
 I would like to share this for learning purpose and get every cool insight/suggestion to improve readable code and reusable code.
+you can see live apps <a href="https://play.google.com/store/apps/details?id=antiboring.game&hl=en">here</a>
 
 # Contribution Guide
 There are maybe some bugs in this apps, I would be happy if you have found it and make it better, pull request and changes are welcome.
